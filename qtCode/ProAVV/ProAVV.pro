@@ -1,4 +1,4 @@
-QT       += core gui
+QT       += core gui multimediawidgets
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -10,13 +10,22 @@ CONFIG += c++17
 
 SOURCES += \
     main.cpp \
-    avv_main_view.cpp
+    avv_main_view.cpp \
+    usrpage.cpp \
+    videodisplay.cpp \
+    videolist.cpp
 
 HEADERS += \
-    avv_main_view.h
+    avv_main_view.h \
+    usrpage.h \
+    videodisplay.h \
+    videolist.h
 
 FORMS += \
-    avv_main_view.ui
+    avv_main_view.ui \
+    usrpage.ui \
+    videodisplay.ui \
+    videolist.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
