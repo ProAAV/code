@@ -1,4 +1,4 @@
-#include "avv_main_view.h"
+#include "aav_main_view.h"
 
 #include <QApplication>
 

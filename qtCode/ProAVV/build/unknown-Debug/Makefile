@@ -14,10 +14,10 @@ EQ            = =
 
 CC            = gcc
 CXX           = g++
-DEFINES       = -DQT_QML_DEBUG -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB
+DEFINES       = -DQT_QML_DEBUG -DQT_MULTIMEDIAWIDGETS_LIB -DQT_MULTIMEDIA_LIB -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_NETWORK_LIB -DQT_CORE_LIB
 CFLAGS        = -pipe -g -Wall -Wextra -D_REENTRANT -fPIC $(DEFINES)
 CXXFLAGS      = -pipe -g -std=gnu++1z -Wall -Wextra -D_REENTRANT -fPIC $(DEFINES)
-INCPATH       = -I../../../ProAVV -I. -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I. -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++
+INCPATH       = -I../../../ProAVV -I. -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtMultimediaWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtMultimedia -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I. -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++
 QMAKE         = /usr/lib/qt5/bin/qmake
 DEL_FILE      = rm -f
 CHK_DIR_EXISTS= test -d
@@ -39,8 +39,8 @@ COMPRESS      = gzip -9f
 DISTNAME      = ProAVV1.0.0
 DISTDIR = /home/hcc/share/qt_code/ProAVV/build/unknown-Debug/.tmp/ProAVV1.0.0
 LINK          = g++
-LFLAGS        = 
-LIBS          = $(SUBLIBS) /usr/lib/x86_64-linux-gnu/libQt5Widgets.so /usr/lib/x86_64-linux-gnu/libQt5Gui.so /usr/lib/x86_64-linux-gnu/libQt5Core.so -lGL -lpthread   
+LFLAGS        = -Wl,-rpath-link,/usr/lib/x86_64-linux-gnu
+LIBS          = $(SUBLIBS) /usr/lib/x86_64-linux-gnu/libQt5MultimediaWidgets.so /usr/lib/x86_64-linux-gnu/libQt5Multimedia.so /usr/lib/x86_64-linux-gnu/libQt5Widgets.so /usr/lib/x86_64-linux-gnu/libQt5Gui.so /usr/lib/x86_64-linux-gnu/libQt5Network.so /usr/lib/x86_64-linux-gnu/libQt5Core.so -lGL -lpthread   
 AR            = ar cqs
 RANLIB        = 
 SED           = sed
@@ -52,11 +52,23 @@ OBJECTS_DIR   = ./
 
 ####### Files
 
-SOURCES       = ../../main.cpp \
-		../../avv_main_view.cpp moc_avv_main_view.cpp
-OBJECTS       = main.o \
-		avv_main_view.o \
-		moc_avv_main_view.o
+SOURCES       = ../../aav_main_view.cpp \
+		../../aav_usrpage.cpp \
+		../../aav_videodisplay.cpp \
+		../../aav_videolist.cpp \
+		../../main.cpp moc_aav_main_view.cpp \
+		moc_aav_usrpage.cpp \
+		moc_aav_videodisplay.cpp \
+		moc_aav_videolist.cpp
+OBJECTS       = aav_main_view.o \
+		aav_usrpage.o \
+		aav_videodisplay.o \
+		aav_videolist.o \
+		main.o \
+		moc_aav_main_view.o \
+		moc_aav_usrpage.o \
+		moc_aav_videodisplay.o \
+		moc_aav_videolist.o
 DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/unix.conf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/linux.conf \
@@ -88,6 +100,8 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_input_support_private.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_kms_support_private.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_linuxaccessibility_support_private.pri \
+		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_multimedia.pri \
+		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_multimediawidgets.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_network.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_network_private.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_opengl.pri \
@@ -114,6 +128,7 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/qt_config.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++/qmake.conf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_post.prf \
+		../../.qmake.stash \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/exclusive_builds.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/toolchain.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/default_pre.prf \
@@ -134,8 +149,14 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/exceptions.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/yacc.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/lex.prf \
-		../../../../ProAVV.pro ../../avv_main_view.h ../../main.cpp \
-		../../avv_main_view.cpp
+		../../../../ProAVV.pro ../../aav_main_view.h \
+		../../aav_usrpage.h \
+		../../aav_videodisplay.h \
+		../../aav_videolist.h ../../aav_main_view.cpp \
+		../../aav_usrpage.cpp \
+		../../aav_videodisplay.cpp \
+		../../aav_videolist.cpp \
+		../../main.cpp
 QMAKE_TARGET  = ProAVV
 DESTDIR       = 
 TARGET        = ProAVV
@@ -144,7 +165,7 @@ TARGET        = ProAVV
 first: all
 ####### Build rules
 
-ProAVV: ui_avv_main_view.h $(OBJECTS)  
+ProAVV: ui_aav_main_view.h ui_aav_usrpage.h ui_aav_videodisplay.h ui_aav_videolist.h $(OBJECTS)  
 	$(LINK) $(LFLAGS) -o $(TARGET) $(OBJECTS) $(OBJCOMP) $(LIBS)
 
 Makefile: ../../ProAVV.pro /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++/qmake.conf /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
@@ -178,6 +199,8 @@ Makefile: ../../ProAVV.pro /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++/qmake
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_input_support_private.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_kms_support_private.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_linuxaccessibility_support_private.pri \
+		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_multimedia.pri \
+		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_multimediawidgets.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_network.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_network_private.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_opengl.pri \
@@ -204,6 +227,7 @@ Makefile: ../../ProAVV.pro /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++/qmake
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/qt_config.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++/qmake.conf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_post.prf \
+		.qmake.stash \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/exclusive_builds.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/toolchain.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/default_pre.prf \
@@ -257,6 +281,8 @@ Makefile: ../../ProAVV.pro /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++/qmake
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_input_support_private.pri:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_kms_support_private.pri:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_linuxaccessibility_support_private.pri:
+/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_multimedia.pri:
+/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_multimediawidgets.pri:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_network.pri:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_network_private.pri:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_opengl.pri:
@@ -283,6 +309,7 @@ Makefile: ../../ProAVV.pro /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++/qmake
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/qt_config.prf:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++/qmake.conf:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_post.prf:
+.qmake.stash:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/exclusive_builds.prf:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/toolchain.prf:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/default_pre.prf:
@@ -319,9 +346,9 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../../avv_main_view.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../../main.cpp ../../avv_main_view.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../../avv_main_view.ui $(DISTDIR)/
+	$(COPY_FILE) --parents ../../aav_main_view.h ../../aav_usrpage.h ../../aav_videodisplay.h ../../aav_videolist.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../../aav_main_view.cpp ../../aav_usrpage.cpp ../../aav_videodisplay.cpp ../../aav_videolist.cpp ../../main.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../../aav_main_view.ui ../../aav_usrpage.ui ../../aav_videodisplay.ui ../../aav_videolist.ui $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -353,24 +380,51 @@ compiler_moc_predefs_clean:
 moc_predefs.h: /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp
 	g++ -pipe -g -std=gnu++1z -Wall -Wextra -dM -E -o moc_predefs.h /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp
 
-compiler_moc_header_make_all: moc_avv_main_view.cpp
+compiler_moc_header_make_all: moc_aav_main_view.cpp moc_aav_usrpage.cpp moc_aav_videodisplay.cpp moc_aav_videolist.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_avv_main_view.cpp
-moc_avv_main_view.cpp: ../../avv_main_view.h \
+	-$(DEL_FILE) moc_aav_main_view.cpp moc_aav_usrpage.cpp moc_aav_videodisplay.cpp moc_aav_videolist.cpp
+moc_aav_main_view.cpp: ../../aav_main_view.h \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
-	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/hcc/share/qt_code/ProAVV/build/unknown-Debug/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/hcc/share/qt_code/ProAVV -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/12 -I/usr/include/x86_64-linux-gnu/c++/12 -I/usr/include/c++/12/backward -I/usr/lib/gcc/x86_64-linux-gnu/12/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include ../../avv_main_view.h -o moc_avv_main_view.cpp
+	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/hcc/share/qt_code/ProAVV/build/unknown-Debug/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/hcc/share/qt_code/ProAVV -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtMultimediaWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtMultimedia -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/12 -I/usr/include/x86_64-linux-gnu/c++/12 -I/usr/include/c++/12/backward -I/usr/lib/gcc/x86_64-linux-gnu/12/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include ../../aav_main_view.h -o moc_aav_main_view.cpp
+
+moc_aav_usrpage.cpp: ../../aav_usrpage.h \
+		moc_predefs.h \
+		/usr/lib/qt5/bin/moc
+	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/hcc/share/qt_code/ProAVV/build/unknown-Debug/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/hcc/share/qt_code/ProAVV -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtMultimediaWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtMultimedia -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/12 -I/usr/include/x86_64-linux-gnu/c++/12 -I/usr/include/c++/12/backward -I/usr/lib/gcc/x86_64-linux-gnu/12/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include ../../aav_usrpage.h -o moc_aav_usrpage.cpp
+
+moc_aav_videodisplay.cpp: ../../aav_videodisplay.h \
+		moc_predefs.h \
+		/usr/lib/qt5/bin/moc
+	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/hcc/share/qt_code/ProAVV/build/unknown-Debug/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/hcc/share/qt_code/ProAVV -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtMultimediaWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtMultimedia -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/12 -I/usr/include/x86_64-linux-gnu/c++/12 -I/usr/include/c++/12/backward -I/usr/lib/gcc/x86_64-linux-gnu/12/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include ../../aav_videodisplay.h -o moc_aav_videodisplay.cpp
+
+moc_aav_videolist.cpp: ../../aav_videolist.h \
+		moc_predefs.h \
+		/usr/lib/qt5/bin/moc
+	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/hcc/share/qt_code/ProAVV/build/unknown-Debug/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/hcc/share/qt_code/ProAVV -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtMultimediaWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtMultimedia -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/12 -I/usr/include/x86_64-linux-gnu/c++/12 -I/usr/include/c++/12/backward -I/usr/lib/gcc/x86_64-linux-gnu/12/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include ../../aav_videolist.h -o moc_aav_videolist.cpp
 
 compiler_moc_objc_header_make_all:
 compiler_moc_objc_header_clean:
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
-compiler_uic_make_all: ui_avv_main_view.h
+compiler_uic_make_all: ui_aav_main_view.h ui_aav_usrpage.h ui_aav_videodisplay.h ui_aav_videolist.h
 compiler_uic_clean:
-	-$(DEL_FILE) ui_avv_main_view.h
-ui_avv_main_view.h: ../../avv_main_view.ui \
+	-$(DEL_FILE) ui_aav_main_view.h ui_aav_usrpage.h ui_aav_videodisplay.h ui_aav_videolist.h
+ui_aav_main_view.h: ../../aav_main_view.ui \
 		/usr/lib/qt5/bin/uic
-	/usr/lib/qt5/bin/uic ../../avv_main_view.ui -o ui_avv_main_view.h
+	/usr/lib/qt5/bin/uic ../../aav_main_view.ui -o ui_aav_main_view.h
+
+ui_aav_usrpage.h: ../../aav_usrpage.ui \
+		/usr/lib/qt5/bin/uic
+	/usr/lib/qt5/bin/uic ../../aav_usrpage.ui -o ui_aav_usrpage.h
+
+ui_aav_videodisplay.h: ../../aav_videodisplay.ui \
+		/usr/lib/qt5/bin/uic
+	/usr/lib/qt5/bin/uic ../../aav_videodisplay.ui -o ui_aav_videodisplay.h
+
+ui_aav_videolist.h: ../../aav_videolist.ui \
+		/usr/lib/qt5/bin/uic
+	/usr/lib/qt5/bin/uic ../../aav_videolist.ui -o ui_aav_videolist.h
 
 compiler_yacc_decl_make_all:
 compiler_yacc_decl_clean:
@@ -382,15 +436,39 @@ compiler_clean: compiler_moc_predefs_clean compiler_moc_header_clean compiler_ui
 
 ####### Compile
 
-main.o: ../../main.cpp ../../avv_main_view.h
+aav_main_view.o: ../../aav_main_view.cpp ../../aav_main_view.h \
+		ui_aav_main_view.h \
+		../../aav_usrpage.h \
+		../../aav_videolist.h \
+		../../aav_videodisplay.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o aav_main_view.o ../../aav_main_view.cpp
+
+aav_usrpage.o: ../../aav_usrpage.cpp ../../aav_usrpage.h \
+		ui_aav_usrpage.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o aav_usrpage.o ../../aav_usrpage.cpp
+
+aav_videodisplay.o: ../../aav_videodisplay.cpp ../../aav_videodisplay.h \
+		ui_aav_videodisplay.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o aav_videodisplay.o ../../aav_videodisplay.cpp
+
+aav_videolist.o: ../../aav_videolist.cpp ../../aav_videolist.h \
+		ui_aav_videolist.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o aav_videolist.o ../../aav_videolist.cpp
+
+main.o: ../../main.cpp ../../aav_main_view.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../../main.cpp
 
-avv_main_view.o: ../../avv_main_view.cpp ../../avv_main_view.h \
-		ui_avv_main_view.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o avv_main_view.o ../../avv_main_view.cpp
+moc_aav_main_view.o: moc_aav_main_view.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_aav_main_view.o moc_aav_main_view.cpp
 
-moc_avv_main_view.o: moc_avv_main_view.cpp 
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_avv_main_view.o moc_avv_main_view.cpp
+moc_aav_usrpage.o: moc_aav_usrpage.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_aav_usrpage.o moc_aav_usrpage.cpp
+
+moc_aav_videodisplay.o: moc_aav_videodisplay.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_aav_videodisplay.o moc_aav_videodisplay.cpp
+
+moc_aav_videolist.o: moc_aav_videolist.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_aav_videolist.o moc_aav_videolist.cpp
 
 ####### Install
 

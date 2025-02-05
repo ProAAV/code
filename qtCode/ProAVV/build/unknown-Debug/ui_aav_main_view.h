@@ -1,13 +1,13 @@
 /********************************************************************************
-** Form generated from reading UI file 'avv_main_view.ui'
+** Form generated from reading UI file 'aav_main_view.ui'
 **
 ** Created by: Qt User Interface Compiler version 5.15.8
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
 
-#ifndef UI_AVV_MAIN_VIEW_H
-#define UI_AVV_MAIN_VIEW_H
+#ifndef UI_AAV_MAIN_VIEW_H
+#define UI_AAV_MAIN_VIEW_H
 
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
@@ -92,4 +92,4 @@ namespace Ui {
 
 QT_END_NAMESPACE
 
-#endif // UI_AVV_MAIN_VIEW_H
+#endif // UI_AAV_MAIN_VIEW_H

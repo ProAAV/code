@@ -9,23 +9,23 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    main.cpp \
-    avv_main_view.cpp \
-    usrpage.cpp \
-    videodisplay.cpp \
-    videolist.cpp
+    aav_main_view.cpp \
+    aav_usrpage.cpp \
+    aav_videodisplay.cpp \
+    aav_videolist.cpp \
+    main.cpp
 
 HEADERS += \
-    avv_main_view.h \
-    usrpage.h \
-    videodisplay.h \
-    videolist.h
+    aav_main_view.h \
+    aav_usrpage.h \
+    aav_videodisplay.h \
+    aav_videolist.h
 
 FORMS += \
-    avv_main_view.ui \
-    usrpage.ui \
-    videodisplay.ui \
-    videolist.ui
+    aav_main_view.ui \
+    aav_usrpage.ui \
+    aav_videodisplay.ui \
+    aav_videolist.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
