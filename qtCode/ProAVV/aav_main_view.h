@@ -19,5 +19,6 @@ public:
 
 private:
     Ui::MainView *ui;
+
 };
 #endif // AVV_MAIN_VIEW_H

@@ -26,10 +26,10 @@ MainView::MainView(QWidget *parent)
     connect(ui->btn_video_list,&QPushButton::clicked,ui->stackw,[=](){
         ui->stackw->setCurrentWidget(w2);
     });
-
+    VideoDisplay* vdis=new VideoDisplay();
     connect(ui->btn_video_disp,&QPushButton::clicked,ui->stackw,[=](){
-        VideoDisplay* vdis=new VideoDisplay();
         vdis->show();
+
     });
 }
 
