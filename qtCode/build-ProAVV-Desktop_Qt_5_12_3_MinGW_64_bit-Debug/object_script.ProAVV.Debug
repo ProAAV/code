@@ -2,9 +2,12 @@ debug/aav_main_view.o
 debug/aav_usrpage.o
 debug/aav_videodisplay.o
 debug/aav_videolist.o
+debug/aav_volumebutton.o
+debug/aav_widgetvlume.o
 debug/main.o
-debug/upmenu.o
 debug/moc_aav_main_view.o
 debug/moc_aav_usrpage.o
 debug/moc_aav_videodisplay.o
 debug/moc_aav_videolist.o
+debug/moc_aav_volumebutton.o
+debug/moc_aav_widgetvlume.o

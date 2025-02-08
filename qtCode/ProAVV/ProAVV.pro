@@ -13,13 +13,17 @@ SOURCES += \
     aav_usrpage.cpp \
     aav_videodisplay.cpp \
     aav_videolist.cpp \
+    aav_volumebutton.cpp \
+    aav_widgetvlume.cpp \
     main.cpp
 
 HEADERS += \
     aav_main_view.h \
     aav_usrpage.h \
     aav_videodisplay.h \
-    aav_videolist.h
+    aav_videolist.h \
+    aav_volumebutton.h \
+    aav_widgetvlume.h
 
 FORMS += \
     aav_main_view.ui \

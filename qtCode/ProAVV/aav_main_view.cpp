@@ -31,6 +31,8 @@ MainView::MainView(QWidget *parent)
         vdis->show();
 
     });
+
+
 }
 
 MainView::~MainView()

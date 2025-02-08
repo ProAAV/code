@@ -7,7 +7,7 @@
 #include<QMediaPlayer>
 #include<QLabel>
 #include<QPushButton>
-
+#include"aav_volumebutton.h"
 namespace Ui {
 class VideoDisplay;
 }
@@ -34,7 +34,8 @@ private:
     qint64 m_cnt_pause_player;
     QPushButton* m_btn_rate;
     QMenu* m_menu_rate;
-private slots:
+    VolumeButton* m_btn_vlm;
+public slots:
     void sloSetSliderDura(qint64 dur);
     void sloSetSliderPos(qint64 dur);
     void sloPlayerMove(int pos);
@@ -42,6 +43,8 @@ private slots:
     void sloMenuUnfold();
     void sloAdjRate(int num);
     void sloPreload(QMediaPlayer::MediaStatus status);
+    void sloVolumeChanged(int position);
+
 };
 
 #endif // VIDEODISPLAY_H

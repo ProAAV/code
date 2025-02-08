@@ -2,9 +2,12 @@ release/aav_main_view.o
 release/aav_usrpage.o
 release/aav_videodisplay.o
 release/aav_videolist.o
+release/aav_volumebutton.o
+release/aav_widgetvlume.o
 release/main.o
-release/upmenu.o
 release/moc_aav_main_view.o
 release/moc_aav_usrpage.o
 release/moc_aav_videodisplay.o
 release/moc_aav_videolist.o
+release/moc_aav_volumebutton.o
+release/moc_aav_widgetvlume.o

@@ -9,6 +9,7 @@
 #include<QPushButton>
 #include<QMenu>
 #include<QVariantList>
+
 VideoDisplay::VideoDisplay(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::VideoDisplay)
@@ -62,13 +63,17 @@ VideoDisplay::VideoDisplay(QWidget *parent) :
     m_menu_rate->addAction(act_5);
     m_btn_rate->setMenu(m_menu_rate);
 
+    m_btn_vlm=new VolumeButton(this);
+    m_btn_vlm->setText("volume");
 
     m_hlayout=new QHBoxLayout;
     m_hlayout->addWidget(btn_video_pre);
     m_hlayout->addWidget(btn_video_pause);
     m_hlayout->addWidget(btn_video_next);
     m_hlayout->addWidget(m_btn_rate);
+    m_hlayout->addWidget(m_btn_vlm);
 
+    //实现暂停，倍速播放
     connect(btn_video_pause,&QPushButton::clicked,this,&VideoDisplay::sloPlayerPause);
     connect(m_btn_rate,&QPushButton::clicked,this,&VideoDisplay::sloMenuUnfold);
     connect(act_1,&QAction::triggered,this,[=](){
@@ -101,6 +106,10 @@ VideoDisplay::VideoDisplay(QWidget *parent) :
     connect(m_player,&QMediaPlayer::durationChanged,this,&VideoDisplay::sloSetSliderDura);
     connect(m_player,&QMediaPlayer::positionChanged,this,&VideoDisplay::sloSetSliderPos);
     connect(m_slider_video_process,&QSlider::sliderMoved,this,&VideoDisplay::sloPlayerMove);
+    //实现音频同步
+    connect(m_btn_vlm->getSlider(),&QSlider::sliderMoved,this,[this](int position){
+        this->sloVolumeChanged(position);
+    });
 }
 void VideoDisplay::sloSetSliderDura(qint64 dur){
     int val=static_cast<int>(dur);
@@ -192,6 +201,15 @@ void VideoDisplay::sloPreload(QMediaPlayer::MediaStatus status){
         m_player->play();
     }
 }
+
+void VideoDisplay::sloVolumeChanged(int position)
+{
+    m_player->setVolume(position);
+
+    m_btn_vlm->getLabVlm()->setText(QString::number(position));
+}
+
+
 VideoDisplay::~VideoDisplay()
 {
     delete m_hlayout;
