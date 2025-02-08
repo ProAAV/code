@@ -10,6 +10,7 @@ VolumeButton::VolumeButton(QWidget *parent):QPushButton (parent)
     //作为widgetVolume的父控件，VolumeButton可以通过信号与槽机制来控制通信
 
     m_tm=new QTimer(this);
+    m_tm->setSingleShot(true);
     connect(m_tm,&QTimer::timeout,this,&VolumeButton::sloTimeOut);
     //用wid_vlm作为sli_vlm的背景板
     m_wid_vlm=new WidgetVlume(parent);
