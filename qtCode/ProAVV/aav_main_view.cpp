@@ -5,6 +5,7 @@
 #include"aav_usrpage.h"
 #include"aav_videolist.h"
 #include"aav_videodisplay.h"
+
 MainView::MainView(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::MainView)
@@ -26,10 +27,16 @@ MainView::MainView(QWidget *parent)
     connect(ui->btn_video_list,&QPushButton::clicked,ui->stackw,[=](){
         ui->stackw->setCurrentWidget(w2);
     });
-    VideoDisplay* vdis=new VideoDisplay();
-    connect(ui->btn_video_disp,&QPushButton::clicked,ui->stackw,[=](){
+
+    //VideoDisplay* vdis=new VideoDisplay();
+    /*connect(ui->btn_video_disp,&QPushButton::clicked,ui->stackw,[=](){
         vdis->show();
 
+    });*/
+
+    connect(ui->btn_upload,&QPushButton::clicked,this,[=](){
+        m_wid_upload_select=new UploadSelect();
+        m_wid_upload_select->show();
     });
 
 

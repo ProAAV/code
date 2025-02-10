@@ -27,6 +27,7 @@ public:
     QVBoxLayout *verticalLayout;
     QPushButton *btn_video_list;
     QPushButton *btn_usr_page;
+    QPushButton *btn_upload;
     QPushButton *btn_video_disp;
     QStackedWidget *stackw;
 
@@ -50,6 +51,11 @@ public:
         btn_usr_page->setObjectName(QString::fromUtf8("btn_usr_page"));
 
         verticalLayout->addWidget(btn_usr_page);
+
+        btn_upload = new QPushButton(MainView);
+        btn_upload->setObjectName(QString::fromUtf8("btn_upload"));
+
+        verticalLayout->addWidget(btn_upload);
 
         btn_video_disp = new QPushButton(MainView);
         btn_video_disp->setObjectName(QString::fromUtf8("btn_video_disp"));
@@ -81,6 +87,7 @@ public:
         MainView->setWindowTitle(QApplication::translate("MainView", "MainView", nullptr));
         btn_video_list->setText(QApplication::translate("MainView", "PushButton", nullptr));
         btn_usr_page->setText(QApplication::translate("MainView", "PushButton", nullptr));
+        btn_upload->setText(QApplication::translate("MainView", "PushButton", nullptr));
         btn_video_disp->setText(QApplication::translate("MainView", "PushButton", nullptr));
     } // retranslateUi
 

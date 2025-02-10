@@ -8,6 +8,7 @@
 #include<QTimer>
 class VolumeButton : public QPushButton
 {
+    //这是VideoDisplay界面中的调节音量按钮的按钮类
     Q_OBJECT
 public:
     explicit VolumeButton(QWidget *parent = nullptr);

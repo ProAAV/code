@@ -2,7 +2,7 @@
 #define AVV_MAIN_VIEW_H
 
 #include <QWidget>
-
+#include"aav_uploadselect.h"
 QT_BEGIN_NAMESPACE
 namespace Ui {
 class MainView;
@@ -19,6 +19,7 @@ public:
 
 private:
     Ui::MainView *ui;
+    UploadSelect* m_wid_upload_select;
 
 };
 #endif // AVV_MAIN_VIEW_H

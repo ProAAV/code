@@ -43,6 +43,7 @@ VolumeButton::VolumeButton(QWidget *parent):QPushButton (parent)
 
 
     m_sli_vlm->setRange(0,100);
+    m_sli_vlm->setValue(50);
 
 }
 

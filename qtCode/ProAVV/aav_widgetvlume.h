@@ -3,6 +3,8 @@
 #include<QWidget>
 class WidgetVlume : public QWidget
 {
+    /*这是VolumeButton按钮点击后弹出的音量滑块的背景类，这个背景包含一个lab来显示音量值和具体的
+    slider控件*/
     Q_OBJECT
 public:
     explicit WidgetVlume(QWidget *parent = nullptr);
