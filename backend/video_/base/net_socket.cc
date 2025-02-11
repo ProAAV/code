@@ -1,17 +1,17 @@
 #include"net_socket.h"
-
+#include<unistd.h>
 NetSocket::NetSocket(){
     //分配一个网络套接字
     m_fd=socket(AF_INET,SOCK_STREAM,0);
 
 }
 NetSocket::~NetSocket(){
+    close(m_fd);
+}
+void NetSocket::setEpollInCb(EpollInCbType func_ptr){
 
 }
-void NetSocket::setEpollInCb(){
-
-}
-void NetSocket::setEpollOutCb(){
+void NetSocket::setEpollOutCb(EpollOutCbType func_ptr){
 
 }
 EpollInCbType NetSocket::getEpollInCb(){
