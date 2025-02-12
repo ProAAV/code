@@ -11,5 +11,7 @@ CMakeFiles/video_server.dir/base/net_socket.cc.o: ../base/net_socket.h
 CMakeFiles/video_server.dir/base/read_config.cc.o: ../base/read_config.cc
 
 CMakeFiles/video_server.dir/main.cc.o: ../base/common.h
+CMakeFiles/video_server.dir/main.cc.o: ../base/net_event_loop.h
+CMakeFiles/video_server.dir/main.cc.o: ../base/net_socket.h
 CMakeFiles/video_server.dir/main.cc.o: ../main.cc
 

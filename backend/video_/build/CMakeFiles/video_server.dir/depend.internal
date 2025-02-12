@@ -12,4 +12,6 @@ CMakeFiles/video_server.dir/base/read_config.cc.o
  /home/hcc/share/code/project/code/backend/video_/base/read_config.cc
 CMakeFiles/video_server.dir/main.cc.o
  /home/hcc/share/code/project/code/backend/video_/base/common.h
+ /home/hcc/share/code/project/code/backend/video_/base/net_event_loop.h
+ /home/hcc/share/code/project/code/backend/video_/base/net_socket.h
  /home/hcc/share/code/project/code/backend/video_/main.cc

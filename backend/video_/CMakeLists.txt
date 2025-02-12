@@ -10,4 +10,5 @@ set(SOURCES
     base/read_config.cc
 )
 add_executable(video_server ${SOURCES})
+add_compile_options(-g)
 
