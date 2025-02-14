@@ -9,7 +9,10 @@ int main(int argc,char* argv[]){
     }
     ConfRead conf_reader(argv[1]);
     conf_reader.confLoadFile();
-    EventLoop eloop;
+    for(auto& it:conf_reader.confGetMap()){
+        std::cout<<it.first<<" "<<it.second<<'\n';
+    }
+    EventLoop eloop(conf_reader);
     eloop.eventLoopStart(eloop);
     return 0;
 }

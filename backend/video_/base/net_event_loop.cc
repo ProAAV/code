@@ -6,6 +6,7 @@
 #include<unistd.h>
 #include<string.h>
 #include<sys/ioctl.h>
+#include"common.h"
 void acceptCallback(int fd,EventLoop& evloop){
     std::cout<<"accept\n";
     struct sockaddr_in client_addr;
@@ -67,7 +68,7 @@ void sendCallback(int fd,EventLoop& evloop){
 }
 
 
-EventLoop::EventLoop(){
+EventLoop::EventLoop(ConfRead& conf_reader):m_conf_reader(conf_reader){
     
 }
 EventLoop::~EventLoop(){
@@ -75,27 +76,36 @@ EventLoop::~EventLoop(){
 }
 void EventLoop::serverSocketsFdCreate(){
     //打算是采用负载均衡的方式来实现服务端的套接字分配
-    int sfd=socket(AF_INET,SOCK_STREAM,0);
-    int opt=1;
-    setsockopt(sfd,SOCK_STREAM,SO_REUSEADDR,&opt,sizeof(opt));
-    m_server_socket=new NetSocket(sfd);
-    m_map[m_server_socket->getSockFd()]=m_server_socket;
-    //绑定server_socket的m_epoll_in_cb和m_epoll_out_cb行为
-    m_server_socket->setEpollInCb(acceptCallback);
-    m_server_socket->setEpollOutCb(sendCallback);
+    isNumber(m_conf_reader.confGetMap().at("server_nb_listen_port"));
+        
+    int nb_listen_port=std::stoi(m_conf_reader.confGetMap().at("server_nb_listen_port"));
+    std::vector<int> vec_ports=separate_ports(m_conf_reader.confGetMap().at("server_listen_ports"),nb_listen_port);
+
+    for(unsigned i=0;i<nb_listen_port;i++){
+        int sfd=socket(AF_INET,SOCK_STREAM,0);
+        int opt=1;
+        setsockopt(sfd,SOCK_STREAM,SO_REUSEADDR,&opt,sizeof(opt));
+        NetSocket* server_socket=new NetSocket(sfd);
+        m_map[sfd]=server_socket;
+        //绑定server_socket的m_epoll_in_cb和m_epoll_out_cb行为
+        server_socket->setEpollInCb(acceptCallback);
+        server_socket->setEpollOutCb(sendCallback);
+        bindAddress(sfd,vec_ports[i]);
+        listenEvent(sfd);
+        epollAddFd(sfd,EPOLLIN);
+    }
 }
-void EventLoop::bindAddress(){
-    int sfd=m_server_socket->getSockFd();
+void EventLoop::bindAddress(int sfd,int port){
     struct sockaddr_in server_addr;
     server_addr.sin_family=AF_INET;
-    server_addr.sin_port=htons(8081);
-    server_addr.sin_addr.s_addr=inet_addr("192.168.208.128");
+    server_addr.sin_port=htons(port);
+    const char* ser_addr=m_conf_reader.confGetMap().at("server_address").c_str();
+    server_addr.sin_addr.s_addr=inet_addr(ser_addr);
     bind(sfd,(struct sockaddr*)(&server_addr),sizeof(struct sockaddr_in));
-    
-
+    std::cout<<"bind:"<<ser_addr<<" "<<port<<'\n';
 }
-void EventLoop::listenEvent(){
-    listen(m_server_socket->getSockFd(),10);
+void EventLoop::listenEvent(int sfd){
+    listen(sfd,10);
 }
 void EventLoop::enterLoop(EventLoop& evloop){
     while(1){
@@ -143,11 +153,8 @@ void EventLoop::enterLoop(EventLoop& evloop){
 }   
 
 void EventLoop::eventLoopStart(EventLoop& evloop){
-    serverSocketsFdCreate();
-    bindAddress();
-    listenEvent();
     epollCreate();
-    epollAddFd(m_server_socket->getSockFd(),EPOLLIN);
+    serverSocketsFdCreate();
     enterLoop(evloop);
 }
 void EventLoop::epollCreate(){
@@ -167,4 +174,22 @@ struct epoll_event* EventLoop::regisEvent(int fd,int ev){
 void EventLoop::epollEventMod(int fd,int ev){
     struct epoll_event* event=regisEvent(fd,ev);
     epoll_ctl(m_epollfd,EPOLL_CTL_MOD,fd,event);
+}
+std::vector<int> EventLoop::separate_ports(const std::string& ports,int nb_port){
+    int start=0,pos=0;
+    std::vector<int> vec;
+    while(1){
+        pos=ports.find(' ',start);
+        std::string port=ports.substr(start,pos-start+1);
+        start=pos+1;
+        std::cout<<"port:"<<port<<'\n';
+        blankTrim(port);
+        isNumber(port);
+        std::cout<<"size:"<<port.size()<<"\n";
+        vec.push_back(std::stoi(port));
+        if(pos==std::string::npos){
+            break;
+        }
+    }
+    return vec;
 }
