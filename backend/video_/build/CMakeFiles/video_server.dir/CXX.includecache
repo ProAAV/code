@@ -6,22 +6,12 @@
 
 #IncludeRegexTransform: 
 
-/home/hcc/share/code/project/code/backend/video_/base/net_event_loop.cc
-netinet/in.h
+/home/hcc/share/code/project/code/backend/video_/base/common.h
+cstdlib
 -
-arpa/inet.h
--
-iostream
--
-net_event_loop.h
-/home/hcc/share/code/project/code/backend/video_/base/net_event_loop.h
-sys/epoll.h
--
-unistd.h
--
-string.h
--
-sys/ioctl.h
+
+/home/hcc/share/code/project/code/backend/video_/base/config_read.h
+string
 -
 
 /home/hcc/share/code/project/code/backend/video_/base/net_event_loop.h
@@ -39,4 +29,14 @@ sys/socket.h
 -
 netinet/in.h
 -
+
+/home/hcc/share/code/project/code/backend/video_/main.cc
+iostream
+-
+base/common.h
+/home/hcc/share/code/project/code/backend/video_/base/common.h
+base/net_event_loop.h
+/home/hcc/share/code/project/code/backend/video_/base/net_event_loop.h
+base/config_read.h
+/home/hcc/share/code/project/code/backend/video_/base/config_read.h
 

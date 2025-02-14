@@ -96,25 +96,25 @@ CMakeFiles/video_server.dir/base/net_socket.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/video_server.dir/base/net_socket.cc.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/hcc/share/code/project/code/backend/video_/base/net_socket.cc -o CMakeFiles/video_server.dir/base/net_socket.cc.s
 
-CMakeFiles/video_server.dir/base/read_config.cc.o: CMakeFiles/video_server.dir/flags.make
-CMakeFiles/video_server.dir/base/read_config.cc.o: ../base/read_config.cc
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/hcc/share/code/project/code/backend/video_/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/video_server.dir/base/read_config.cc.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/video_server.dir/base/read_config.cc.o -c /home/hcc/share/code/project/code/backend/video_/base/read_config.cc
+CMakeFiles/video_server.dir/base/config_read.cc.o: CMakeFiles/video_server.dir/flags.make
+CMakeFiles/video_server.dir/base/config_read.cc.o: ../base/config_read.cc
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/hcc/share/code/project/code/backend/video_/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/video_server.dir/base/config_read.cc.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/video_server.dir/base/config_read.cc.o -c /home/hcc/share/code/project/code/backend/video_/base/config_read.cc
 
-CMakeFiles/video_server.dir/base/read_config.cc.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/video_server.dir/base/read_config.cc.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/hcc/share/code/project/code/backend/video_/base/read_config.cc > CMakeFiles/video_server.dir/base/read_config.cc.i
+CMakeFiles/video_server.dir/base/config_read.cc.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/video_server.dir/base/config_read.cc.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/hcc/share/code/project/code/backend/video_/base/config_read.cc > CMakeFiles/video_server.dir/base/config_read.cc.i
 
-CMakeFiles/video_server.dir/base/read_config.cc.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/video_server.dir/base/read_config.cc.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/hcc/share/code/project/code/backend/video_/base/read_config.cc -o CMakeFiles/video_server.dir/base/read_config.cc.s
+CMakeFiles/video_server.dir/base/config_read.cc.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/video_server.dir/base/config_read.cc.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/hcc/share/code/project/code/backend/video_/base/config_read.cc -o CMakeFiles/video_server.dir/base/config_read.cc.s
 
 # Object files for target video_server
 video_server_OBJECTS = \
 "CMakeFiles/video_server.dir/main.cc.o" \
 "CMakeFiles/video_server.dir/base/net_event_loop.cc.o" \
 "CMakeFiles/video_server.dir/base/net_socket.cc.o" \
-"CMakeFiles/video_server.dir/base/read_config.cc.o"
+"CMakeFiles/video_server.dir/base/config_read.cc.o"
 
 # External object files for target video_server
 video_server_EXTERNAL_OBJECTS =
@@ -122,7 +122,7 @@ video_server_EXTERNAL_OBJECTS =
 video_server: CMakeFiles/video_server.dir/main.cc.o
 video_server: CMakeFiles/video_server.dir/base/net_event_loop.cc.o
 video_server: CMakeFiles/video_server.dir/base/net_socket.cc.o
-video_server: CMakeFiles/video_server.dir/base/read_config.cc.o
+video_server: CMakeFiles/video_server.dir/base/config_read.cc.o
 video_server: CMakeFiles/video_server.dir/build.make
 video_server: CMakeFiles/video_server.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/hcc/share/code/project/code/backend/video_/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Linking CXX executable video_server"

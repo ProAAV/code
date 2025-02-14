@@ -7,7 +7,7 @@ set(SOURCES
     main.cc
     base/net_event_loop.cc
     base/net_socket.cc 
-    base/read_config.cc
+    base/config_read.cc
 )
 add_executable(video_server ${SOURCES})
 add_compile_options(-g)

@@ -123,6 +123,33 @@ video_server/fast:
 	$(MAKE) -f CMakeFiles/video_server.dir/build.make CMakeFiles/video_server.dir/build
 .PHONY : video_server/fast
 
+base/config_read.o: base/config_read.cc.o
+
+.PHONY : base/config_read.o
+
+# target to build an object file
+base/config_read.cc.o:
+	$(MAKE) -f CMakeFiles/video_server.dir/build.make CMakeFiles/video_server.dir/base/config_read.cc.o
+.PHONY : base/config_read.cc.o
+
+base/config_read.i: base/config_read.cc.i
+
+.PHONY : base/config_read.i
+
+# target to preprocess a source file
+base/config_read.cc.i:
+	$(MAKE) -f CMakeFiles/video_server.dir/build.make CMakeFiles/video_server.dir/base/config_read.cc.i
+.PHONY : base/config_read.cc.i
+
+base/config_read.s: base/config_read.cc.s
+
+.PHONY : base/config_read.s
+
+# target to generate assembly for a file
+base/config_read.cc.s:
+	$(MAKE) -f CMakeFiles/video_server.dir/build.make CMakeFiles/video_server.dir/base/config_read.cc.s
+.PHONY : base/config_read.cc.s
+
 base/net_event_loop.o: base/net_event_loop.cc.o
 
 .PHONY : base/net_event_loop.o
@@ -177,33 +204,6 @@ base/net_socket.cc.s:
 	$(MAKE) -f CMakeFiles/video_server.dir/build.make CMakeFiles/video_server.dir/base/net_socket.cc.s
 .PHONY : base/net_socket.cc.s
 
-base/read_config.o: base/read_config.cc.o
-
-.PHONY : base/read_config.o
-
-# target to build an object file
-base/read_config.cc.o:
-	$(MAKE) -f CMakeFiles/video_server.dir/build.make CMakeFiles/video_server.dir/base/read_config.cc.o
-.PHONY : base/read_config.cc.o
-
-base/read_config.i: base/read_config.cc.i
-
-.PHONY : base/read_config.i
-
-# target to preprocess a source file
-base/read_config.cc.i:
-	$(MAKE) -f CMakeFiles/video_server.dir/build.make CMakeFiles/video_server.dir/base/read_config.cc.i
-.PHONY : base/read_config.cc.i
-
-base/read_config.s: base/read_config.cc.s
-
-.PHONY : base/read_config.s
-
-# target to generate assembly for a file
-base/read_config.cc.s:
-	$(MAKE) -f CMakeFiles/video_server.dir/build.make CMakeFiles/video_server.dir/base/read_config.cc.s
-.PHONY : base/read_config.cc.s
-
 main.o: main.cc.o
 
 .PHONY : main.o
@@ -240,15 +240,15 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... video_server"
+	@echo "... base/config_read.o"
+	@echo "... base/config_read.i"
+	@echo "... base/config_read.s"
 	@echo "... base/net_event_loop.o"
 	@echo "... base/net_event_loop.i"
 	@echo "... base/net_event_loop.s"
 	@echo "... base/net_socket.o"
 	@echo "... base/net_socket.i"
 	@echo "... base/net_socket.s"
-	@echo "... base/read_config.o"
-	@echo "... base/read_config.i"
-	@echo "... base/read_config.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
