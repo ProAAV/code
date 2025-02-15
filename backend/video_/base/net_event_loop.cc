@@ -6,6 +6,7 @@
 #include<unistd.h>
 #include<string.h>
 #include<sys/ioctl.h>
+#include"http_layer.h"
 #include"common.h"
 void acceptCallback(int fd,EventLoop& evloop){
     std::cout<<"accept\n";
@@ -27,32 +28,44 @@ void acceptCallback(int fd,EventLoop& evloop){
 }
 
 void recvCallback(int fd,EventLoop& evloop){
+    /*正确的做法应当是通过获取content-length的方式来判断后续内容是否还要继续接收，从而决定注册EPOLLIN还是
+    EPOLLOUT*/
     char* recv_buffer=evloop.m_map[fd]->getReadBuffer();
     int current_pos=strlen(recv_buffer);
-    std::cout<<"current_pos:"<<current_pos<<"\n";
+    std::cout<<"current_pos:"<<current_pos<<'\n';
     if(RBUF_SIZE<current_pos){
         std::cout<<"buf is too small\n";
         return;
     }
+
+    
     int ret=recv(fd,recv_buffer+current_pos,RBUF_SIZE-current_pos,0);
+    HttpServer hserver;
+    hserver.http_parse_(recv_buffer);
+
     if(ret==0){
         close(fd);
         epoll_ctl(evloop.m_epollfd,EPOLL_CTL_DEL,fd,nullptr);
         evloop.m_map.erase(fd);
         return;
     }
-    int bytes_available;
-    ioctl(fd, FIONREAD, &bytes_available);
-    std::cout<<"bytes:"<<bytes_available<<'\n';
     std::cout<<"recv:"<<recv_buffer<<'\n';
-    std::cout<<"len:"<<strlen(recv_buffer);
+    current_pos=strlen(recv_buffer);
+    std::cout<<"current_pos:"<<current_pos<<'\n';
+    /*int bytes_available;
+    ioctl(fd, FIONREAD, &bytes_available);
+    std::cout<<"no read:"<<bytes_available<<'\n';
+    std::cout<<"recv:"<<recv_buffer<<'\n';
+    
     if(bytes_available<=0){
         //recv完毕以后该将fd的事件置为EPOLLOUT
+        std::cout<<"epollout\n";
         evloop.epollEventMod(fd,EPOLLOUT);
-    }
+    }*/
 }
 
 void sendCallback(int fd,EventLoop& evloop){
+    std::cout<<"sendcb\n";
     char* write_buffer=evloop.m_map[fd]->getWriteBuffer();
     memcpy(write_buffer,"hhh",sizeof("hhh"));
     int ret=send(fd,write_buffer,strlen(write_buffer),0);
@@ -65,6 +78,7 @@ void sendCallback(int fd,EventLoop& evloop){
     }
     //send完毕后设置为EPOLLIN
     evloop.epollEventMod(fd,EPOLLIN);
+    std::cout<<"sendcb over\n";
 }
 
 
@@ -102,7 +116,6 @@ void EventLoop::bindAddress(int sfd,int port){
     const char* ser_addr=m_conf_reader.confGetMap().at("server_address").c_str();
     server_addr.sin_addr.s_addr=inet_addr(ser_addr);
     bind(sfd,(struct sockaddr*)(&server_addr),sizeof(struct sockaddr_in));
-    std::cout<<"bind:"<<ser_addr<<" "<<port<<'\n';
 }
 void EventLoop::listenEvent(int sfd){
     listen(sfd,10);
@@ -110,6 +123,7 @@ void EventLoop::listenEvent(int sfd){
 void EventLoop::enterLoop(EventLoop& evloop){
     while(1){
         int nb_ready=epoll_wait(m_epollfd,m_epoll_events,EPOLL_EVENTS_MAX,-1);
+        std::cout<<"nready:"<<nb_ready<<'\n';
         if(nb_ready<0){
             if(errno==EBADF){
                 std::cout<<"wuxiao\n";
@@ -132,13 +146,15 @@ void EventLoop::enterLoop(EventLoop& evloop){
                 return;
             }
         }
-        
+        std::cout<<"1\n";
         if(nb_ready>0){
             for(unsigned i=0;i<nb_ready;i++){
                 if(m_epoll_events[i].events&EPOLLIN){
+                    std::cout<<"in\n";
                     m_map[m_epoll_events[i].data.fd]->getEpollInCb()(m_epoll_events[i].data.fd,evloop);
                 }
                 else if(m_epoll_events[i].events&EPOLLOUT){
+                    std::cout<<"out\n";
                     m_map[m_epoll_events[i].data.fd]->getEpollOutCb()(m_epoll_events[i].data.fd,evloop);
                 }
                 else if(m_epoll_events[i].events&EPOLLERR){
@@ -147,6 +163,7 @@ void EventLoop::enterLoop(EventLoop& evloop){
                 }
             }
         }
+        std::cout<<"2\n";
         
     }
 
@@ -182,10 +199,8 @@ std::vector<int> EventLoop::separate_ports(const std::string& ports,int nb_port)
         pos=ports.find(' ',start);
         std::string port=ports.substr(start,pos-start+1);
         start=pos+1;
-        std::cout<<"port:"<<port<<'\n';
         blankTrim(port);
         isNumber(port);
-        std::cout<<"size:"<<port.size()<<"\n";
         vec.push_back(std::stoi(port));
         if(pos==std::string::npos){
             break;

@@ -150,6 +150,60 @@ base/config_read.cc.s:
 	$(MAKE) -f CMakeFiles/video_server.dir/build.make CMakeFiles/video_server.dir/base/config_read.cc.s
 .PHONY : base/config_read.cc.s
 
+base/http_layer.o: base/http_layer.cc.o
+
+.PHONY : base/http_layer.o
+
+# target to build an object file
+base/http_layer.cc.o:
+	$(MAKE) -f CMakeFiles/video_server.dir/build.make CMakeFiles/video_server.dir/base/http_layer.cc.o
+.PHONY : base/http_layer.cc.o
+
+base/http_layer.i: base/http_layer.cc.i
+
+.PHONY : base/http_layer.i
+
+# target to preprocess a source file
+base/http_layer.cc.i:
+	$(MAKE) -f CMakeFiles/video_server.dir/build.make CMakeFiles/video_server.dir/base/http_layer.cc.i
+.PHONY : base/http_layer.cc.i
+
+base/http_layer.s: base/http_layer.cc.s
+
+.PHONY : base/http_layer.s
+
+# target to generate assembly for a file
+base/http_layer.cc.s:
+	$(MAKE) -f CMakeFiles/video_server.dir/build.make CMakeFiles/video_server.dir/base/http_layer.cc.s
+.PHONY : base/http_layer.cc.s
+
+base/mongoose.o: base/mongoose.c.o
+
+.PHONY : base/mongoose.o
+
+# target to build an object file
+base/mongoose.c.o:
+	$(MAKE) -f CMakeFiles/video_server.dir/build.make CMakeFiles/video_server.dir/base/mongoose.c.o
+.PHONY : base/mongoose.c.o
+
+base/mongoose.i: base/mongoose.c.i
+
+.PHONY : base/mongoose.i
+
+# target to preprocess a source file
+base/mongoose.c.i:
+	$(MAKE) -f CMakeFiles/video_server.dir/build.make CMakeFiles/video_server.dir/base/mongoose.c.i
+.PHONY : base/mongoose.c.i
+
+base/mongoose.s: base/mongoose.c.s
+
+.PHONY : base/mongoose.s
+
+# target to generate assembly for a file
+base/mongoose.c.s:
+	$(MAKE) -f CMakeFiles/video_server.dir/build.make CMakeFiles/video_server.dir/base/mongoose.c.s
+.PHONY : base/mongoose.c.s
+
 base/net_event_loop.o: base/net_event_loop.cc.o
 
 .PHONY : base/net_event_loop.o
@@ -243,6 +297,12 @@ help:
 	@echo "... base/config_read.o"
 	@echo "... base/config_read.i"
 	@echo "... base/config_read.s"
+	@echo "... base/http_layer.o"
+	@echo "... base/http_layer.i"
+	@echo "... base/http_layer.s"
+	@echo "... base/mongoose.o"
+	@echo "... base/mongoose.i"
+	@echo "... base/mongoose.s"
 	@echo "... base/net_event_loop.o"
 	@echo "... base/net_event_loop.i"
 	@echo "... base/net_event_loop.s"

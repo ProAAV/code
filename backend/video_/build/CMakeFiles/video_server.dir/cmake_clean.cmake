@@ -1,5 +1,7 @@
 file(REMOVE_RECURSE
   "CMakeFiles/video_server.dir/base/config_read.cc.o"
+  "CMakeFiles/video_server.dir/base/http_layer.cc.o"
+  "CMakeFiles/video_server.dir/base/mongoose.c.o"
   "CMakeFiles/video_server.dir/base/net_event_loop.cc.o"
   "CMakeFiles/video_server.dir/base/net_socket.cc.o"
   "CMakeFiles/video_server.dir/main.cc.o"
@@ -8,6 +10,6 @@ file(REMOVE_RECURSE
 )
 
 # Per-language clean rules from dependency scanning.
-foreach(lang CXX)
+foreach(lang C CXX)
   include(CMakeFiles/video_server.dir/cmake_clean_${lang}.cmake OPTIONAL)
 endforeach()
