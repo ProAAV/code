@@ -1,3 +1,0 @@
-/home/hcc/share/code/project/code/backend/video_/build/CMakeFiles/rebuild_cache.dir
-/home/hcc/share/code/project/code/backend/video_/build/CMakeFiles/edit_cache.dir
-/home/hcc/share/code/project/code/backend/video_/build/CMakeFiles/video_server.dir
