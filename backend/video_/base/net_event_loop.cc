@@ -30,44 +30,56 @@ void acceptCallback(int fd,EventLoop& evloop){
 void recvCallback(int fd,EventLoop& evloop){
     /*正确的做法应当是通过获取content-length的方式来判断后续内容是否还要继续接收，从而决定注册EPOLLIN还是
     EPOLLOUT*/
+    std::cout<<"enter recv\n";
     char* recv_buffer=evloop.m_map[fd]->getReadBuffer();
-    int current_pos=strlen(recv_buffer);
-    std::cout<<"current_pos:"<<current_pos<<'\n';
-    if(RBUF_SIZE<current_pos){
-        std::cout<<"buf is too small\n";
-        return;
-    }
-
-    
-    int ret=recv(fd,recv_buffer+current_pos,RBUF_SIZE-current_pos,0);
-    HttpServer hserver;
-    hserver.http_parse_(recv_buffer);
-
+    std::cout<<"11\n";
+    int ret=recv(fd,recv_buffer,RBUF_SIZE,0);
+    std::cout<<"first recv:"<<recv_buffer<<'\n';
     if(ret==0){
+        std::cout<<"fd disconnect!!!\n";
         close(fd);
         epoll_ctl(evloop.m_epollfd,EPOLL_CTL_DEL,fd,nullptr);
         evloop.m_map.erase(fd);
         return;
     }
-    std::cout<<"recv:"<<recv_buffer<<'\n';
-    current_pos=strlen(recv_buffer);
-    std::cout<<"current_pos:"<<current_pos<<'\n';
-    /*int bytes_available;
-    ioctl(fd, FIONREAD, &bytes_available);
-    std::cout<<"no read:"<<bytes_available<<'\n';
-    std::cout<<"recv:"<<recv_buffer<<'\n';
+    std::cout<<"ppp\n";
+    HttpServer hserver(recv_buffer);
+    std::string method=hserver.http_parse_method();
+    std::cout<<"klkl\n";
+    int content_length=hserver.http_get_content_length_from_request_header();
+    if(content_length+hserver.http_get_header_size()>RBUF_SIZE){
+        std::cout<<"rbuffer size is too small\n";
+        //不够直接断开此次连接
+        close(fd);
+        epoll_ctl(evloop.m_epollfd,EPOLL_CTL_DEL,fd,nullptr);
+        evloop.m_map.erase(fd);
+        return;
+    }
+    //做的是循环接收，条件是请求方法POST并且接收到的请求体大小小于请求头中内容长度
+
+    if(method=="POST"&&strlen(recv_buffer)-hserver.http_get_header_size()<content_length){
+        while(1){
+            int current_pos=strlen(recv_buffer);
+            recv(fd,recv_buffer+current_pos,RBUF_SIZE-current_pos,0);
+            if(strlen(recv_buffer)-hserver.http_get_header_size()==content_length){
+                
+                std::cout<<"break\n";
+                break;
+            }
+            std::cout<<"recv:"<<recv_buffer<<'\n';
+        }
+    }
+    //接下来是一次性接收完毕的情况要处理的工作
+    evloop.epollEventMod(fd,EPOLLOUT);
+
     
-    if(bytes_available<=0){
-        //recv完毕以后该将fd的事件置为EPOLLOUT
-        std::cout<<"epollout\n";
-        evloop.epollEventMod(fd,EPOLLOUT);
-    }*/
 }
 
 void sendCallback(int fd,EventLoop& evloop){
     std::cout<<"sendcb\n";
     char* write_buffer=evloop.m_map[fd]->getWriteBuffer();
-    memcpy(write_buffer,"hhh",sizeof("hhh"));
+    char* response=(char*)"HTTP/1.1 200 OK\nContent-Type: text/plain\nContent-Length: 13\n\nHello, World!";
+    memcpy(write_buffer,response,strlen(response));
     int ret=send(fd,write_buffer,strlen(write_buffer),0);
     if(ret==-1){
         std::cout<<"send failed\n";

@@ -8,6 +8,7 @@ CMakeFiles/video_server.dir/base/config_read.cc.o: ../base/common.h
 CMakeFiles/video_server.dir/base/config_read.cc.o: ../base/config_read.cc
 CMakeFiles/video_server.dir/base/config_read.cc.o: ../base/config_read.h
 
+CMakeFiles/video_server.dir/base/http_layer.cc.o: ../base/common.h
 CMakeFiles/video_server.dir/base/http_layer.cc.o: ../base/http_layer.cc
 CMakeFiles/video_server.dir/base/http_layer.cc.o: ../base/http_layer.h
 CMakeFiles/video_server.dir/base/http_layer.cc.o: ../base/mongoose.h

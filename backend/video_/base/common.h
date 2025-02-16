@@ -8,7 +8,10 @@ inline void isNumber(const std::string& str) {
     // 正则表达式匹配整数、浮点数和科学计数法
     std::regex pattern("^[-+]?([0-9]+([.][0-9]*)?|[.][0-9]+)([eE][-+]?[0-9]+)?$");
     if(!std::regex_match(str, pattern)){
+        std::cout<<"---------------------------\n";
         std::cout<<str<<"is not a number\n";
+        std::cout<<"---------------------------\n";
+
         exit(1);
     }
 }
