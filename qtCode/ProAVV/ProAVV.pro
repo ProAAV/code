@@ -1,4 +1,4 @@
-QT       += core gui multimediawidgets multimedia
+QT       += core gui multimediawidgets multimedia network
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -10,6 +10,7 @@ CONFIG += c++17
 
 SOURCES += \
     aav_main_view.cpp \
+    aav_networkmanager.cpp \
     aav_uploadfile.cpp \
     aav_uploadselect.cpp \
     aav_usrpage.cpp \
@@ -21,6 +22,7 @@ SOURCES += \
 
 HEADERS += \
     aav_main_view.h \
+    aav_networkmanager.h \
     aav_uploadfile.h \
     aav_uploadselect.h \
     aav_usrpage.h \

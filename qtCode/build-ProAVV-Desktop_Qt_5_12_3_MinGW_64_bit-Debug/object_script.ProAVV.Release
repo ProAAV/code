@@ -1,4 +1,5 @@
 release/aav_main_view.o
+release/aav_networkmanager.o
 release/aav_uploadfile.o
 release/aav_uploadselect.o
 release/aav_usrpage.o
@@ -8,6 +9,7 @@ release/aav_volumebutton.o
 release/aav_widgetvlume.o
 release/main.o
 release/moc_aav_main_view.o
+release/moc_aav_networkmanager.o
 release/moc_aav_uploadfile.o
 release/moc_aav_uploadselect.o
 release/moc_aav_usrpage.o

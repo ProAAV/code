@@ -2,6 +2,8 @@
 #include "ui_aav_uploadfile.h"
 #include<QDebug>
 #include<QPixmap>
+#include"aav_networkmanager.h"
+#include"aav_networkmanager.h"
 extern "C"{
     #include<libavcodec/avcodec.h>
     #include<libavformat/avformat.h>
@@ -9,7 +11,7 @@ extern "C"{
     #include<libswscale/swscale.h>
     #include <libavutil/imgutils.h>
 }
-UploadFile::UploadFile(QString file_path,QWidget *parent)
+UploadFile::UploadFile(QString& file_path,QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::UploadFile)
 {
@@ -23,6 +25,12 @@ UploadFile::UploadFile(QString file_path,QWidget *parent)
     //首先捕获一张封面
     captureAnPicture();
     //然后再上传视频文件和捕获的封面图片
+    sendVdoFile(file_path);
+}
+void UploadFile::sendVdoFile(const QString& file_path){
+    qDebug()<<"send";
+    NetWorkManager manager;
+    manager.http_upload_file(file_path,"http://192.168.208.128:8888/api/upload");
 
 }
 void UploadFile::captureAnPicture(){
