@@ -30,11 +30,10 @@ void acceptCallback(int fd,EventLoop& evloop){
 void recvCallback(int fd,EventLoop& evloop){
     /*正确的做法应当是通过获取content-length的方式来判断后续内容是否还要继续接收，从而决定注册EPOLLIN还是
     EPOLLOUT*/
-    std::cout<<"enter recv\n";
     char* recv_buffer=evloop.m_map[fd]->getReadBuffer();
-    std::cout<<"11\n";
     int ret=recv(fd,recv_buffer,RBUF_SIZE,0);
-    std::cout<<"first recv:"<<recv_buffer<<'\n';
+    std::cout<<"first recv1:"<<recv_buffer<<'\n';
+    std::cout<<"recv size:"<<strlen(recv_buffer)<<'\n';
     if(ret==0){
         std::cout<<"fd disconnect!!!\n";
         close(fd);
@@ -42,10 +41,8 @@ void recvCallback(int fd,EventLoop& evloop){
         evloop.m_map.erase(fd);
         return;
     }
-    std::cout<<"ppp\n";
     HttpServer hserver(recv_buffer);
     std::string method=hserver.http_parse_method();
-    std::cout<<"klkl\n";
     int content_length=hserver.http_get_content_length_from_request_header();
     if(content_length+hserver.http_get_header_size()>RBUF_SIZE){
         std::cout<<"rbuffer size is too small\n";
@@ -61,12 +58,11 @@ void recvCallback(int fd,EventLoop& evloop){
         while(1){
             int current_pos=strlen(recv_buffer);
             recv(fd,recv_buffer+current_pos,RBUF_SIZE-current_pos,0);
+            std::cout<<"recv:"<<recv_buffer<<'\n';
             if(strlen(recv_buffer)-hserver.http_get_header_size()==content_length){
-                
                 std::cout<<"break\n";
                 break;
             }
-            std::cout<<"recv:"<<recv_buffer<<'\n';
         }
     }
     //接下来是一次性接收完毕的情况要处理的工作
@@ -135,7 +131,6 @@ void EventLoop::listenEvent(int sfd){
 void EventLoop::enterLoop(EventLoop& evloop){
     while(1){
         int nb_ready=epoll_wait(m_epollfd,m_epoll_events,EPOLL_EVENTS_MAX,-1);
-        std::cout<<"nready:"<<nb_ready<<'\n';
         if(nb_ready<0){
             if(errno==EBADF){
                 std::cout<<"wuxiao\n";
@@ -158,15 +153,12 @@ void EventLoop::enterLoop(EventLoop& evloop){
                 return;
             }
         }
-        std::cout<<"1\n";
         if(nb_ready>0){
             for(unsigned i=0;i<nb_ready;i++){
                 if(m_epoll_events[i].events&EPOLLIN){
-                    std::cout<<"in\n";
                     m_map[m_epoll_events[i].data.fd]->getEpollInCb()(m_epoll_events[i].data.fd,evloop);
                 }
                 else if(m_epoll_events[i].events&EPOLLOUT){
-                    std::cout<<"out\n";
                     m_map[m_epoll_events[i].data.fd]->getEpollOutCb()(m_epoll_events[i].data.fd,evloop);
                 }
                 else if(m_epoll_events[i].events&EPOLLERR){
@@ -174,9 +166,7 @@ void EventLoop::enterLoop(EventLoop& evloop){
                     delete m_map[m_epoll_events[i].data.fd];
                 }
             }
-        }
-        std::cout<<"2\n";
-        
+        }        
     }
 
 }   
