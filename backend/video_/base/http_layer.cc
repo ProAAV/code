@@ -1,0 +1,58 @@
+#include"http_layer.h"
+#include"common.h"
+#include<string.h>
+#include<iostream>
+HttpServer::HttpServer(const char* msg):m_msg(msg){
+    if(!m_msg){
+        std::cout<<"m_msg is failed to init\n";
+    }
+    mg_http_parse(m_msg,strlen(m_msg),&m_http_msg);
+}
+HttpServer::~HttpServer()
+{
+
+}
+void HttpServer::http_parse_get(){
+
+}
+int HttpServer::http_get_content_length_from_request_header(){
+    struct mg_str* content_len=mg_http_get_header(&m_http_msg,"content-length");
+    std::string content_length(content_len->buf,content_len->len);
+    isNumber(content_length);
+    return std::stoi(content_length);
+}
+int HttpServer::http_get_header_size(){
+    std::string msg(m_msg);
+    int pos=msg.find("\r\n\r\n",0);
+    std::string header=msg.substr(0,pos+4);
+    return header.size();
+}
+std::string HttpServer::http_parse_method(){
+    std::cout<<"enter http_parse_method\n";
+    //如果mg_method没有找到方法的话，后续对他的操作可能会导致程序崩溃，所以要判断，但是程序中还有多处使用mongoose的地方并没有加以判断，后续要补上
+    
+    struct mg_str mg_method=m_http_msg.method;
+    std::cout<<"fgfg\n";
+    if(mg_method.buf==nullptr||mg_method.len==0){
+        std::cout<<"err\n";
+        return "";
+    }
+    std::string method(mg_method.buf,mg_method.len);
+    std::cout<<"body:"<<m_http_msg.body.buf<<"\n";
+    std::cout<<"method:"<<method<<'\n';
+    if(method=="GET"){
+        std::cout<<"GET method\n";
+        return "GET";
+    }
+    else if(method=="POST"){
+        std::cout<<"POST method\n";
+        return "POST";
+    }
+    else{
+        std::cout<<"unkown method was recv\n";
+        return "UNKOWN";
+    }
+    /*std::cout<<"-------------------------\n";
+    std::cout<<"oooooo:"<<std::string(http_msg.method.buf,http_msg.method.len)<<'\n';
+    std::cout<<"-------------------------\n";*/
+}
