@@ -123,6 +123,33 @@ video_server/fast:
 	$(MAKE) -f CMakeFiles/video_server.dir/build.make CMakeFiles/video_server.dir/build
 .PHONY : video_server/fast
 
+api/api_upload.o: api/api_upload.cc.o
+
+.PHONY : api/api_upload.o
+
+# target to build an object file
+api/api_upload.cc.o:
+	$(MAKE) -f CMakeFiles/video_server.dir/build.make CMakeFiles/video_server.dir/api/api_upload.cc.o
+.PHONY : api/api_upload.cc.o
+
+api/api_upload.i: api/api_upload.cc.i
+
+.PHONY : api/api_upload.i
+
+# target to preprocess a source file
+api/api_upload.cc.i:
+	$(MAKE) -f CMakeFiles/video_server.dir/build.make CMakeFiles/video_server.dir/api/api_upload.cc.i
+.PHONY : api/api_upload.cc.i
+
+api/api_upload.s: api/api_upload.cc.s
+
+.PHONY : api/api_upload.s
+
+# target to generate assembly for a file
+api/api_upload.cc.s:
+	$(MAKE) -f CMakeFiles/video_server.dir/build.make CMakeFiles/video_server.dir/api/api_upload.cc.s
+.PHONY : api/api_upload.cc.s
+
 base/config_read.o: base/config_read.cc.o
 
 .PHONY : base/config_read.o
@@ -149,6 +176,33 @@ base/config_read.s: base/config_read.cc.s
 base/config_read.cc.s:
 	$(MAKE) -f CMakeFiles/video_server.dir/build.make CMakeFiles/video_server.dir/base/config_read.cc.s
 .PHONY : base/config_read.cc.s
+
+base/file_info.o: base/file_info.cc.o
+
+.PHONY : base/file_info.o
+
+# target to build an object file
+base/file_info.cc.o:
+	$(MAKE) -f CMakeFiles/video_server.dir/build.make CMakeFiles/video_server.dir/base/file_info.cc.o
+.PHONY : base/file_info.cc.o
+
+base/file_info.i: base/file_info.cc.i
+
+.PHONY : base/file_info.i
+
+# target to preprocess a source file
+base/file_info.cc.i:
+	$(MAKE) -f CMakeFiles/video_server.dir/build.make CMakeFiles/video_server.dir/base/file_info.cc.i
+.PHONY : base/file_info.cc.i
+
+base/file_info.s: base/file_info.cc.s
+
+.PHONY : base/file_info.s
+
+# target to generate assembly for a file
+base/file_info.cc.s:
+	$(MAKE) -f CMakeFiles/video_server.dir/build.make CMakeFiles/video_server.dir/base/file_info.cc.s
+.PHONY : base/file_info.cc.s
 
 base/http_layer.o: base/http_layer.cc.o
 
@@ -294,9 +348,15 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... video_server"
+	@echo "... api/api_upload.o"
+	@echo "... api/api_upload.i"
+	@echo "... api/api_upload.s"
 	@echo "... base/config_read.o"
 	@echo "... base/config_read.i"
 	@echo "... base/config_read.s"
+	@echo "... base/file_info.o"
+	@echo "... base/file_info.i"
+	@echo "... base/file_info.s"
 	@echo "... base/http_layer.o"
 	@echo "... base/http_layer.i"
 	@echo "... base/http_layer.s"

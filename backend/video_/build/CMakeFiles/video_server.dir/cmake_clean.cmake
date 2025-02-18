@@ -1,5 +1,7 @@
 file(REMOVE_RECURSE
+  "CMakeFiles/video_server.dir/api/api_upload.cc.o"
   "CMakeFiles/video_server.dir/base/config_read.cc.o"
+  "CMakeFiles/video_server.dir/base/file_info.cc.o"
   "CMakeFiles/video_server.dir/base/http_layer.cc.o"
   "CMakeFiles/video_server.dir/base/mongoose.c.o"
   "CMakeFiles/video_server.dir/base/net_event_loop.cc.o"

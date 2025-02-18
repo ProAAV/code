@@ -1,5 +1,6 @@
 #include"http_layer.h"
 #include"common.h"
+#include"../api/api_upload.h"
 #include<string.h>
 #include<iostream>
 HttpServer::HttpServer(const char* msg):m_msg(msg){
@@ -12,11 +13,32 @@ HttpServer::~HttpServer()
 {
 
 }
+std::string HttpServer::http_get_url(){
+    struct mg_str url=m_http_msg.uri;
+    std::string real_url(url.buf,url.len);
+    std::cout<<"---------------------\n";
+    std::cout<<"url:"<<real_url<<"\n";
+    std::cout<<"---------------------\n";
+    return real_url;
+}
 void HttpServer::http_parse_get(){
-
+    std::string url=http_get_url();
+    
+}
+void HttpServer::http_parse_post(char* wbuf,int wbuf_sz){
+    //作为路由，url决定调用具体的函数
+    std::string url=http_get_url();
+    
+    if(url=="/api/upload"){
+        apiUpload(wbuf,wbuf_sz,m_http_msg);
+    }
 }
 int HttpServer::http_get_content_length_from_request_header(){
     struct mg_str* content_len=mg_http_get_header(&m_http_msg,"content-length");
+    if(!content_len){
+        std::cout<<"cant get content-len\n";
+        return 1;
+    }
     std::string content_length(content_len->buf,content_len->len);
     isNumber(content_length);
     return std::stoi(content_length);
@@ -49,7 +71,4 @@ std::string HttpServer::http_parse_method(){
         std::cout<<"unkown method was recv\n";
         return "UNKOWN";
     }
-    /*std::cout<<"-------------------------\n";
-    std::cout<<"oooooo:"<<std::string(http_msg.method.buf,http_msg.method.len)<<'\n';
-    std::cout<<"-------------------------\n";*/
 }

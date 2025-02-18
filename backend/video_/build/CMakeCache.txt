@@ -210,12 +210,6 @@ CMAKE_STRIP:FILEPATH=/usr/bin/strip
 CMAKE_VERBOSE_MAKEFILE:BOOL=FALSE
 
 //Value Computed by CMake
-Project_BINARY_DIR:STATIC=/home/hcc/share/code/project/code/backend/video_/build
-
-//Value Computed by CMake
-Project_SOURCE_DIR:STATIC=/home/hcc/share/code/project/code/backend/video_
-
-//Value Computed by CMake
 video_BINARY_DIR:STATIC=/home/hcc/share/code/project/code/backend/video_/build
 
 //Value Computed by CMake

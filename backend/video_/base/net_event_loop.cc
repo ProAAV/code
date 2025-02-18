@@ -65,6 +65,22 @@ void recvCallback(int fd,EventLoop& evloop){
             }
         }
     }
+    else{
+        std::cout<<"other method\n";
+    }
+    //到现在是彻底在这之前接受完数据了，接下来要做的就是对完整的http请求进行解析和路由并且回复
+    HttpServer http_layer(recv_buffer);
+    char* write_buffer=evloop.m_map[fd]->getWriteBuffer();
+    int wbuffer_size=evloop.m_map[fd]->getWriteBufferSize();
+    if(method=="GET"){
+        http_layer.http_parse_get();
+    }
+    else if(method=="POST"){
+        http_layer.http_parse_post(write_buffer,wbuffer_size);
+    }
+    else{
+        std::cout<<"no func can be called\n";
+    }
     //接下来是一次性接收完毕的情况要处理的工作
     evloop.epollEventMod(fd,EPOLLOUT);
 

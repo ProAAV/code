@@ -40,3 +40,9 @@ char* NetSocket::getReadBuffer(){
 char* NetSocket::getWriteBuffer(){
     return m_wbuf;
 }
+int NetSocket::getReadBufferSize(){
+    return RBUF_SIZE;
+}
+int NetSocket::getWriteBufferSize(){
+    return WBUF_SIZE;
+}

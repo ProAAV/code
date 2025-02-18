@@ -19,6 +19,8 @@ public:
     char* getReadBuffer();
     char* getWriteBuffer();
     int getSockFd();
+    int getReadBufferSize();
+    int getWriteBufferSize();
 private:
     int m_fd;
     void (* m_epoll_in_cb)(int fd,EventLoop& evloop);

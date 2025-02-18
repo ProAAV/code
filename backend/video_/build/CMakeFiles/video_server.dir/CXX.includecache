@@ -6,6 +6,28 @@
 
 #IncludeRegexTransform: 
 
+/home/hcc/share/code/project/code/backend/video_/api/api_upload.cc
+api_upload.h
+/home/hcc/share/code/project/code/backend/video_/api/api_upload.h
+iostream
+-
+libavcodec/avcodec.h
+-
+libavformat/avformat.h
+-
+libavutil/avutil.h
+-
+libswscale/swscale.h
+-
+
+/home/hcc/share/code/project/code/backend/video_/api/api_upload.h
+string
+-
+../base/file_info.h
+/home/hcc/share/code/project/code/backend/video_/base/file_info.h
+../base/mongoose.h
+/home/hcc/share/code/project/code/backend/video_/base/mongoose.h
+
 /home/hcc/share/code/project/code/backend/video_/base/common.h
 cstdlib
 -
@@ -18,10 +40,44 @@ regex
 unistd.h
 -
 
+/home/hcc/share/code/project/code/backend/video_/base/config_read.cc
+config_read.h
+/home/hcc/share/code/project/code/backend/video_/base/config_read.h
+common.h
+/home/hcc/share/code/project/code/backend/video_/base/common.h
+string.h
+-
+fstream
+-
+iostream
+-
+
 /home/hcc/share/code/project/code/backend/video_/base/config_read.h
 string
 -
 unordered_map
+-
+
+/home/hcc/share/code/project/code/backend/video_/base/file_info.cc
+file_info.h
+/home/hcc/share/code/project/code/backend/video_/base/file_info.h
+
+/home/hcc/share/code/project/code/backend/video_/base/file_info.h
+unordered_map
+-
+string
+-
+
+/home/hcc/share/code/project/code/backend/video_/base/http_layer.cc
+http_layer.h
+/home/hcc/share/code/project/code/backend/video_/base/http_layer.h
+common.h
+/home/hcc/share/code/project/code/backend/video_/base/common.h
+../api/api_upload.h
+/home/hcc/share/code/project/code/backend/video_/api/api_upload.h
+string.h
+-
+iostream
 -
 
 /home/hcc/share/code/project/code/backend/video_/base/http_layer.h
@@ -486,6 +542,14 @@ vector
 config_read.h
 /home/hcc/share/code/project/code/backend/video_/base/config_read.h
 
+/home/hcc/share/code/project/code/backend/video_/base/net_socket.cc
+net_socket.h
+/home/hcc/share/code/project/code/backend/video_/base/net_socket.h
+unistd.h
+-
+iostream
+-
+
 /home/hcc/share/code/project/code/backend/video_/base/net_socket.h
 arpa/inet.h
 -
@@ -493,4 +557,14 @@ sys/socket.h
 -
 netinet/in.h
 -
+
+/home/hcc/share/code/project/code/backend/video_/main.cc
+iostream
+-
+base/common.h
+/home/hcc/share/code/project/code/backend/video_/base/common.h
+base/net_event_loop.h
+/home/hcc/share/code/project/code/backend/video_/base/net_event_loop.h
+base/config_read.h
+/home/hcc/share/code/project/code/backend/video_/base/config_read.h
 

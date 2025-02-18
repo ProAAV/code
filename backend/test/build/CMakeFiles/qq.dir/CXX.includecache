@@ -1,0 +1,20 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/hcc/share/code/project/code/backend/test/main.cc
+libavcodec/avcodec.h
+-
+libavformat/avformat.h
+-
+libavutil/avutil.h
+-
+libswscale/swscale.h
+-
+iostream
+-
+

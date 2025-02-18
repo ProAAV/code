@@ -1,0 +1,1 @@
+/usr/bin/c++     CMakeFiles/qq.dir/main.cc.o  -o qq  -lavcodec -lavutil -lavformat -lswscale 
