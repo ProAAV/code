@@ -91,3 +91,11 @@ void NetWorkManager::http_upload_file(const QString& file_path,const QString &ur
 
 
 }
+
+void NetWorkManager::http_download_file()
+{
+    qDebug()<<"enter http_download_file ";
+    QNetworkRequest request(QUrl("http://192.168.208.128:8888/group1/M00/00/03/wKjQgGe15OyAFfdVABwtxOjf0Ks7803.ts"));
+    m_manager->get(request);
+
+}

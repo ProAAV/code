@@ -13,6 +13,7 @@ public:
     ~NetWorkManager();
     void httpRequest(const QString& method,const QString& url);
     void http_upload_file(const QString& file_path,const QString& url);
+    void http_download_file();
 private:
     QNetworkAccessManager* m_manager;
 signals:
