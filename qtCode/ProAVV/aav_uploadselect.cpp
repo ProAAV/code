@@ -18,7 +18,7 @@ UploadSelect::~UploadSelect()
 
 void UploadSelect::sloSelectFile()
 {
-    QString video_file_path=QFileDialog::getOpenFileName(this,"选择视频文件上传",QDir::currentPath(),"(*.mkv);;(*.mp4)");
+    QString video_file_path=QFileDialog::getOpenFileName(this,"选择视频文件上传",QDir::currentPath());
     m_wid_upload_file=new UploadFile(video_file_path);
     this->hide();
     m_wid_upload_file->show();

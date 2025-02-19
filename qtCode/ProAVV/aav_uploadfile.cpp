@@ -3,14 +3,14 @@
 #include<QDebug>
 #include<QPixmap>
 #include"aav_networkmanager.h"
-#include"aav_networkmanager.h"
 extern "C"{
     #include<libavcodec/avcodec.h>
     #include<libavformat/avformat.h>
     #include<libavutil/avutil.h>
     #include<libswscale/swscale.h>
-    #include <libavutil/imgutils.h>
+    #include<libavutil/imgutils.h>
 }
+
 UploadFile::UploadFile(QString& file_path,QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::UploadFile)
