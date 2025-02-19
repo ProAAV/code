@@ -4,6 +4,18 @@
 CMakeFiles/video_server.dir/base/mongoose.c.o: ../base/mongoose.c
 CMakeFiles/video_server.dir/base/mongoose.c.o: ../base/mongoose.h
 
+CMakeFiles/video_server.dir/api/api_upload.cc.o: /home/hcc/share/FastDfs/fastdfs/client/client_func.h
+CMakeFiles/video_server.dir/api/api_upload.cc.o: /home/hcc/share/FastDfs/fastdfs/client/client_global.h
+CMakeFiles/video_server.dir/api/api_upload.cc.o: /home/hcc/share/FastDfs/fastdfs/client/fdfs_client.h
+CMakeFiles/video_server.dir/api/api_upload.cc.o: /home/hcc/share/FastDfs/fastdfs/client/storage_client.h
+CMakeFiles/video_server.dir/api/api_upload.cc.o: /home/hcc/share/FastDfs/fastdfs/client/storage_client1.h
+CMakeFiles/video_server.dir/api/api_upload.cc.o: /home/hcc/share/FastDfs/fastdfs/client/tracker_client.h
+CMakeFiles/video_server.dir/api/api_upload.cc.o: /home/hcc/share/FastDfs/fastdfs/common/fdfs_define.h
+CMakeFiles/video_server.dir/api/api_upload.cc.o: /home/hcc/share/FastDfs/fastdfs/common/fdfs_global.h
+CMakeFiles/video_server.dir/api/api_upload.cc.o: /home/hcc/share/FastDfs/fastdfs/tracker/fdfs_server_id_func.h
+CMakeFiles/video_server.dir/api/api_upload.cc.o: /home/hcc/share/FastDfs/fastdfs/tracker/fdfs_shared_func.h
+CMakeFiles/video_server.dir/api/api_upload.cc.o: /home/hcc/share/FastDfs/fastdfs/tracker/tracker_proto.h
+CMakeFiles/video_server.dir/api/api_upload.cc.o: /home/hcc/share/FastDfs/fastdfs/tracker/tracker_types.h
 CMakeFiles/video_server.dir/api/api_upload.cc.o: ../api/api_upload.cc
 CMakeFiles/video_server.dir/api/api_upload.cc.o: ../api/api_upload.h
 CMakeFiles/video_server.dir/api/api_upload.cc.o: ../base/file_info.h

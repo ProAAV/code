@@ -11,6 +11,9 @@ set(CMAKE_C_COMPILER_ID "GNU")
 
 # The include file search paths:
 set(CMAKE_C_TARGET_INCLUDE_PATH
+  "/home/hcc/share/FastDfs/fastdfs/client"
+  "/home/hcc/share/FastDfs/fastdfs/tracker"
+  "/home/hcc/share/FastDfs/fastdfs/common"
   )
 set(CMAKE_DEPENDS_CHECK_CXX
   "/home/hcc/share/code/project/code/backend/video_/api/api_upload.cc" "/home/hcc/share/code/project/code/backend/video_/build/CMakeFiles/video_server.dir/api/api_upload.cc.o"
@@ -25,6 +28,9 @@ set(CMAKE_CXX_COMPILER_ID "GNU")
 
 # The include file search paths:
 set(CMAKE_CXX_TARGET_INCLUDE_PATH
+  "/home/hcc/share/FastDfs/fastdfs/client"
+  "/home/hcc/share/FastDfs/fastdfs/tracker"
+  "/home/hcc/share/FastDfs/fastdfs/common"
   )
 
 # Targets to which this target links.

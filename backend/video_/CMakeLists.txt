@@ -15,7 +15,11 @@ set(SOURCES
 )
 add_executable(video_server ${SOURCES})
 add_compile_options(-g)
-include_directories(/usr/include/x86_64-linux-gnu/)
+include_directories(/usr/include/x86_64-linux-gnu/
+                    /home/hcc/share/FastDfs/fastdfs/client
+                    /home/hcc/share/FastDfs/fastdfs/tracker/
+                    /home/hcc/share/FastDfs/fastdfs/common)
+
 target_link_directories(video_server PRIVATE /usr/lib/x86_64-linux-gnu)
-target_link_libraries(video_server PRIVATE avcodec avutil avformat swscale avdevice avfilter)
+target_link_libraries(video_server PRIVATE avcodec avutil avformat swscale avdevice avfilter fdfsclient)
 

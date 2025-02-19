@@ -7,11 +7,11 @@ C_FLAGS =
 
 C_DEFINES = 
 
-C_INCLUDES = 
+C_INCLUDES = -I/home/hcc/share/FastDfs/fastdfs/client -I/home/hcc/share/FastDfs/fastdfs/tracker -I/home/hcc/share/FastDfs/fastdfs/common 
 
 CXX_FLAGS =   -std=gnu++17
 
 CXX_DEFINES = 
 
-CXX_INCLUDES = 
+CXX_INCLUDES = -I/home/hcc/share/FastDfs/fastdfs/client -I/home/hcc/share/FastDfs/fastdfs/tracker -I/home/hcc/share/FastDfs/fastdfs/common 
 

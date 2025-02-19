@@ -5,6 +5,18 @@ CMakeFiles/video_server.dir/base/mongoose.c.o
  /home/hcc/share/code/project/code/backend/video_/base/mongoose.c
  /home/hcc/share/code/project/code/backend/video_/base/mongoose.h
 CMakeFiles/video_server.dir/api/api_upload.cc.o
+ /home/hcc/share/FastDfs/fastdfs/client/client_func.h
+ /home/hcc/share/FastDfs/fastdfs/client/client_global.h
+ /home/hcc/share/FastDfs/fastdfs/client/fdfs_client.h
+ /home/hcc/share/FastDfs/fastdfs/client/storage_client.h
+ /home/hcc/share/FastDfs/fastdfs/client/storage_client1.h
+ /home/hcc/share/FastDfs/fastdfs/client/tracker_client.h
+ /home/hcc/share/FastDfs/fastdfs/common/fdfs_define.h
+ /home/hcc/share/FastDfs/fastdfs/common/fdfs_global.h
+ /home/hcc/share/FastDfs/fastdfs/tracker/fdfs_server_id_func.h
+ /home/hcc/share/FastDfs/fastdfs/tracker/fdfs_shared_func.h
+ /home/hcc/share/FastDfs/fastdfs/tracker/tracker_proto.h
+ /home/hcc/share/FastDfs/fastdfs/tracker/tracker_types.h
  /home/hcc/share/code/project/code/backend/video_/api/api_upload.cc
  /home/hcc/share/code/project/code/backend/video_/api/api_upload.h
  /home/hcc/share/code/project/code/backend/video_/base/file_info.h
