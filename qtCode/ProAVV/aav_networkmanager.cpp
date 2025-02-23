@@ -6,10 +6,12 @@
 #include<QFileInfo>
 #include<QMimeDatabase>
 #include<QEventLoop>
+#include<QFile>
+#include<QBuffer>
 NetWorkManager::NetWorkManager(QObject *parent): QObject{parent}
 {
     m_manager=new QNetworkAccessManager(this);
-
+    m_buffer=nullptr;
 
 }
 
@@ -92,10 +94,37 @@ void NetWorkManager::http_upload_file(const QString& file_path,const QString &ur
 
 }
 
-void NetWorkManager::http_download_file()
+QBuffer* NetWorkManager::http_download_file()
 {
     qDebug()<<"enter http_download_file ";
     QNetworkRequest request(QUrl("http://192.168.208.128:8888/group1/M00/00/03/wKjQgGe15OyAFfdVABwtxOjf0Ks7803.ts"));
-    m_manager->get(request);
+    //QNetworkRequest request(QUrl("http://192.168.208.128:8888/"));
+    QNetworkReply* reply=m_manager->get(request);
+    QBuffer* buf=new QBuffer(this);
+    connect(reply,&QNetworkReply::finished,this,[this,reply](){
+        this->sloHandleDownloadData(reply);
+    });
+    QEventLoop loop;
+    connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
+    loop.exec();
+}
 
+QBuffer* NetWorkManager::sloHandleDownloadData(QNetworkReply* reply)
+{
+    qDebug()<<"enter sloHandleDownloadData";
+    QByteArray byte_array=reply->readAll();
+    /*QFile file("/home/hcc/ttttt.ts");
+    if(!file.open(QIODevice::WriteOnly)){
+        qDebug()<<"open file failed";
+    }
+    file.write(byte_array);
+    file.close();*/
+    QBuffer* buffer=new QBuffer(this);
+    buffer->setData(byte_array);
+    buffer->open(QIODevice::ReadOnly);
+    if(buffer){
+        qDebug()<<"sloHandleDownloadData buffer have";
+    }
+    //qDebug()<<"sloHandleDownloadData buffer:"<<buffer->buffer();
+    m_buffer=buffer;
 }

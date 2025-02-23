@@ -28,13 +28,13 @@ MainView::MainView(QWidget *parent)
         ui->stackw->setCurrentWidget(w2);
     });
 
-    VideoDisplay* vdis=new VideoDisplay();
+    /*VideoDisplay* vdis=new VideoDisplay();
 
     connect(ui->btn_video_disp,&QPushButton::clicked,ui->stackw,[=](){
         vdis->show();
 
 
-    });
+    });*/
 
     connect(ui->btn_upload,&QPushButton::clicked,this,[=](){
         m_wid_upload_select=new UploadSelect();
