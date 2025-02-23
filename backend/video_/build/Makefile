@@ -123,6 +123,33 @@ video_server/fast:
 	$(MAKE) -f CMakeFiles/video_server.dir/build.make CMakeFiles/video_server.dir/build
 .PHONY : video_server/fast
 
+api/api_files_list.o: api/api_files_list.cc.o
+
+.PHONY : api/api_files_list.o
+
+# target to build an object file
+api/api_files_list.cc.o:
+	$(MAKE) -f CMakeFiles/video_server.dir/build.make CMakeFiles/video_server.dir/api/api_files_list.cc.o
+.PHONY : api/api_files_list.cc.o
+
+api/api_files_list.i: api/api_files_list.cc.i
+
+.PHONY : api/api_files_list.i
+
+# target to preprocess a source file
+api/api_files_list.cc.i:
+	$(MAKE) -f CMakeFiles/video_server.dir/build.make CMakeFiles/video_server.dir/api/api_files_list.cc.i
+.PHONY : api/api_files_list.cc.i
+
+api/api_files_list.s: api/api_files_list.cc.s
+
+.PHONY : api/api_files_list.s
+
+# target to generate assembly for a file
+api/api_files_list.cc.s:
+	$(MAKE) -f CMakeFiles/video_server.dir/build.make CMakeFiles/video_server.dir/api/api_files_list.cc.s
+.PHONY : api/api_files_list.cc.s
+
 api/api_upload.o: api/api_upload.cc.o
 
 .PHONY : api/api_upload.o
@@ -375,6 +402,9 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... video_server"
+	@echo "... api/api_files_list.o"
+	@echo "... api/api_files_list.i"
+	@echo "... api/api_files_list.s"
 	@echo "... api/api_upload.o"
 	@echo "... api/api_upload.i"
 	@echo "... api/api_upload.s"

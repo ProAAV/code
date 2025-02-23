@@ -466,8 +466,8 @@ void uploadFileToFastdfs(CfileInfo& file_info,ConfRead& conf_reader){
     MysqlConn conn{};
     sprintf(query,"insert into `aav_file_info` (file_path,file_md5,file_size,file_title,file_playback_duration,file_image_path) value('%s','%s','%s','%s','%s','%s')",update_file_path.c_str(),update_file_md5.c_str(),update_file_size.c_str(),update_file_title.c_str(),update_file_playback_duration.c_str(),update_file_image_path.c_str());
     std::cout<<"query::::"<<query<<"\n";
-    std::string mysql_query(query);
-    conn.mysqlQuery(mysql_query);
+    
+    conn.mysqlQuery(query);
 
 
     tracker_close_connection(trackerServer);

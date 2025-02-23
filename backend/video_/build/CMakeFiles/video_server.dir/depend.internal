@@ -4,6 +4,13 @@
 CMakeFiles/video_server.dir/base/mongoose.c.o
  /home/hcc/share/code/project/code/backend/video_/base/mongoose.c
  /home/hcc/share/code/project/code/backend/video_/base/mongoose.h
+CMakeFiles/video_server.dir/api/api_files_list.cc.o
+ /home/hcc/share/code/project/code/backend/video_/api/api_files_list.cc
+ /home/hcc/share/code/project/code/backend/video_/api/api_files_list.h
+ /home/hcc/share/code/project/code/backend/video_/base/common.h
+ /home/hcc/share/code/project/code/backend/video_/base/config_read.h
+ /home/hcc/share/code/project/code/backend/video_/base/mongoose.h
+ /home/hcc/share/code/project/code/backend/video_/base/mysqlconn.h
 CMakeFiles/video_server.dir/api/api_upload.cc.o
  /home/hcc/share/FastDfs/fastdfs/client/client_func.h
  /home/hcc/share/FastDfs/fastdfs/client/client_global.h
@@ -31,6 +38,7 @@ CMakeFiles/video_server.dir/base/file_info.cc.o
  /home/hcc/share/code/project/code/backend/video_/base/file_info.cc
  /home/hcc/share/code/project/code/backend/video_/base/file_info.h
 CMakeFiles/video_server.dir/base/http_layer.cc.o
+ /home/hcc/share/code/project/code/backend/video_/api/api_files_list.h
  /home/hcc/share/code/project/code/backend/video_/api/api_upload.h
  /home/hcc/share/code/project/code/backend/video_/base/common.h
  /home/hcc/share/code/project/code/backend/video_/base/config_read.h

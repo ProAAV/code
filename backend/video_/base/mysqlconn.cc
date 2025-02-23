@@ -14,10 +14,10 @@ MysqlConn::MysqlConn():m_host(HOST),m_user(USER),m_passwd(PASSWD),m_db(DB),m_por
 
 }
 MysqlConn::~MysqlConn(){
-
+    mysql_close(m_conn);
 }
-MYSQL_RES* MysqlConn::mysqlQuery(const std::string& query){
-    if(mysql_query(m_conn,query.c_str())){
+MYSQL_RES* MysqlConn::mysqlQuery(char* query){
+    if(mysql_query(m_conn,query)){
         std::cout<<"mysql_query failed\n";
         std::cout<<mysql_error(m_conn)<<"\n";
         mysql_close(m_conn);

@@ -12,7 +12,7 @@ class MysqlConn{
 public:
     MysqlConn();
     ~MysqlConn();
-    MYSQL_RES* mysqlQuery(const std::string& query);
+    MYSQL_RES* mysqlQuery(char* query);
 private:
     MYSQL* m_conn;
     std::string m_host;

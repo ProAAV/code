@@ -72,11 +72,9 @@ void recvCallback(int fd,EventLoop& evloop){
     HttpServer http_layer(recv_buffer,evloop.m_conf_reader);
     char* write_buffer=evloop.m_map[fd]->getWriteBuffer();
     int wbuffer_size=evloop.m_map[fd]->getWriteBufferSize();
-    if(method=="GET"){
-        http_layer.http_parse_get();
-    }
-    else if(method=="POST"){
-        http_layer.http_parse_post(write_buffer,wbuffer_size);
+    
+    if(method=="POST"||method=="GET"){
+        http_layer.http_route_url(write_buffer,wbuffer_size);
     }
     else{
         std::cout<<"no func can be called\n";
