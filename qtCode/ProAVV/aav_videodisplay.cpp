@@ -1,5 +1,6 @@
 #include "aav_videodisplay.h"
 #include "ui_aav_videodisplay.h"
+#include"aav_networkmanager.h"
 #include<QMediaPlayer>
 #include<QVideoWidget>
 #include<QLabel>
@@ -99,7 +100,9 @@ VideoDisplay::VideoDisplay(QWidget *parent) :
     m_vlayout->addLayout(m_hlayout);
     ui->frame->setLayout(m_vlayout);
     //播放视频
-    m_player->setMedia(QUrl::fromLocalFile("/home/hcc/share/my.mkv"));
+    NetWorkManager manag;
+    manag.http_download_file();
+    //m_player->setMedia(QUrl::fromLocalFile("/home/hcc/share/my.mkv"));
     connect(m_player,&QMediaPlayer::mediaStatusChanged,this,&VideoDisplay::sloPreload);
     //m_player->play();
     //实现进度条与视频播放的同步
