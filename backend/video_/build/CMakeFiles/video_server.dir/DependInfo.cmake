@@ -20,6 +20,7 @@ set(CMAKE_DEPENDS_CHECK_CXX
   "/home/hcc/share/code/project/code/backend/video_/base/config_read.cc" "/home/hcc/share/code/project/code/backend/video_/build/CMakeFiles/video_server.dir/base/config_read.cc.o"
   "/home/hcc/share/code/project/code/backend/video_/base/file_info.cc" "/home/hcc/share/code/project/code/backend/video_/build/CMakeFiles/video_server.dir/base/file_info.cc.o"
   "/home/hcc/share/code/project/code/backend/video_/base/http_layer.cc" "/home/hcc/share/code/project/code/backend/video_/build/CMakeFiles/video_server.dir/base/http_layer.cc.o"
+  "/home/hcc/share/code/project/code/backend/video_/base/mysqlconn.cc" "/home/hcc/share/code/project/code/backend/video_/build/CMakeFiles/video_server.dir/base/mysqlconn.cc.o"
   "/home/hcc/share/code/project/code/backend/video_/base/net_event_loop.cc" "/home/hcc/share/code/project/code/backend/video_/build/CMakeFiles/video_server.dir/base/net_event_loop.cc.o"
   "/home/hcc/share/code/project/code/backend/video_/base/net_socket.cc" "/home/hcc/share/code/project/code/backend/video_/build/CMakeFiles/video_server.dir/base/net_socket.cc.o"
   "/home/hcc/share/code/project/code/backend/video_/main.cc" "/home/hcc/share/code/project/code/backend/video_/build/CMakeFiles/video_server.dir/main.cc.o"

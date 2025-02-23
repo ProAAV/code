@@ -56,17 +56,6 @@ CMAKE_BINARY_DIR = /home/hcc/share/code/project/code/backend/test/build
 #=============================================================================
 # Targets provided globally by CMake.
 
-# Special rule for the target edit_cache
-edit_cache:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
-	/usr/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
-.PHONY : edit_cache
-
-# Special rule for the target edit_cache
-edit_cache/fast: edit_cache
-
-.PHONY : edit_cache/fast
-
 # Special rule for the target rebuild_cache
 rebuild_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
@@ -77,6 +66,17 @@ rebuild_cache:
 rebuild_cache/fast: rebuild_cache
 
 .PHONY : rebuild_cache/fast
+
+# Special rule for the target edit_cache
+edit_cache:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
+	/usr/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
+.PHONY : edit_cache
+
+# Special rule for the target edit_cache
+edit_cache/fast: edit_cache
+
+.PHONY : edit_cache/fast
 
 # The main all target
 all: cmake_check_build_system
@@ -111,17 +111,17 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named qq
+# Target rules for targets named eee
 
 # Build rule for target.
-qq: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 qq
-.PHONY : qq
+eee: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 eee
+.PHONY : eee
 
 # fast build rule for target.
-qq/fast:
-	$(MAKE) -f CMakeFiles/qq.dir/build.make CMakeFiles/qq.dir/build
-.PHONY : qq/fast
+eee/fast:
+	$(MAKE) -f CMakeFiles/eee.dir/build.make CMakeFiles/eee.dir/build
+.PHONY : eee/fast
 
 main.o: main.cc.o
 
@@ -129,7 +129,7 @@ main.o: main.cc.o
 
 # target to build an object file
 main.cc.o:
-	$(MAKE) -f CMakeFiles/qq.dir/build.make CMakeFiles/qq.dir/main.cc.o
+	$(MAKE) -f CMakeFiles/eee.dir/build.make CMakeFiles/eee.dir/main.cc.o
 .PHONY : main.cc.o
 
 main.i: main.cc.i
@@ -138,7 +138,7 @@ main.i: main.cc.i
 
 # target to preprocess a source file
 main.cc.i:
-	$(MAKE) -f CMakeFiles/qq.dir/build.make CMakeFiles/qq.dir/main.cc.i
+	$(MAKE) -f CMakeFiles/eee.dir/build.make CMakeFiles/eee.dir/main.cc.i
 .PHONY : main.cc.i
 
 main.s: main.cc.s
@@ -147,7 +147,7 @@ main.s: main.cc.s
 
 # target to generate assembly for a file
 main.cc.s:
-	$(MAKE) -f CMakeFiles/qq.dir/build.make CMakeFiles/qq.dir/main.cc.s
+	$(MAKE) -f CMakeFiles/eee.dir/build.make CMakeFiles/eee.dir/main.cc.s
 .PHONY : main.cc.s
 
 # Help Target
@@ -156,9 +156,9 @@ help:
 	@echo "... all (the default if no target is provided)"
 	@echo "... clean"
 	@echo "... depend"
-	@echo "... edit_cache"
 	@echo "... rebuild_cache"
-	@echo "... qq"
+	@echo "... edit_cache"
+	@echo "... eee"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"

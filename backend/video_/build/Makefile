@@ -258,6 +258,33 @@ base/mongoose.c.s:
 	$(MAKE) -f CMakeFiles/video_server.dir/build.make CMakeFiles/video_server.dir/base/mongoose.c.s
 .PHONY : base/mongoose.c.s
 
+base/mysqlconn.o: base/mysqlconn.cc.o
+
+.PHONY : base/mysqlconn.o
+
+# target to build an object file
+base/mysqlconn.cc.o:
+	$(MAKE) -f CMakeFiles/video_server.dir/build.make CMakeFiles/video_server.dir/base/mysqlconn.cc.o
+.PHONY : base/mysqlconn.cc.o
+
+base/mysqlconn.i: base/mysqlconn.cc.i
+
+.PHONY : base/mysqlconn.i
+
+# target to preprocess a source file
+base/mysqlconn.cc.i:
+	$(MAKE) -f CMakeFiles/video_server.dir/build.make CMakeFiles/video_server.dir/base/mysqlconn.cc.i
+.PHONY : base/mysqlconn.cc.i
+
+base/mysqlconn.s: base/mysqlconn.cc.s
+
+.PHONY : base/mysqlconn.s
+
+# target to generate assembly for a file
+base/mysqlconn.cc.s:
+	$(MAKE) -f CMakeFiles/video_server.dir/build.make CMakeFiles/video_server.dir/base/mysqlconn.cc.s
+.PHONY : base/mysqlconn.cc.s
+
 base/net_event_loop.o: base/net_event_loop.cc.o
 
 .PHONY : base/net_event_loop.o
@@ -363,6 +390,9 @@ help:
 	@echo "... base/mongoose.o"
 	@echo "... base/mongoose.i"
 	@echo "... base/mongoose.s"
+	@echo "... base/mysqlconn.o"
+	@echo "... base/mysqlconn.i"
+	@echo "... base/mysqlconn.s"
 	@echo "... base/net_event_loop.o"
 	@echo "... base/net_event_loop.i"
 	@echo "... base/net_event_loop.s"

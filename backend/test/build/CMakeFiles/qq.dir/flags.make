@@ -6,5 +6,5 @@ CXX_FLAGS =   -g -std=gnu++17
 
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/usr/include/x86_64-linux-gnu/libavcodec -I/usr/include/x86_64-linux-gnu/libavutil -I/usr/include/x86_64-linux-gnu/libavformat -I/usr/include/x86_64-linux-gnu/libswscale 
+CXX_INCLUDES = 
 

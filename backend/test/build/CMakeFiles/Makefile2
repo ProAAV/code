@@ -53,7 +53,7 @@ CMAKE_BINARY_DIR = /home/hcc/share/code/project/code/backend/test/build
 # Directory level rules for the build root directory
 
 # The main recursive "all" target.
-all: CMakeFiles/qq.dir/all
+all: CMakeFiles/eee.dir/all
 
 .PHONY : all
 
@@ -63,36 +63,36 @@ preinstall:
 .PHONY : preinstall
 
 # The main recursive "clean" target.
-clean: CMakeFiles/qq.dir/clean
+clean: CMakeFiles/eee.dir/clean
 
 .PHONY : clean
 
 #=============================================================================
-# Target rules for target CMakeFiles/qq.dir
+# Target rules for target CMakeFiles/eee.dir
 
 # All Build rule for target.
-CMakeFiles/qq.dir/all:
-	$(MAKE) -f CMakeFiles/qq.dir/build.make CMakeFiles/qq.dir/depend
-	$(MAKE) -f CMakeFiles/qq.dir/build.make CMakeFiles/qq.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/hcc/share/code/project/code/backend/test/build/CMakeFiles --progress-num=1,2 "Built target qq"
-.PHONY : CMakeFiles/qq.dir/all
+CMakeFiles/eee.dir/all:
+	$(MAKE) -f CMakeFiles/eee.dir/build.make CMakeFiles/eee.dir/depend
+	$(MAKE) -f CMakeFiles/eee.dir/build.make CMakeFiles/eee.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/hcc/share/code/project/code/backend/test/build/CMakeFiles --progress-num=1,2 "Built target eee"
+.PHONY : CMakeFiles/eee.dir/all
 
 # Build rule for subdir invocation for target.
-CMakeFiles/qq.dir/rule: cmake_check_build_system
+CMakeFiles/eee.dir/rule: cmake_check_build_system
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/hcc/share/code/project/code/backend/test/build/CMakeFiles 2
-	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/qq.dir/all
+	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/eee.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/hcc/share/code/project/code/backend/test/build/CMakeFiles 0
-.PHONY : CMakeFiles/qq.dir/rule
+.PHONY : CMakeFiles/eee.dir/rule
 
 # Convenience name for target.
-qq: CMakeFiles/qq.dir/rule
+eee: CMakeFiles/eee.dir/rule
 
-.PHONY : qq
+.PHONY : eee
 
 # clean rule for target.
-CMakeFiles/qq.dir/clean:
-	$(MAKE) -f CMakeFiles/qq.dir/build.make CMakeFiles/qq.dir/clean
-.PHONY : CMakeFiles/qq.dir/clean
+CMakeFiles/eee.dir/clean:
+	$(MAKE) -f CMakeFiles/eee.dir/build.make CMakeFiles/eee.dir/clean
+.PHONY : CMakeFiles/eee.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.

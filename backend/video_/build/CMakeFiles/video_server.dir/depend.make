@@ -18,8 +18,10 @@ CMakeFiles/video_server.dir/api/api_upload.cc.o: /home/hcc/share/FastDfs/fastdfs
 CMakeFiles/video_server.dir/api/api_upload.cc.o: /home/hcc/share/FastDfs/fastdfs/tracker/tracker_types.h
 CMakeFiles/video_server.dir/api/api_upload.cc.o: ../api/api_upload.cc
 CMakeFiles/video_server.dir/api/api_upload.cc.o: ../api/api_upload.h
+CMakeFiles/video_server.dir/api/api_upload.cc.o: ../base/config_read.h
 CMakeFiles/video_server.dir/api/api_upload.cc.o: ../base/file_info.h
 CMakeFiles/video_server.dir/api/api_upload.cc.o: ../base/mongoose.h
+CMakeFiles/video_server.dir/api/api_upload.cc.o: ../base/mysqlconn.h
 
 CMakeFiles/video_server.dir/base/config_read.cc.o: ../base/common.h
 CMakeFiles/video_server.dir/base/config_read.cc.o: ../base/config_read.cc
@@ -30,10 +32,14 @@ CMakeFiles/video_server.dir/base/file_info.cc.o: ../base/file_info.h
 
 CMakeFiles/video_server.dir/base/http_layer.cc.o: ../api/api_upload.h
 CMakeFiles/video_server.dir/base/http_layer.cc.o: ../base/common.h
+CMakeFiles/video_server.dir/base/http_layer.cc.o: ../base/config_read.h
 CMakeFiles/video_server.dir/base/http_layer.cc.o: ../base/file_info.h
 CMakeFiles/video_server.dir/base/http_layer.cc.o: ../base/http_layer.cc
 CMakeFiles/video_server.dir/base/http_layer.cc.o: ../base/http_layer.h
 CMakeFiles/video_server.dir/base/http_layer.cc.o: ../base/mongoose.h
+
+CMakeFiles/video_server.dir/base/mysqlconn.cc.o: ../base/mysqlconn.cc
+CMakeFiles/video_server.dir/base/mysqlconn.cc.o: ../base/mysqlconn.h
 
 CMakeFiles/video_server.dir/base/net_event_loop.cc.o: ../base/common.h
 CMakeFiles/video_server.dir/base/net_event_loop.cc.o: ../base/config_read.h

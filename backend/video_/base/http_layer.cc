@@ -3,7 +3,7 @@
 #include"../api/api_upload.h"
 #include<string.h>
 #include<iostream>
-HttpServer::HttpServer(const char* msg):m_msg(msg){
+HttpServer::HttpServer(const char* msg,ConfRead& conf_reader):m_msg(msg),m_conf_reader(conf_reader){
     if(!m_msg){
         std::cout<<"m_msg is failed to init\n";
     }
@@ -30,7 +30,7 @@ void HttpServer::http_parse_post(char* wbuf,int wbuf_sz){
     std::string url=http_get_url();
     
     if(url=="/api/upload"){
-        apiUpload(wbuf,wbuf_sz,m_http_msg);
+        apiUpload(wbuf,wbuf_sz,m_http_msg,m_conf_reader);
     }
 }
 int HttpServer::http_get_content_length_from_request_header(){
