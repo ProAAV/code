@@ -100,11 +100,12 @@ VideoDisplay::VideoDisplay(QWidget *parent) :
     m_vlayout->addLayout(m_hlayout);
     ui->frame->setLayout(m_vlayout);
     //播放视频
-    NetWorkManager manag;
-    manag.http_download_file();
-    //m_player->setMedia(QUrl::fromLocalFile("/home/hcc/share/my.mkv"));
+    //通过请求到ts视频文件的m3u8文件列表来实现QMediaPlayer配合m3u8文件来播放连续的ts视频文件
+    QUrl url("http://192.168.208.128:8888/group1/M00/00/00/wKjQgGe59q6Ab91jAAAE_cVFw6s72.m3u8");
+    m_player->setMedia(QMediaContent(url));
+
     connect(m_player,&QMediaPlayer::mediaStatusChanged,this,&VideoDisplay::sloPreload);
-    //m_player->play();
+
     //实现进度条与视频播放的同步
     connect(m_player,&QMediaPlayer::durationChanged,this,&VideoDisplay::sloSetSliderDura);
     connect(m_player,&QMediaPlayer::positionChanged,this,&VideoDisplay::sloSetSliderPos);
