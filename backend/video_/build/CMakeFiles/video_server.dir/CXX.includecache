@@ -127,10 +127,20 @@ api_upload.h
 /home/hcc/share/code/project/code/backend/video_/api/api_upload.h
 iostream
 -
+stdlib.h
+-
+string.h
+-
+fstream
+-
 fdfs_client.h
 /home/hcc/share/code/project/code/backend/video_/api/fdfs_client.h
 tracker_client.h
 /home/hcc/share/code/project/code/backend/video_/api/tracker_client.h
+../base/config_read.h
+/home/hcc/share/code/project/code/backend/video_/base/config_read.h
+../base/mysqlconn.h
+/home/hcc/share/code/project/code/backend/video_/base/mysqlconn.h
 libavcodec/avcodec.h
 -
 libavformat/avformat.h
@@ -143,14 +153,28 @@ libavdevice/avdevice.h
 -
 libavfilter/avfilter.h
 -
+libavutil/imgutils.h
+-
+mysql/mysql.h
+-
 
 /home/hcc/share/code/project/code/backend/video_/api/api_upload.h
 string
 -
+vector
+-
 ../base/file_info.h
 /home/hcc/share/code/project/code/backend/video_/base/file_info.h
+../base/config_read.h
+/home/hcc/share/code/project/code/backend/video_/base/config_read.h
 ../base/mongoose.h
 /home/hcc/share/code/project/code/backend/video_/base/mongoose.h
+
+/home/hcc/share/code/project/code/backend/video_/base/config_read.h
+string
+-
+unordered_map
+-
 
 /home/hcc/share/code/project/code/backend/video_/base/file_info.h
 unordered_map
@@ -579,4 +603,10 @@ Driver_ETH_MAC.h
 /home/hcc/share/code/project/code/backend/video_/base/Driver_ETH_MAC.h
 Driver_ETH_PHY.h
 /home/hcc/share/code/project/code/backend/video_/base/Driver_ETH_PHY.h
+
+/home/hcc/share/code/project/code/backend/video_/base/mysqlconn.h
+string
+-
+mysql/mysql.h
+-
 

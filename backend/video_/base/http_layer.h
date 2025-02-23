@@ -1,11 +1,12 @@
 #pragma once
 #include<string>
+#include"config_read.h"
 extern "C"{
     #include"mongoose.h"
 }
 class HttpServer{
 public:
-    HttpServer(const char* msg);
+    HttpServer(const char* msg,ConfRead& conf_reader);
     ~HttpServer();
     std::string http_parse_method();
     void http_parse_get();
@@ -16,4 +17,5 @@ public:
 private:
     const char* m_msg;
     struct mg_http_message m_http_msg;
+    ConfRead m_conf_reader;
 };

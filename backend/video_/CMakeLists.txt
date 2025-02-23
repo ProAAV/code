@@ -12,6 +12,7 @@ set(SOURCES
     base/http_layer.cc
     api/api_upload.cc
     base/file_info.cc
+    base/mysqlconn.cc
 )
 add_executable(video_server ${SOURCES})
 add_compile_options(-g)
@@ -21,5 +22,5 @@ include_directories(/usr/include/x86_64-linux-gnu/
                     /home/hcc/share/FastDfs/fastdfs/common)
 
 target_link_directories(video_server PRIVATE /usr/lib/x86_64-linux-gnu)
-target_link_libraries(video_server PRIVATE avcodec avutil avformat swscale avdevice avfilter fdfsclient)
+target_link_libraries(video_server PRIVATE avcodec avutil avformat swscale avdevice avfilter fdfsclient mysqlclient)
 

@@ -41,7 +41,7 @@ void recvCallback(int fd,EventLoop& evloop){
         evloop.m_map.erase(fd);
         return;
     }
-    HttpServer hserver(recv_buffer);
+    HttpServer hserver(recv_buffer,evloop.m_conf_reader);
     std::string method=hserver.http_parse_method();
     int content_length=hserver.http_get_content_length_from_request_header();
     if(content_length+hserver.http_get_header_size()>RBUF_SIZE){
@@ -69,7 +69,7 @@ void recvCallback(int fd,EventLoop& evloop){
         std::cout<<"other method\n";
     }
     //到现在是彻底在这之前接受完数据了，接下来要做的就是对完整的http请求进行解析和路由并且回复
-    HttpServer http_layer(recv_buffer);
+    HttpServer http_layer(recv_buffer,evloop.m_conf_reader);
     char* write_buffer=evloop.m_map[fd]->getWriteBuffer();
     int wbuffer_size=evloop.m_map[fd]->getWriteBufferSize();
     if(method=="GET"){
