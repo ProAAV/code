@@ -12,8 +12,7 @@
 #include<QVariantList>
 
 VideoDisplay::VideoDisplay(QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::VideoDisplay)
+    QWidget(parent),ui(new Ui::VideoDisplay),m_file_path("")
 {
     ui->setupUi(this);
     m_cnt_pause_player=0;
@@ -99,12 +98,17 @@ VideoDisplay::VideoDisplay(QWidget *parent) :
     m_vlayout->addLayout(hlayout_slider);
     m_vlayout->addLayout(m_hlayout);
     ui->frame->setLayout(m_vlayout);
-    //播放视频
+    /*//播放视频
     //通过请求到ts视频文件的m3u8文件列表来实现QMediaPlayer配合m3u8文件来播放连续的ts视频文件
-    QUrl url("http://192.168.208.128:8888/group1/M00/00/00/wKjQgGe59q6Ab91jAAAE_cVFw6s72.m3u8");
+    //在这里videodisplay先被初始化也就是说先使用m_file_path开始了，只不过还没有show出来，但是这时候m_file_path还没有被设置
+    if(m_file_path==""){
+        qDebug()<<"file_path is invalid null";
+        return;
+    }
+    QUrl url(m_file_path);
     m_player->setMedia(QMediaContent(url));
 
-    connect(m_player,&QMediaPlayer::mediaStatusChanged,this,&VideoDisplay::sloPreload);
+    connect(m_player,&QMediaPlayer::mediaStatusChanged,this,&VideoDisplay::sloPreload);*/
 
     //实现进度条与视频播放的同步
     connect(m_player,&QMediaPlayer::durationChanged,this,&VideoDisplay::sloSetSliderDura);
@@ -154,6 +158,26 @@ QString VideoDisplay::integraTime(qint64 tim){
     }
     QString str_duration=str_h+":"+str_m+":"+str_s;
     return str_duration;
+}
+
+void VideoDisplay::setVideoFilePath(QString &file_path)
+{
+    m_file_path=file_path;
+}
+
+void VideoDisplay::play()
+{
+    //播放视频
+    //通过请求到ts视频文件的m3u8文件列表来实现QMediaPlayer配合m3u8文件来播放连续的ts视频文件
+    //在这里videodisplay先被初始化也就是说先使用m_file_path开始了，只不过还没有show出来，但是这时候m_file_path还没有被设置
+    if(m_file_path==""){
+        qDebug()<<"file_path is invalid null";
+        return;
+    }
+    QUrl url(m_file_path);
+    m_player->setMedia(QMediaContent(url));
+
+    connect(m_player,&QMediaPlayer::mediaStatusChanged,this,&VideoDisplay::sloPreload);
 }
 void VideoDisplay::updatePresentTimeLab(qint64 tim){
     m_lab_present_time->setText(integraTime(tim));

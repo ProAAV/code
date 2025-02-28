@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>UploadFile</class>
- <widget class="QWidget" name="UploadFile">
+ <class>VideoCoverWidget</class>
+ <widget class="QWidget" name="VideoCoverWidget">
   <property name="geometry">
    <rect>
     <x>0</x>

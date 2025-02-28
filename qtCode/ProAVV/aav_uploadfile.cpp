@@ -2,6 +2,11 @@
 #include "ui_aav_uploadfile.h"
 #include<QDebug>
 #include<QPixmap>
+#include<QPushButton>
+#include<QLabel>
+#include<QLineEdit>
+#include<QHBoxLayout>
+#include<QVBoxLayout>
 #include"aav_networkmanager.h"
 extern "C"{
     #include<libavcodec/avcodec.h>
@@ -17,21 +22,77 @@ UploadFile::UploadFile(QString& file_path,QWidget *parent)
 {
     ui->setupUi(this);
     qDebug()<<"hhh";
+
     if(file_path.isEmpty()){
         qDebug()<<"file_path is null";
         return;
     }
-    m_file_path=file_path;
+    //设计上传视频文件窗口
+    QLineEdit* line_edit=new QLineEdit(this);
+
+    QPushButton* btn_commit=new QPushButton(this);
+    btn_commit->setText("上传");
+    QVBoxLayout* vlayout=new QVBoxLayout();
+    vlayout->addWidget(line_edit);
+    vlayout->addWidget(btn_commit);
+    this->setLayout(vlayout);
+
+    connect(btn_commit,&QPushButton::clicked,this,[=](){
+        //获取用户输入的上传简介/标题
+        QString file_title=line_edit->text();
+
+        m_file_path=file_path;
+        //首先捕获一张封面
+        captureAnPicture();
+        //获取到音视频播放时长
+        double file_playback_duration=getVideoFileDuration();
+        //然后再上传视频文件和捕获的封面图片
+        sendVdoFile(file_title,file_playback_duration);
+    });
+
+    /*m_file_path=file_path;
     //首先捕获一张封面
     captureAnPicture();
     //然后再上传视频文件和捕获的封面图片
-    sendVdoFile(file_path);
+    sendVdoFile(file_path);*/
 }
-void UploadFile::sendVdoFile(const QString& file_path){
+void UploadFile::sendVdoFile(QString& file_title,double file_playback_duration){
     qDebug()<<"send";
     NetWorkManager manager;
-    manager.http_upload_file(file_path,"http://192.168.208.128:8888/api/upload");
+    manager.http_upload_file(file_playback_duration,file_title,m_file_path,"http://192.168.208.128:8888/api/upload");
 
+}
+
+double UploadFile::getVideoFileDuration()
+{
+        AVFormatContext *fmt_ctx = nullptr;
+
+        // 打开音视频文件
+        if (avformat_open_input(&fmt_ctx, m_file_path.toUtf8().constData(), nullptr, nullptr) != 0) {
+            qDebug()<<"open file failed";
+            return 1;
+        }
+
+        // 获取流信息
+        if (avformat_find_stream_info(fmt_ctx, nullptr) < 0) {
+            qDebug()<<"can not get stream info";
+            avformat_close_input(&fmt_ctx);
+            return 1;
+        }
+
+        // 获取总时长（单位：微秒）
+        double durationInSeconds=0.0;
+        int64_t duration = fmt_ctx->duration;
+        if (duration == AV_NOPTS_VALUE) {
+            qDebug()<<"duration is failed to get";
+        } else {
+            // 转换为秒
+            durationInSeconds = duration / (double)AV_TIME_BASE;
+        }
+
+        // 释放资源
+        avformat_close_input(&fmt_ctx);
+        return durationInSeconds;
 }
 void UploadFile::captureAnPicture(){
     AVFormatContext* format_context=nullptr;

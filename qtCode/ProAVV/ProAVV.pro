@@ -14,6 +14,7 @@ SOURCES += \
     aav_uploadfile.cpp \
     aav_uploadselect.cpp \
     aav_usrpage.cpp \
+    aav_videocoverwidget.cpp \
     aav_videodisplay.cpp \
     aav_videolist.cpp \
     aav_volumebutton.cpp \
@@ -26,6 +27,7 @@ HEADERS += \
     aav_uploadfile.h \
     aav_uploadselect.h \
     aav_usrpage.h \
+    aav_videocoverwidget.h \
     aav_videodisplay.h \
     aav_videolist.h \
     aav_volumebutton.h \
@@ -36,6 +38,7 @@ FORMS += \
     aav_uploadfile.ui \
     aav_uploadselect.ui \
     aav_usrpage.ui \
+    aav_videocoverwidget.ui \
     aav_videodisplay.ui \
     aav_videolist.ui
 

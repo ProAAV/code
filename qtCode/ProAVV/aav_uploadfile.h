@@ -17,7 +17,8 @@ public:
     explicit UploadFile(QString& file_path,QWidget *parent = nullptr);
     ~UploadFile();
     void captureAnPicture();
-    void sendVdoFile(const QString& file_path);
+    void sendVdoFile(QString& file_title,double file_playback_duration);
+    double getVideoFileDuration();
 private:
     Ui::UploadFile *ui;
     QString m_file_path;

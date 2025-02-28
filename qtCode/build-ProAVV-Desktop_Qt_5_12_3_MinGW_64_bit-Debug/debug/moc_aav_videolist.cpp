@@ -21,8 +21,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_VideoList_t {
-    QByteArrayData data[1];
-    char stringdata0[10];
+    QByteArrayData data[5];
+    char stringdata0[49];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -31,10 +31,15 @@ struct qt_meta_stringdata_VideoList_t {
     )
 static const qt_meta_stringdata_VideoList_t qt_meta_stringdata_VideoList = {
     {
-QT_MOC_LITERAL(0, 0, 9) // "VideoList"
+QT_MOC_LITERAL(0, 0, 9), // "VideoList"
+QT_MOC_LITERAL(1, 10, 16), // "sloShowFilesInfo"
+QT_MOC_LITERAL(2, 27, 0), // ""
+QT_MOC_LITERAL(3, 28, 14), // "QNetworkReply*"
+QT_MOC_LITERAL(4, 43, 5) // "reply"
 
     },
-    "VideoList"
+    "VideoList\0sloShowFilesInfo\0\0QNetworkReply*\0"
+    "reply"
 };
 #undef QT_MOC_LITERAL
 
@@ -44,22 +49,43 @@ static const uint qt_meta_data_VideoList[] = {
        8,       // revision
        0,       // classname
        0,    0, // classinfo
-       0,    0, // methods
+       1,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
        0,       // signalCount
 
+ // slots: name, argc, parameters, tag, flags
+       1,    1,   19,    2, 0x0a /* Public */,
+
+ // slots: parameters
+    QMetaType::Void, 0x80000000 | 3,    4,
+
        0        // eod
 };
 
 void VideoList::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
 {
-    Q_UNUSED(_o);
-    Q_UNUSED(_id);
-    Q_UNUSED(_c);
-    Q_UNUSED(_a);
+    if (_c == QMetaObject::InvokeMetaMethod) {
+        auto *_t = static_cast<VideoList *>(_o);
+        Q_UNUSED(_t)
+        switch (_id) {
+        case 0: _t->sloShowFilesInfo((*reinterpret_cast< QNetworkReply*(*)>(_a[1]))); break;
+        default: ;
+        }
+    } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
+        switch (_id) {
+        default: *reinterpret_cast<int*>(_a[0]) = -1; break;
+        case 0:
+            switch (*reinterpret_cast<int*>(_a[1])) {
+            default: *reinterpret_cast<int*>(_a[0]) = -1; break;
+            case 0:
+                *reinterpret_cast<int*>(_a[0]) = qRegisterMetaType< QNetworkReply* >(); break;
+            }
+            break;
+        }
+    }
 }
 
 QT_INIT_METAOBJECT const QMetaObject VideoList::staticMetaObject = { {
@@ -88,6 +114,17 @@ void *VideoList::qt_metacast(const char *_clname)
 int VideoList::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 {
     _id = QWidget::qt_metacall(_c, _id, _a);
+    if (_id < 0)
+        return _id;
+    if (_c == QMetaObject::InvokeMetaMethod) {
+        if (_id < 1)
+            qt_static_metacall(this, _c, _id, _a);
+        _id -= 1;
+    } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
+        if (_id < 1)
+            qt_static_metacall(this, _c, _id, _a);
+        _id -= 1;
+    }
     return _id;
 }
 QT_WARNING_POP

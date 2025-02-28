@@ -8,11 +8,12 @@
 #include<QEventLoop>
 #include<QFile>
 #include<QBuffer>
+
 NetWorkManager::NetWorkManager(QObject *parent): QObject{parent}
 {
     m_manager=new QNetworkAccessManager(this);
     m_buffer=nullptr;
-
+    m_files_info_reply=nullptr;
 }
 
 NetWorkManager::~NetWorkManager()
@@ -26,7 +27,7 @@ void NetWorkManager::httpRequest(const QString& method,const QString& url)
 
 }
 
-void NetWorkManager::http_upload_file(const QString& file_path,const QString &url)
+void NetWorkManager::http_upload_file(double file_playback_duration,QString& file_title,const QString& file_path,const QString &url)
 {
     //nginx_upload_module对于文件上传时http请求头的content-type有着严格的约束，必须指定boundary
     qDebug()<<"enter http_upload_file";
@@ -67,9 +68,38 @@ void NetWorkManager::http_upload_file(const QString& file_path,const QString &ur
     // 将 `file_content_type` 字段添加到多部分对象中
     multiPart->append(contentTypePart);
 
+    // 创建一个 `username` 字段部分
+    QHttpPart userNamePart;
+    userNamePart.setHeader(QNetworkRequest::ContentDispositionHeader, QVariant("form-data; name=\"username\""));
+    userNamePart.setBody("hcc");
+
+    // 将 `username` 字段添加到多部分对象中
+    multiPart->append(userNamePart);
+
+
+    // 创建一个 `file_title` 字段部分
+    QHttpPart fileTitlePart;
+    fileTitlePart.setHeader(QNetworkRequest::ContentDispositionHeader, QVariant("form-data; name=\"file_title\""));
+    fileTitlePart.setBody(file_title.toUtf8().data());
+
+    // 将 `file_title` 字段添加到多部分对象中
+    multiPart->append(fileTitlePart);
+
+
+
+    // 创建一个 `file_playback_duration` 字段部分
+    QHttpPart filePlayBackDurationPart;
+    filePlayBackDurationPart.setHeader(QNetworkRequest::ContentDispositionHeader, QVariant("form-data; name=\"file_playback_duration\""));
+    QString s_duration=QString::number(file_playback_duration);
+    filePlayBackDurationPart.setBody(s_duration.toUtf8().data());
+
+    // 将 `file_title` 字段添加到多部分对象中
+    multiPart->append(filePlayBackDurationPart);
+
     // 创建请求
     QNetworkRequest request(url);
-
+    qDebug()<<"url:"<<url;
+    qDebug()<<"file_path:"<<file_path;
     // 设置 Content-Type 头为 multipart/form-data
     request.setHeader(QNetworkRequest::ContentTypeHeader, "multipart/form-data; boundary=" + boundary);
 
@@ -109,6 +139,45 @@ QBuffer* NetWorkManager::http_download_file()
     loop.exec();
 }
 
+QNetworkReply* NetWorkManager::http_get_files_info()
+{
+    QString s="http://192.168.208.128:8888/api/filesList?files=1&strategy=random";
+    QUrl url(s);
+    QNetworkRequest request(url);
+    qDebug()<<"enter  http_get_files_info";
+    QNetworkReply* reply=m_manager->get(request);
+    QEventLoop loop;
+    connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
+    loop.exec();
+    //qDebug()<<"yyyy:"<<reply->readAll();
+    return reply;
+}
+
+QNetworkReply *NetWorkManager::getFilesInfoReply()
+{
+    if(m_files_info_reply==nullptr){
+        qDebug()<<"getFilesInfoReply return null";
+        return nullptr;
+    }
+     qDebug()<<"enter  getFilesInfoReply";
+    return m_files_info_reply;
+}
+
+QNetworkReply *NetWorkManager::http_get_img_cover(QString& file_img_path)
+{
+    QString s=file_img_path;
+    QUrl url(s);
+    QNetworkRequest request(url);
+    qDebug()<<"enter  http_get_img_cover";
+    QNetworkReply* reply=m_manager->get(request);
+    QEventLoop loop;
+    connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
+    loop.exec();
+    return reply;
+}
+
+
+
 QBuffer* NetWorkManager::sloHandleDownloadData(QNetworkReply* reply)
 {
     qDebug()<<"enter sloHandleDownloadData";
@@ -127,4 +196,26 @@ QBuffer* NetWorkManager::sloHandleDownloadData(QNetworkReply* reply)
     }
     //qDebug()<<"sloHandleDownloadData buffer:"<<buffer->buffer();
     m_buffer=buffer;
+}
+
+QBuffer *NetWorkManager::sloHandleVideosInfo(QNetworkReply *reply)
+{
+    if(reply->error()==QNetworkReply::NoError){
+        qDebug()<<"error";
+        return nullptr;
+    }
+    m_files_info_reply=reply;
+    qDebug()<<"enter  sloHandleVideosInfo";
+    /*QByteArray byte_array=reply->readAll();
+    QJsonDocument json_docm=QJsonDocument::fromJson(byte_array);
+    if(json_docm.isNull()){
+        qDebug()<<"json document is null";
+        return nullptr;
+    }
+    QJsonObject obj_root=json_docm.object();
+    QString status=obj_root.value("status").toString();
+    int file_info_cnt=obj_root.value("file_info_cnt").toInt();
+    for(int i=0;i<file_info_cnt;i++){
+
+    }*/
 }

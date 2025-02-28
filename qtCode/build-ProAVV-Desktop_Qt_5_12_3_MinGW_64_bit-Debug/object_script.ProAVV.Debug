@@ -3,6 +3,7 @@ debug/aav_networkmanager.o
 debug/aav_uploadfile.o
 debug/aav_uploadselect.o
 debug/aav_usrpage.o
+debug/aav_videocoverwidget.o
 debug/aav_videodisplay.o
 debug/aav_videolist.o
 debug/aav_volumebutton.o
@@ -13,6 +14,7 @@ debug/moc_aav_networkmanager.o
 debug/moc_aav_uploadfile.o
 debug/moc_aav_uploadselect.o
 debug/moc_aav_usrpage.o
+debug/moc_aav_videocoverwidget.o
 debug/moc_aav_videodisplay.o
 debug/moc_aav_videolist.o
 debug/moc_aav_volumebutton.o

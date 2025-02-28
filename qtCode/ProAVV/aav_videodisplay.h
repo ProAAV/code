@@ -22,6 +22,8 @@ public:
     void updatePresentTimeLab(qint64 tim);
     void updateDurationTimeLab(qint64 tim);
     QString integraTime(qint64 tim);
+    void setVideoFilePath(QString& file_path);
+    void play();
 private:
     Ui::VideoDisplay *ui;
     QVBoxLayout* m_vlayout;
@@ -35,6 +37,7 @@ private:
     QPushButton* m_btn_rate;
     QMenu* m_menu_rate;
     VolumeButton* m_btn_vlm;
+    QString m_file_path;
 public slots:
     void sloSetSliderDura(qint64 dur);
     void sloSetSliderPos(qint64 dur);

@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include"aav_uploadselect.h"
+#include<QNetworkReply>
 QT_BEGIN_NAMESPACE
 namespace Ui {
 class MainView;
@@ -20,6 +21,9 @@ public:
 private:
     Ui::MainView *ui;
     UploadSelect* m_wid_upload_select;
+signals:
+    void sigFilesInfo(QNetworkReply* reply);
+public slots:
 
 };
 #endif // AVV_MAIN_VIEW_H
