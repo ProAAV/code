@@ -3,6 +3,7 @@
 #include<stdlib.h>
 #include<string.h>
 #include<fstream>
+#include<json/json.h>
 #include"fdfs_client.h"
 #include"tracker_client.h"
 #include"../base/config_read.h"
@@ -17,15 +18,50 @@ extern "C"{
     #include<libavutil/imgutils.h>
     #include<mysql/mysql.h>
 }
+void upload_responSuccess(char* wbuf,int wbuf_sz){
+    Json::Value root;
+    root["status"]="0";
+    Json::StreamWriterBuilder writer;
+    std::string jsonStr = Json::writeString(writer, root);
+    std::string response="HTTP/1.1 200 OK\r\n"
+            "Content-Type: application/json\r\n"
+            "Content-Length: " + std::to_string(jsonStr.size()) + "\r\n"
+            "Connection: close\r\n"
+            "\r\n" +
+            jsonStr;
+    if(jsonStr.size()>wbuf_sz){
+        std::cout<<"size is too small\n";
+        return;
+    }
+    memcpy(wbuf,response.c_str(),response.size());
+}
+void upload_responFailed(char* wbuf,int wbuf_sz){
+    Json::Value root;
+    root["status"]="1";
+    Json::StreamWriterBuilder writer;
+    std::string jsonStr = Json::writeString(writer, root);
+    std::string response="HTTP/1.1 500 Internal Server Error\r\n"
+            "Content-Type: application/json\r\n"
+            "Content-Length: " + std::to_string(jsonStr.size()) + "\r\n"
+            "Connection: close\r\n"
+            "\r\n" +
+            jsonStr;
+    if(jsonStr.size()>wbuf_sz){
+        std::cout<<"size is too small\n";
+        return;
+    }
+    memcpy(wbuf,response.c_str(),response.size());
+}
 void apiUpload(char* wbuf,int wbuf_sz,struct mg_http_message hm,ConfRead& conf_reader){
     std::cout<<"enter upload api\n";
+    //文件信息是由我们自己根据http请求体发送来的表单字段解析得到的
     CfileInfo file_info{};
     struct mg_str* content_type=mg_http_get_header(&hm,"content-type");
     std::string ct(content_type->buf,content_type->len);
     std::string real_content_type=ct.substr(0,ct.find(';',0));
 
     std::cout<<"real_content_type:"<<real_content_type<<'\n';
-    //将文件信息写入CfileInfo对象的map中储存
+    //解析http请求体的表单字段，将文件信息写入CfileInfo对象的map中储存
     if(real_content_type=="multipart/form-data"){
         struct mg_http_part hpart;
         size_t offset=0;
@@ -37,12 +73,51 @@ void apiUpload(char* wbuf,int wbuf_sz,struct mg_http_message hm,ConfRead& conf_r
     }
     else{
         std::cout<<"文件上传失败，文件内容不匹配\n";
+        upload_responFailed(wbuf,wbuf_sz);
+        return;
+    }
+    //先来判断文件的md5信息，如果数据库中已经存在相同的md5，那么直接更新数据库表即可，如果没有则进行常规的文件上传操作
+    if(fileMd5InfoCheckout(file_info)){
+        upload_responSuccess(wbuf,wbuf_sz);
         return;
     }
     //先将文件分为多个ts文件和一个m3u8文件
-    uploadHandleFileTLS(file_info,conf_reader);
-    
+    if(uploadHandleFileTLS(file_info,conf_reader)){
+        upload_responFailed(wbuf,wbuf_sz);
+        return;
+    }
+    upload_responSuccess(wbuf,wbuf_sz);
+    return;
 }
+bool fileMd5InfoCheckout(CfileInfo& file_info){
+    std::string file_md5=file_info.getFileInfoMap().at("file_md5");
+    MysqlConn sql_conn{};
+    char query_[256];
+    sprintf(query_,"select * from aav_file_info where file_md5 = '%s'",file_md5.c_str());
+    std::cout<<"sql:"<<query_<<'\n';
+    MYSQL_RES* res=sql_conn.mysqlQuery(query_);
+    if(mysql_num_rows(res)){
+        //如果找到了一条记录，先看看当前用户是否已经有一条该文件记录;
+        std::string username=file_info.getFileInfoMap().at("username");
+        sprintf(query_,"select * from aav_user_file where username='%s' and file_md5='%s'",username.c_str(),file_md5.c_str());
+        res=sql_conn.mysqlQuery(query_);
+        if(mysql_num_rows(res)){
+            std::cout<<"user table have exist\n";
+            mysql_free_result(res);
+            return true;
+        }
+        //如果该用户没有该文件的一条记录，那么更新数据库表再return就行了；
+        sprintf(query_,"insert into aav_user_file (username,file_md5) value('%s','%s')",username.c_str(),file_md5.c_str());
+        std::cout<<"sql:"<<query_<<'\n';
+        sql_conn.mysqlQuery(query_);
+        mysql_free_result(res);
+        return true;
+    }
+    //没找到就走正常流程
+    mysql_free_result(res);
+    return false;
+}
+//检查字符串是否以'/'结尾，如果不是则添加一个'/'
 void checkEnd(std::string& str){
     char c=str.back();
     if(c!='/'){
@@ -53,25 +128,25 @@ void checkEnd(std::string& str){
     }
     return;
 }
-void uploadHandleFileTLS(CfileInfo& file_info,ConfRead& conf_reader){
+int uploadHandleFileTLS(CfileInfo& file_info,ConfRead& conf_reader){
     avformat_network_init();
     AVFormatContext* input_format_ctx=nullptr;
     std::string file_path=file_info.getFileInfoMap().at("file_path");
     std::cout<<"file_path:"<<file_path<<'\n';
     if(avformat_open_input(&input_format_ctx,file_path.c_str(),nullptr,nullptr)){
         std::cout<<"avformat_open_input failed\n";
-        return;
+        return 1;
     }
     int ret=avformat_find_stream_info(input_format_ctx,nullptr);
     if(ret<0){
         std::cout<<"avformat_find_stream_info failed\n";
-        return;
+        return 1;
     }
     AVFormatContext* output_format_ctx=nullptr;
     AVOutputFormat* output_format=av_guess_format("hls",nullptr,nullptr);
     if(!output_format){
         std::cout<<"output_format is null\n";
-        return;
+        return 1;
     }
     //指定m3u8文件的命名规则,命名规则就直接指定了ts文件的存储路径
     std::string ts_and_m3u8_and_pic_dir=conf_reader.confGetMap().at("ts_and_m3u8_and_pic_dir");
@@ -82,7 +157,7 @@ void uploadHandleFileTLS(CfileInfo& file_info,ConfRead& conf_reader){
     sprintf(command,"mkdir -p %s",ts_and_m3u8_and_pic_dir.c_str());
     if(system(command)==-1){
         std::cout<<command<<" is failed\n";
-        return;
+        return 1;
     }
     //再拼凑整个完整路径，这里还没写完。。。。。。。。。。。。
     checkEnd(ts_and_m3u8_and_pic_dir);
@@ -92,14 +167,14 @@ void uploadHandleFileTLS(CfileInfo& file_info,ConfRead& conf_reader){
     avformat_alloc_output_context2(&output_format_ctx,output_format,nullptr,m3u8_file_name.c_str());
     if(!output_format_ctx){
         std::cout<<"output_format_ctx is null\n";
-        return;
+        return 1;
     }
     for(unsigned i=0;i<input_format_ctx->nb_streams;i++){
         AVStream* in_stream=input_format_ctx->streams[i];
         AVStream* out_stream=avformat_new_stream(output_format_ctx,nullptr);
         if(!out_stream){
             std::cout<<"out_stream is null\n";
-            return;
+            return 1;
         }
         avcodec_parameters_copy(out_stream->codecpar,in_stream->codecpar);
         out_stream->codecpar->codec_tag=0;
@@ -118,7 +193,7 @@ void uploadHandleFileTLS(CfileInfo& file_info,ConfRead& conf_reader){
     if(!(output_format->flags&AVFMT_NOFILE)){
         if(avio_open(&output_format_ctx->pb,"output.m3u8",AVIO_FLAG_WRITE)<0){
             std::cout<<"avio_open failed\n";
-            return;
+            return 1;
         }
     }
     AVDictionary* optionn=nullptr;
@@ -126,7 +201,7 @@ void uploadHandleFileTLS(CfileInfo& file_info,ConfRead& conf_reader){
     ret=avformat_write_header(output_format_ctx,&option);
     if(ret<0){
         std::cout<<"avformat_write_header failed\n";
-        return;
+        return 1;
     }
     AVPacket packet;
     av_init_packet(&packet);
@@ -143,7 +218,7 @@ void uploadHandleFileTLS(CfileInfo& file_info,ConfRead& conf_reader){
         // Write the packet
         if (av_interleaved_write_frame(output_format_ctx, &packet) != 0) {
             std::cerr << "Error while writing output packet." << std::endl;
-            return ;
+            return 1;
         }
 
         av_packet_unref(&packet);
@@ -156,15 +231,18 @@ void uploadHandleFileTLS(CfileInfo& file_info,ConfRead& conf_reader){
     avformat_free_context(output_format_ctx);
     std::cout<<"end up\n";
     //生成一张封面图片
-    generateCoverPic(file_info,conf_reader);
+    bool is_audio;
+    generateCoverPic(file_info,conf_reader,is_audio);
     //上传文件到fastdfs中
     std::cout<<"enter uploadHandleFileTLS\n";
     //在这之前就是生成ts文件和m3u8文件和视封面图片文件，存放到指定的/tmp文件夹下，之后应该是修改m3u8文件中的ts文件路径
-    uploadFileToFastdfs(file_info,conf_reader);
-
+    if(uploadFileToFastdfs(file_info,conf_reader,is_audio)){
+        return 1;
+    }
+    return 0;
 
 }
-int generateCoverPic(CfileInfo& file_info,ConfRead& conf_reader) {
+int generateCoverPic(CfileInfo& file_info,ConfRead& conf_reader,bool& is_audio) {
     AVFormatContext* format_context = nullptr;
     AVCodecParameters* decoder_param = nullptr;
     AVCodecContext* decoder_context = nullptr;
@@ -195,9 +273,11 @@ int generateCoverPic(CfileInfo& file_info,ConfRead& conf_reader) {
             break;
         }
     }
+    is_audio=false;
     if (video_stream_index == -1) {
         avformat_close_input(&format_context);
         fprintf(stderr, "No video stream found\n");
+        is_audio=true;
         return 1;
     }
 
@@ -372,17 +452,17 @@ int generateCoverPic(CfileInfo& file_info,ConfRead& conf_reader) {
     avformat_close_input(&format_context);
     return 0;
 }
-void uploadFileToFastdfs(CfileInfo& file_info,ConfRead& conf_reader){
+int uploadFileToFastdfs(CfileInfo& file_info,ConfRead& conf_reader,const bool& is_audio){
     //这个函数主要就是先把ts文件上传到fastdfs后修改m3u8文件中的ts文件地址，最后把自己这个m3u8文件上传到fastdfs中就行了
     std::cout<<"enter uploadFileToFastdfs\n";
     if(fdfs_client_init(FASTDFS_CLIENT_CONF)){
         std::cout<<"err\n";
-        return;
+        return 1;
     }
     ConnectionInfo* trackerServer=tracker_get_connection();
     if(trackerServer==nullptr){
         fdfs_client_destroy();
-        return;
+        return 1;
     }
     
     ConnectionInfo* storageServer=new ConnectionInfo();
@@ -394,7 +474,7 @@ void uploadFileToFastdfs(CfileInfo& file_info,ConfRead& conf_reader){
     
     if(!trackerServer||!storageServer){
         std::cout<<"trackerServer is null\n";
-        return;
+        return 1;
     }
     //得到ts这些文件的文件夹路径
     std::string ts_and_m3u8_and_pic_dir=conf_reader.confGetMap().at("ts_and_m3u8_and_pic_dir");
@@ -406,7 +486,7 @@ void uploadFileToFastdfs(CfileInfo& file_info,ConfRead& conf_reader){
     std::cout<<"file_name:"<<m3u8_file_name<<"\n";
     if(!m3u8_file.is_open()){
         std::cout<<"m3u8_file is not open\n";
-        return;
+        return 1;
     }
     std::string line="";
     std::string ts_file_name="";
@@ -430,7 +510,7 @@ void uploadFileToFastdfs(CfileInfo& file_info,ConfRead& conf_reader){
     std::ofstream m3u8_file_write(m3u8_file_name);
     if(!m3u8_file_write.is_open()){
         std::cout<<"m3u8_file_write open failed\n";
-        return ;
+        return 1;
     }
     //写回文件
     for(auto& i:file_content){
@@ -449,18 +529,26 @@ void uploadFileToFastdfs(CfileInfo& file_info,ConfRead& conf_reader){
     checkEnd(addr_of_nginx);
     std::string update_file_path=addr_of_nginx+std::string(file_id);
     std::string update_file_md5=file_info.getFileInfoMap().at("file_md5");
-    std::string update_file_size="12";
-    std::string update_file_title="eqweweq";
-    std::string update_file_playback_duration="134231";
+    std::string update_file_size=file_info.getFileInfoMap().at("file_size");
+
+
+    std::string update_file_title=file_info.getFileInfoMap().at("file_title");
+    std::string update_file_playback_duration=file_info.getFileInfoMap().at("file_playback_duration");
+
     
     
     //再然后上传png图片文件
-    std::string pic_file_name=ts_and_m3u8_and_pic_dir+file_info.getFileInfoMap().at("file_md5")+".png";
-    r=storage_upload_by_filename1(trackerServer,storageServer,\
-    storage_path_idx,pic_file_name.c_str(),nullptr,nullptr,0,groupName,file_id);
-    //其次是这个png图片的id也是很重要的，因为没有其他办法找到这个图片的文件位置，只能将返回的id用mysql存储起来
-    std::cout<<"===================pngid:"<<file_id<<'\n';
-    std::string update_file_image_path=addr_of_nginx+std::string(file_id);
+    std::string update_file_image_path="null";
+    if(!is_audio){
+        std::string pic_file_name=ts_and_m3u8_and_pic_dir+file_info.getFileInfoMap().at("file_md5")+".png";
+        r=storage_upload_by_filename1(trackerServer,storageServer,\
+        storage_path_idx,pic_file_name.c_str(),nullptr,nullptr,0,groupName,file_id);
+        //其次是这个png图片的id也是很重要的，因为没有其他办法找到这个图片的文件位置，只能将返回的id用mysql存储起来
+        std::cout<<"===================pngid:"<<file_id<<'\n';
+        update_file_image_path=addr_of_nginx+std::string(file_id);
+    }
+    
+    
     //得到数据之后更新aav_file_info这张表
     char query[256];
     MysqlConn conn{};
@@ -474,11 +562,19 @@ void uploadFileToFastdfs(CfileInfo& file_info,ConfRead& conf_reader){
     
     fdfs_client_destroy();
     //上传完毕以后将tmp目录下的内容清空，这个内容就是一次文件上传所产生的文件
-    removeFilesInTmp(conf_reader);
+    if(removeFilesInTmp(conf_reader)){
+        return 1;
+    }
+    return 0;
 }
-void removeFilesInTmp(ConfRead& conf_reader){
+int removeFilesInTmp(ConfRead& conf_reader){
     std::string command="rm -rf "+conf_reader.confGetMap().at("ts_and_m3u8_and_pic_dir");
-    system(command.c_str());
-    command="rm -rf "+std::string("/tmp/nginx_upload");
-    system(command.c_str());
+    if(system(command.c_str())){
+        return 1;
+    }
+    command="rm -f "+std::string("/tmp/nginx_upload/*");
+    if(system(command.c_str())){
+        return 1;
+    }
+    return 0;
 }

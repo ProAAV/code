@@ -10,7 +10,7 @@ public:
     ~HttpServer();
     std::string http_parse_method();
     
-    //http_parse_post
+    
     void http_route_url(char* wbuf,int wbuf_sz);
     int http_get_content_length_from_request_header();
     int http_get_header_size();

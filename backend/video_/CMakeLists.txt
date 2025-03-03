@@ -14,6 +14,8 @@ set(SOURCES
     base/file_info.cc
     base/mysqlconn.cc
     api/api_files_list.cc
+    api/api_login.cc
+    api/api_register.cc
 )
 add_executable(video_server ${SOURCES})
 add_compile_options(-g)

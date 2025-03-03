@@ -1,5 +1,7 @@
 file(REMOVE_RECURSE
   "CMakeFiles/video_server.dir/api/api_files_list.cc.o"
+  "CMakeFiles/video_server.dir/api/api_login.cc.o"
+  "CMakeFiles/video_server.dir/api/api_register.cc.o"
   "CMakeFiles/video_server.dir/api/api_upload.cc.o"
   "CMakeFiles/video_server.dir/base/config_read.cc.o"
   "CMakeFiles/video_server.dir/base/file_info.cc.o"
