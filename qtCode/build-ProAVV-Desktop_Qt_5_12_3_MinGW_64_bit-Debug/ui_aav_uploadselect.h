@@ -44,7 +44,7 @@ public:
     void retranslateUi(QWidget *UploadSelect)
     {
         UploadSelect->setWindowTitle(QApplication::translate("UploadSelect", "Form", nullptr));
-        btn_select_file->setText(QApplication::translate("UploadSelect", "PushButton", nullptr));
+        btn_select_file->setText(QApplication::translate("UploadSelect", "\351\200\211\346\213\251\346\226\207\344\273\266", nullptr));
     } // retranslateUi
 
 };

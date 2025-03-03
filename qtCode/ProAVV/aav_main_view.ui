@@ -21,21 +21,21 @@
        <item>
         <widget class="QPushButton" name="btn_video_list">
          <property name="text">
-          <string>PushButton</string>
+          <string>home</string>
          </property>
         </widget>
        </item>
        <item>
         <widget class="QPushButton" name="btn_usr_page">
          <property name="text">
-          <string>PushButton</string>
+          <string>用户</string>
          </property>
         </widget>
        </item>
        <item>
         <widget class="QPushButton" name="btn_upload">
          <property name="text">
-          <string>PushButton</string>
+          <string>上传</string>
          </property>
         </widget>
        </item>

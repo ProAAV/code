@@ -70,6 +70,8 @@ void VideoCoverWidget::sloRequestImg(QString& file_img_path)
     qDebug()<<"file_img_path:"<<file_img_path;
     if(file_img_path==""){
         qDebug()<<"file_img_path is null";
+        //如果图片是空，那么直接使用qt自定义的一张图片展示封面
+
         return;
     }
     QNetworkReply* reply=net_manager.http_get_img_cover(file_img_path);

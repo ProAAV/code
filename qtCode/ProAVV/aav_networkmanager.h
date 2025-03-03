@@ -21,6 +21,7 @@ public:
     QBuffer* m_buffer;
     QNetworkReply* getFilesInfoReply();
     QNetworkReply *http_get_img_cover(QString& file_img_path);
+    bool http_login(const QString& account,const QString& password);
 private:
     QNetworkAccessManager* m_manager;
     QNetworkReply* m_files_info_reply;

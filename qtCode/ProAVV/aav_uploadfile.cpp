@@ -28,12 +28,18 @@ UploadFile::UploadFile(QString& file_path,QWidget *parent)
         return;
     }
     //设计上传视频文件窗口
+    QLabel* lab_set_intro=new QLabel(this);
+    lab_set_intro->setText("输入音频/视频文件简介");
+    QHBoxLayout* hlayout=new QHBoxLayout();
+
     QLineEdit* line_edit=new QLineEdit(this);
 
     QPushButton* btn_commit=new QPushButton(this);
     btn_commit->setText("上传");
     QVBoxLayout* vlayout=new QVBoxLayout();
-    vlayout->addWidget(line_edit);
+    hlayout->addWidget(lab_set_intro);
+    hlayout->addWidget(line_edit);
+    vlayout->addLayout(hlayout);
     vlayout->addWidget(btn_commit);
     this->setLayout(vlayout);
 

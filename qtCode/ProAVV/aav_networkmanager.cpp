@@ -8,7 +8,10 @@
 #include<QEventLoop>
 #include<QFile>
 #include<QBuffer>
-
+#include<QJsonDocument>
+#include<QJsonObject>
+#include<QJsonArray>
+#include<QJsonValue>
 NetWorkManager::NetWorkManager(QObject *parent): QObject{parent}
 {
     m_manager=new QNetworkAccessManager(this);
@@ -174,6 +177,38 @@ QNetworkReply *NetWorkManager::http_get_img_cover(QString& file_img_path)
     connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
     loop.exec();
     return reply;
+}
+
+bool NetWorkManager::http_login(const QString& account,const QString& password)
+{
+    QJsonObject root;
+    root.insert("account",account);
+    root.insert("password",password);
+    QJsonDocument js_doc(root);
+    QUrl url("http://192.168.208.128:8888/api/login");
+    QNetworkRequest request(url);
+    QByteArray post_data = js_doc.toJson(QJsonDocument::Compact);
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+    QNetworkReply* reply=m_manager->post(request,post_data);
+    QEventLoop loop;
+    connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
+    loop.exec();
+    if(reply->error()){
+        qDebug()<<"http_login reply error";
+        return false;
+    }
+    QByteArray respon_data=reply->readAll();
+    QJsonDocument respon_doc = QJsonDocument::fromJson(respon_data);
+    if (respon_doc.isNull()) {
+        qDebug() << "Invalid JSON data.";
+        return false;
+    }
+    QJsonObject respon_obj = respon_doc.object();
+    QString status=respon_obj.value("status").toString();
+    if(status=="0"){
+        return true;
+    }
+    return false;
 }
 
 

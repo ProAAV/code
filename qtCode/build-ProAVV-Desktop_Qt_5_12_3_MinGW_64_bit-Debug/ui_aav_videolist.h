@@ -62,7 +62,7 @@ public:
         scrollArea->setWidgetResizable(true);
         scrollAreaWidgetContents = new QWidget();
         scrollAreaWidgetContents->setObjectName(QString::fromUtf8("scrollAreaWidgetContents"));
-        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 610, 382));
+        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 600, 363));
         gridLayout = new QGridLayout(scrollAreaWidgetContents);
         gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
         scrollArea->setWidget(scrollAreaWidgetContents);
@@ -81,7 +81,7 @@ public:
     void retranslateUi(QWidget *VideoList)
     {
         VideoList->setWindowTitle(QApplication::translate("VideoList", "Form", nullptr));
-        pushButton->setText(QApplication::translate("VideoList", "PushButton", nullptr));
+        pushButton->setText(QApplication::translate("VideoList", "\346\220\234\347\264\242", nullptr));
     } // retranslateUi
 
 };

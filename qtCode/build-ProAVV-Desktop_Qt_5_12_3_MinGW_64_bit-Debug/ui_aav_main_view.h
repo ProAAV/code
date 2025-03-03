@@ -85,9 +85,9 @@ public:
     void retranslateUi(QWidget *MainView)
     {
         MainView->setWindowTitle(QApplication::translate("MainView", "MainView", nullptr));
-        btn_video_list->setText(QApplication::translate("MainView", "PushButton", nullptr));
-        btn_usr_page->setText(QApplication::translate("MainView", "PushButton", nullptr));
-        btn_upload->setText(QApplication::translate("MainView", "PushButton", nullptr));
+        btn_video_list->setText(QApplication::translate("MainView", "home", nullptr));
+        btn_usr_page->setText(QApplication::translate("MainView", "\347\224\250\346\210\267", nullptr));
+        btn_upload->setText(QApplication::translate("MainView", "\344\270\212\344\274\240", nullptr));
         btn_video_disp->setText(QApplication::translate("MainView", "PushButton", nullptr));
     } // retranslateUi
 

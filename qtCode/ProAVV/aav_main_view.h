@@ -24,6 +24,7 @@ private:
 signals:
     void sigFilesInfo(QNetworkReply* reply);
 public slots:
+    void sloBtnUserPageHandle();
 
 };
 #endif // AVV_MAIN_VIEW_H

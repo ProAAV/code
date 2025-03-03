@@ -24,7 +24,7 @@
        <item>
         <widget class="QPushButton" name="pushButton">
          <property name="text">
-          <string>PushButton</string>
+          <string>搜索</string>
          </property>
         </widget>
        </item>
@@ -40,8 +40,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>610</width>
-          <height>382</height>
+          <width>600</width>
+          <height>363</height>
          </rect>
         </property>
         <layout class="QGridLayout" name="gridLayout"/>

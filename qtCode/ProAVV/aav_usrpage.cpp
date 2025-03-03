@@ -1,5 +1,6 @@
 #include "aav_usrpage.h"
 #include "ui_aav_usrpage.h"
+#include"aav_userlogin.h"
 #include<QPushButton>
 UsrPage::UsrPage(QWidget *parent) :
     QWidget(parent),
@@ -9,6 +10,7 @@ UsrPage::UsrPage(QWidget *parent) :
     /*
     用户界面展示类
     */
+
 
 }
 
