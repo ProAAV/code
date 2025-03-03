@@ -1,6 +1,7 @@
 #include"http_layer.h"
 #include"common.h"
 #include"../api/api_upload.h"
+#include"../api/api_files_list.h"
 #include<string.h>
 #include<iostream>
 HttpServer::HttpServer(const char* msg,ConfRead& conf_reader):m_msg(msg),m_conf_reader(conf_reader){
@@ -21,16 +22,16 @@ std::string HttpServer::http_get_url(){
     std::cout<<"---------------------\n";
     return real_url;
 }
-void HttpServer::http_parse_get(){
-    std::string url=http_get_url();
-    
-}
-void HttpServer::http_parse_post(char* wbuf,int wbuf_sz){
+
+void HttpServer::http_route_url(char* wbuf,int wbuf_sz){
     //作为路由，url决定调用具体的函数
     std::string url=http_get_url();
     
     if(url=="/api/upload"){
         apiUpload(wbuf,wbuf_sz,m_http_msg,m_conf_reader);
+    }
+    else if(url=="/api/filesList"){
+        apiFilesList(wbuf,wbuf_sz,m_http_msg,m_conf_reader);
     }
 }
 int HttpServer::http_get_content_length_from_request_header(){

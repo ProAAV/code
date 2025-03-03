@@ -4,6 +4,19 @@
 CMakeFiles/video_server.dir/base/mongoose.c.o: ../base/mongoose.c
 CMakeFiles/video_server.dir/base/mongoose.c.o: ../base/mongoose.h
 
+CMakeFiles/video_server.dir/api/api_files_list.cc.o: ../api/api_files_list.cc
+CMakeFiles/video_server.dir/api/api_files_list.cc.o: ../api/api_files_list.h
+CMakeFiles/video_server.dir/api/api_files_list.cc.o: ../base/common.h
+CMakeFiles/video_server.dir/api/api_files_list.cc.o: ../base/config_read.h
+CMakeFiles/video_server.dir/api/api_files_list.cc.o: ../base/mongoose.h
+CMakeFiles/video_server.dir/api/api_files_list.cc.o: ../base/mysqlconn.h
+
+CMakeFiles/video_server.dir/api/api_login.cc.o: ../api/api_login.cc
+CMakeFiles/video_server.dir/api/api_login.cc.o: ../api/api_login.h
+
+CMakeFiles/video_server.dir/api/api_register.cc.o: ../api/api_register.cc
+CMakeFiles/video_server.dir/api/api_register.cc.o: ../api/api_register.h
+
 CMakeFiles/video_server.dir/api/api_upload.cc.o: /home/hcc/share/FastDfs/fastdfs/client/client_func.h
 CMakeFiles/video_server.dir/api/api_upload.cc.o: /home/hcc/share/FastDfs/fastdfs/client/client_global.h
 CMakeFiles/video_server.dir/api/api_upload.cc.o: /home/hcc/share/FastDfs/fastdfs/client/fdfs_client.h
@@ -30,6 +43,7 @@ CMakeFiles/video_server.dir/base/config_read.cc.o: ../base/config_read.h
 CMakeFiles/video_server.dir/base/file_info.cc.o: ../base/file_info.cc
 CMakeFiles/video_server.dir/base/file_info.cc.o: ../base/file_info.h
 
+CMakeFiles/video_server.dir/base/http_layer.cc.o: ../api/api_files_list.h
 CMakeFiles/video_server.dir/base/http_layer.cc.o: ../api/api_upload.h
 CMakeFiles/video_server.dir/base/http_layer.cc.o: ../base/common.h
 CMakeFiles/video_server.dir/base/http_layer.cc.o: ../base/config_read.h
@@ -37,6 +51,7 @@ CMakeFiles/video_server.dir/base/http_layer.cc.o: ../base/file_info.h
 CMakeFiles/video_server.dir/base/http_layer.cc.o: ../base/http_layer.cc
 CMakeFiles/video_server.dir/base/http_layer.cc.o: ../base/http_layer.h
 CMakeFiles/video_server.dir/base/http_layer.cc.o: ../base/mongoose.h
+CMakeFiles/video_server.dir/base/http_layer.cc.o: ../base/mysqlconn.h
 
 CMakeFiles/video_server.dir/base/mysqlconn.cc.o: ../base/mysqlconn.cc
 CMakeFiles/video_server.dir/base/mysqlconn.cc.o: ../base/mysqlconn.h

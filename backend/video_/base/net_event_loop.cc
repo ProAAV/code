@@ -47,8 +47,9 @@ void recvCallback(int fd,EventLoop& evloop){
     if(content_length+hserver.http_get_header_size()>RBUF_SIZE){
         std::cout<<"rbuffer size is too small\n";
         //不够直接断开此次连接
-        close(fd);
+        //close(fd);
         epoll_ctl(evloop.m_epollfd,EPOLL_CTL_DEL,fd,nullptr);
+        delete evloop.m_map[fd];
         evloop.m_map.erase(fd);
         return;
     }
@@ -59,7 +60,7 @@ void recvCallback(int fd,EventLoop& evloop){
             int current_pos=strlen(recv_buffer);
             recv(fd,recv_buffer+current_pos,RBUF_SIZE-current_pos,0);
             std::cout<<"recv:"<<recv_buffer<<'\n';
-            if(strlen(recv_buffer)-hserver.http_get_header_size()==content_length){
+            if(strlen(recv_buffer)-hserver.http_get_header_size()>=content_length){
                 std::cout<<"break\n";
                 break;
             }
@@ -72,16 +73,15 @@ void recvCallback(int fd,EventLoop& evloop){
     HttpServer http_layer(recv_buffer,evloop.m_conf_reader);
     char* write_buffer=evloop.m_map[fd]->getWriteBuffer();
     int wbuffer_size=evloop.m_map[fd]->getWriteBufferSize();
-    if(method=="GET"){
-        http_layer.http_parse_get();
-    }
-    else if(method=="POST"){
-        http_layer.http_parse_post(write_buffer,wbuffer_size);
+    
+    if(method=="POST"||method=="GET"){
+        http_layer.http_route_url(write_buffer,wbuffer_size);
     }
     else{
         std::cout<<"no func can be called\n";
     }
-    //接下来是一次性接收完毕的情况要处理的工作
+    //现在的思路就是已经做完了对应的api操作，并且也填充了wbuf，现在就是将fd的关心点转为EPOLLOUT,这样触发EPOLLOUT调用sendCallback，\
+    顺其自然将填充后的wbuf发送出去
     evloop.epollEventMod(fd,EPOLLOUT);
 
     
@@ -90,9 +90,14 @@ void recvCallback(int fd,EventLoop& evloop){
 void sendCallback(int fd,EventLoop& evloop){
     std::cout<<"sendcb\n";
     char* write_buffer=evloop.m_map[fd]->getWriteBuffer();
-    char* response=(char*)"HTTP/1.1 200 OK\nContent-Type: text/plain\nContent-Length: 13\n\nHello, World!";
-    memcpy(write_buffer,response,strlen(response));
+    int wbuf_size=evloop.m_map[fd]->getWriteBufferSize();
+    //char* response=(char*)"HTTP/1.1 200 OK\nContent-Type: text/plain\nContent-Length: 13\n\nHello, World!";
+    //memcpy(write_buffer,response,strlen(response));
+    
+    
+    std::cout<<"wbuf:"<<write_buffer<<'\n';
     int ret=send(fd,write_buffer,strlen(write_buffer),0);
+
     if(ret==-1){
         std::cout<<"send failed\n";
         return;
@@ -102,6 +107,8 @@ void sendCallback(int fd,EventLoop& evloop){
     }
     //send完毕后设置为EPOLLIN
     evloop.epollEventMod(fd,EPOLLIN);
+    //清空wbuf
+    memset(write_buffer,0,wbuf_size);
     std::cout<<"sendcb over\n";
 }
 

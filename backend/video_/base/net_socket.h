@@ -5,8 +5,8 @@
 class EventLoop;
 using EpollInCbType=void (*)(int fd,EventLoop& evloop);
 using EpollOutCbType=void (*)(int fd,EventLoop& evloop);
-#define WBUF_SIZE 4096
-#define RBUF_SIZE 4096
+#define WBUF_SIZE 8192
+#define RBUF_SIZE 8192
 class NetSocket{
     //该类只负责网络套接字的初始化，包装一个网络套接字
 public:
