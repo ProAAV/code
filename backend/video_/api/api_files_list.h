@@ -8,5 +8,8 @@
 void apiFilesList(char* wbuf,int wbuf_sz,struct mg_http_message hm,ConfRead& conf_reader);
 //以随机策略来构造返回的音视频文件
 
-void constructFileRandom(int file_cnt,char* wbuf,int wbuf_sz);
+void constructFileListsInfoRandom(int file_cnt,char* wbuf,int wbuf_sz);
+void constructFileListsInfoUserowned(int file_cnt,char* wbuf,int wbuf_sz,char* username);
+void constructFileListsInfoUserhistory(int file_cnt,char* wbuf,int wbuf_sz,char* username);
+
 void fileListResponseSuccess(MYSQL_RES* res,char* wbuf,int wbuf_sz);

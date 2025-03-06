@@ -18,7 +18,7 @@ class VideoDisplay : public QWidget
 
 public:
     explicit VideoDisplay(QWidget *parent = nullptr);
-    ~VideoDisplay();
+    ~VideoDisplay() override;
     void updatePresentTimeLab(qint64 tim);
     void updateDurationTimeLab(qint64 tim);
     QString integraTime(qint64 tim);
@@ -47,6 +47,10 @@ public slots:
     void sloAdjRate(int num);
     void sloPreload(QMediaPlayer::MediaStatus status);
     void sloVolumeChanged(int position);
+protected:
+    void closeEvent(QCloseEvent *event) override;
+signals:
+    void sigClose();
 
 };
 

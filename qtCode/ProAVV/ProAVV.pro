@@ -14,6 +14,9 @@ SOURCES += \
     aav_uploadfile.cpp \
     aav_uploadselect.cpp \
     aav_userlogin.cpp \
+    aav_userloginandregis.cpp \
+    aav_usermanager.cpp \
+    aav_userregister.cpp \
     aav_usrpage.cpp \
     aav_videocoverwidget.cpp \
     aav_videodisplay.cpp \
@@ -28,6 +31,9 @@ HEADERS += \
     aav_uploadfile.h \
     aav_uploadselect.h \
     aav_userlogin.h \
+    aav_userloginandregis.h \
+    aav_usermanager.h \
+    aav_userregister.h \
     aav_usrpage.h \
     aav_videocoverwidget.h \
     aav_videodisplay.h \
@@ -40,6 +46,8 @@ FORMS += \
     aav_uploadfile.ui \
     aav_uploadselect.ui \
     aav_userlogin.ui \
+    aav_userloginandregis.ui \
+    aav_userregister.ui \
     aav_usrpage.ui \
     aav_videocoverwidget.ui \
     aav_videodisplay.ui \

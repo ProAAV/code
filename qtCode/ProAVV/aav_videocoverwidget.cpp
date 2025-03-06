@@ -4,13 +4,12 @@
 #include<QByteArray>
 #include<QPixmap>
 #include"aav_videodisplay.h"
-VideoCoverWidget::VideoCoverWidget(VideoDisplay* vdis,QWidget *parent)
+VideoCoverWidget::VideoCoverWidget(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::VideoCoverWidget)
 {
     ui->setupUi(this);
     //这是视频封面类，主要是展示视频封面，包含视频封面图，视频总时长，视频上传时间，视频简介，视频上传作者。
-    m_vdis=vdis;
 
 
     m_lab_img=new QLabel(this);
@@ -48,6 +47,7 @@ VideoCoverWidget::VideoCoverWidget(VideoDisplay* vdis,QWidget *parent)
 
 VideoCoverWidget::~VideoCoverWidget()
 {
+    //delete m_vdis;
     delete ui;
 }
 
@@ -57,12 +57,19 @@ bool VideoCoverWidget::eventFilter(QObject *obj, QEvent *event)
     if(obj==m_lab_img&&event->type()==QEvent::MouseButtonPress){
         qDebug()<<"clicked and show";
         qDebug()<<"file_path:"<<m_file_path;
+        m_vdis=new VideoDisplay(nullptr);
+        connect(m_vdis,&VideoDisplay::sigClose,this,&VideoCoverWidget::sloCloseDisplayer);
+
         m_vdis->setVideoFilePath(m_file_path);
 
         m_vdis->show();
         m_vdis->play();
     }
+
+
 }
+
+
 
 void VideoCoverWidget::sloRequestImg(QString& file_img_path)
 {
@@ -86,4 +93,10 @@ void VideoCoverWidget::sloRequestImg(QString& file_img_path)
             m_lab_img->setScaledContents(true);
     reply->deleteLater();
 
+}
+
+void VideoCoverWidget::sloCloseDisplayer()
+{
+    m_vdis->deleteLater();
+    qDebug()<<"delete vdis";
 }

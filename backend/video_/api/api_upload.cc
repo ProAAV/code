@@ -78,6 +78,7 @@ void apiUpload(char* wbuf,int wbuf_sz,struct mg_http_message hm,ConfRead& conf_r
     }
     //先来判断文件的md5信息，如果数据库中已经存在相同的md5，那么直接更新数据库表即可，如果没有则进行常规的文件上传操作
     if(fileMd5InfoCheckout(file_info)){
+        
         upload_responSuccess(wbuf,wbuf_sz);
         return;
     }
@@ -90,6 +91,7 @@ void apiUpload(char* wbuf,int wbuf_sz,struct mg_http_message hm,ConfRead& conf_r
     return;
 }
 bool fileMd5InfoCheckout(CfileInfo& file_info){
+    std::cout<<"enter fileMd5InfoCheckout\n";
     std::string file_md5=file_info.getFileInfoMap().at("file_md5");
     MysqlConn sql_conn{};
     char query_[256];
@@ -556,7 +558,10 @@ int uploadFileToFastdfs(CfileInfo& file_info,ConfRead& conf_reader,const bool& i
     std::cout<<"query::::"<<query<<"\n";
     
     conn.mysqlQuery(query);
-
+    //之后更新aav_user_file这张表
+    std::string username=file_info.getFileInfoMap().at("username");
+    sprintf(query,"insert into `aav_user_file` (username,file_md5) value('%s','%s')",username.c_str(),update_file_md5.c_str());
+    conn.mysqlQuery(query);
 
     tracker_close_connection(trackerServer);
     

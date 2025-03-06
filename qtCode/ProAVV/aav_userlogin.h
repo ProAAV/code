@@ -15,13 +15,13 @@ class UserLogin : public QWidget
 public:
     explicit UserLogin(QWidget *parent = nullptr);
     ~UserLogin();
-
+    void handleLogin();
 private:
     Ui::UserLogin *ui;
     QLineEdit* m_ledit_account;
     QLineEdit* m_ledit_password;
 private slots:
-    void sloHandleLogin();
+
 
 signals:
     void sigLoginSuccess();

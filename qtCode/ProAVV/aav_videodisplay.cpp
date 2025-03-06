@@ -10,12 +10,14 @@
 #include<QPushButton>
 #include<QMenu>
 #include<QVariantList>
-
+#include<QCloseEvent>
+#include<unistd.h>
 VideoDisplay::VideoDisplay(QWidget *parent) :
     QWidget(parent),ui(new Ui::VideoDisplay),m_file_path("")
 {
     ui->setupUi(this);
     m_cnt_pause_player=0;
+    qDebug()<<"videodisplay init";
     /*
      视频播放类
     */
@@ -24,6 +26,7 @@ VideoDisplay::VideoDisplay(QWidget *parent) :
     m_video_widget=new QVideoWidget(this);
     m_player->setVideoOutput(m_video_widget);
     //当前进度，分隔符，总时长再加一个进度条的创建，作为当前页面的第二个板块
+
     m_lab_present_time=new QLabel(this);
     m_lab_present_time->setText("00:00:00");
     QLabel* lab_sepra=new QLabel(this);
@@ -98,17 +101,8 @@ VideoDisplay::VideoDisplay(QWidget *parent) :
     m_vlayout->addLayout(hlayout_slider);
     m_vlayout->addLayout(m_hlayout);
     ui->frame->setLayout(m_vlayout);
-    /*//播放视频
-    //通过请求到ts视频文件的m3u8文件列表来实现QMediaPlayer配合m3u8文件来播放连续的ts视频文件
-    //在这里videodisplay先被初始化也就是说先使用m_file_path开始了，只不过还没有show出来，但是这时候m_file_path还没有被设置
-    if(m_file_path==""){
-        qDebug()<<"file_path is invalid null";
-        return;
-    }
-    QUrl url(m_file_path);
-    m_player->setMedia(QMediaContent(url));
 
-    connect(m_player,&QMediaPlayer::mediaStatusChanged,this,&VideoDisplay::sloPreload);*/
+
 
     //实现进度条与视频播放的同步
     connect(m_player,&QMediaPlayer::durationChanged,this,&VideoDisplay::sloSetSliderDura);
@@ -119,6 +113,8 @@ VideoDisplay::VideoDisplay(QWidget *parent) :
         this->sloVolumeChanged(position);
     });
 }
+
+
 void VideoDisplay::sloSetSliderDura(qint64 dur){
     int val=static_cast<int>(dur);
     m_slider_video_process->setRange(0,val);
@@ -170,6 +166,7 @@ void VideoDisplay::play()
     //播放视频
     //通过请求到ts视频文件的m3u8文件列表来实现QMediaPlayer配合m3u8文件来播放连续的ts视频文件
     //在这里videodisplay先被初始化也就是说先使用m_file_path开始了，只不过还没有show出来，但是这时候m_file_path还没有被设置
+    qDebug()<<"play begin";
     if(m_file_path==""){
         qDebug()<<"file_path is invalid null";
         return;
@@ -178,6 +175,8 @@ void VideoDisplay::play()
     m_player->setMedia(QMediaContent(url));
 
     connect(m_player,&QMediaPlayer::mediaStatusChanged,this,&VideoDisplay::sloPreload);
+
+
 }
 void VideoDisplay::updatePresentTimeLab(qint64 tim){
     m_lab_present_time->setText(integraTime(tim));
@@ -237,10 +236,27 @@ void VideoDisplay::sloVolumeChanged(int position)
     m_btn_vlm->getLabVlm()->setText(QString::number(position));
 }
 
+void VideoDisplay::closeEvent(QCloseEvent *event)
+{
+    qDebug()<<"close event";
+
+    m_player->stop(); // 停止播放
+
+
+    // 断开视频输出
+    m_player->setVideoOutput(static_cast<QVideoWidget*>(nullptr));    // 清空媒体
+    m_player->setMedia(QMediaContent());
+
+    m_video_widget->close();
+    QWidget::closeEvent(event);
+    emit sigClose();
+}
+
 
 VideoDisplay::~VideoDisplay()
 {
-    delete m_hlayout;
-    delete m_vlayout;
+    qDebug()<<"close close";
+    //delete m_hlayout;
+    //delete m_vlayout;
     delete ui;
 }

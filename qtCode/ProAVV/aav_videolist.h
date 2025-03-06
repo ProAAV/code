@@ -16,7 +16,8 @@ class VideoList : public QWidget
 public:
     explicit VideoList(QWidget *parent = nullptr);
     ~VideoList();
-
+    void setUserVideoListsInfo();
+    void setUserHistoryVideoListsInfo();
 private:
     Ui::VideoList *ui;
     VideoCoverWidget* m_widget_1;
@@ -24,6 +25,7 @@ private:
     VideoCoverWidget* m_widget_3;
     VideoCoverWidget* m_widget_4;
     QVector<VideoCoverWidget*> vec_wids;
+
 public slots:
     void sloShowFilesInfo(QNetworkReply* reply);
 };

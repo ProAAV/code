@@ -11,6 +11,8 @@
 #include<QJsonDocument>
 #include<QJsonObject>
 #include<QJsonArray>
+#include<QTimer>
+#include"aav_usermanager.h"
 #include<QJsonValue>
 NetWorkManager::NetWorkManager(QObject *parent): QObject{parent}
 {
@@ -74,7 +76,9 @@ void NetWorkManager::http_upload_file(double file_playback_duration,QString& fil
     // 创建一个 `username` 字段部分
     QHttpPart userNamePart;
     userNamePart.setHeader(QNetworkRequest::ContentDispositionHeader, QVariant("form-data; name=\"username\""));
-    userNamePart.setBody("hcc");
+    QString username=UserManager::instance()->getUserName();
+    qDebug()<<"uuusername:"<<username;
+    userNamePart.setBody(username.toUtf8().data());
 
     // 将 `username` 字段添加到多部分对象中
     multiPart->append(userNamePart);
@@ -144,7 +148,7 @@ QBuffer* NetWorkManager::http_download_file()
 
 QNetworkReply* NetWorkManager::http_get_files_info()
 {
-    QString s="http://192.168.208.128:8888/api/filesList?files=1&strategy=random";
+    QString s="http://192.168.208.128:8888/api/filesList?files=1&strategy=random&username=null";
     QUrl url(s);
     QNetworkRequest request(url);
     qDebug()<<"enter  http_get_files_info";
@@ -181,6 +185,7 @@ QNetworkReply *NetWorkManager::http_get_img_cover(QString& file_img_path)
 
 bool NetWorkManager::http_login(const QString& account,const QString& password)
 {
+    qDebug()<<"login start";
     QJsonObject root;
     root.insert("account",account);
     root.insert("password",password);
@@ -209,6 +214,92 @@ bool NetWorkManager::http_login(const QString& account,const QString& password)
         return true;
     }
     return false;
+}
+
+bool NetWorkManager::http_register(const QString &account, const QString &password, const QString &nickname, const QString &repassword)
+{
+    qDebug()<<"http_register start";
+    QJsonObject root;
+    root.insert("account",account);
+    root.insert("password",password);
+    root.insert("nickname",nickname);
+
+    QJsonDocument js_doc(root);
+    QUrl url("http://192.168.208.128:8888/api/register");
+    QNetworkRequest request(url);
+    QByteArray post_data = js_doc.toJson(QJsonDocument::Compact);
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+    QNetworkReply* reply=m_manager->post(request,post_data);
+    QEventLoop loop;
+    connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
+    loop.exec();
+    if(reply->error()){
+        qDebug()<<"http_register reply error";
+        return false;
+    }
+    QByteArray respon_data=reply->readAll();
+    QJsonDocument respon_doc = QJsonDocument::fromJson(respon_data);
+    if (respon_doc.isNull()) {
+        qDebug() << "Invalid JSON data.";
+        return false;
+    }
+    QJsonObject respon_obj = respon_doc.object();
+    QString status=respon_obj.value("status").toString();
+    if(status=="0"){
+        return true;
+    }
+    return false;
+}
+
+QNetworkReply* NetWorkManager::http_get_user_video_lists_info(int opt)
+{
+    //利用opt实现代码复用,对于user_video_lists_info和user_history_video_lists_info这两个请求来说，通过opt传入参数不同区分,0,1
+
+    /*QString s="http://192.168.208.128:8888/api/filesList?files=1&strategy=random";
+    QUrl url(s);
+    QNetworkRequest request(url);
+    qDebug()<<"enter  http_get_files_info";
+    QNetworkReply* reply=m_manager->get(request);
+    QEventLoop loop;
+    connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
+    loop.exec();
+
+    return reply;*/
+
+    QString username=UserManager::instance()->getUserName();
+    QString s="";
+    if(opt==1){
+        s="http://192.168.208.128:8888/api/filesList?files=4&strategy=userhistory&username="+username;
+    }
+    else if(opt==0){
+        s="http://192.168.208.128:8888/api/filesList?files=4&strategy=userowned&username="+username;
+    }
+    else{
+        qDebug()<<"error with http_get_user_video_lists_info";
+        return nullptr;
+    }
+    qDebug()<<"uuuurl:"<<s;
+    QUrl url(s);
+    QNetworkRequest request(url);
+    qDebug()<<"enter  http_get_user_video_lists_info";
+    QNetworkReply* reply=m_manager->get(request);
+    QEventLoop loop;
+    connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
+    QTimer timer;
+    connect(&timer, &QTimer::timeout, [&]() {
+        if (reply->isRunning()) {
+            qWarning() << "Request timed out";
+            reply->abort(); // 中止请求
+            loop.quit();    // 退出事件循环
+        }
+    });
+
+    timer.start(2000);
+    loop.exec();
+    timer.stop();
+    qDebug()<<"http_get_user_video_lists_info out";
+    return reply;
+
 }
 
 

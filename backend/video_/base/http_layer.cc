@@ -2,6 +2,8 @@
 #include"common.h"
 #include"../api/api_upload.h"
 #include"../api/api_files_list.h"
+#include"../api/api_login.h"
+#include"../api/api_register.h"
 #include<string.h>
 #include<iostream>
 HttpServer::HttpServer(const char* msg,ConfRead& conf_reader):m_msg(msg),m_conf_reader(conf_reader){
@@ -32,6 +34,12 @@ void HttpServer::http_route_url(char* wbuf,int wbuf_sz){
     }
     else if(url=="/api/filesList"){
         apiFilesList(wbuf,wbuf_sz,m_http_msg,m_conf_reader);
+    }
+    else if(url=="/api/login"){
+        apiLogin(wbuf,wbuf_sz,m_http_msg,m_conf_reader);
+    }
+    else if(url=="/api/register"){
+        apiRegister(wbuf,wbuf_sz,m_http_msg,m_conf_reader);
     }
 }
 int HttpServer::http_get_content_length_from_request_header(){

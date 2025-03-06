@@ -22,6 +22,8 @@ public:
     QNetworkReply* getFilesInfoReply();
     QNetworkReply *http_get_img_cover(QString& file_img_path);
     bool http_login(const QString& account,const QString& password);
+    bool http_register(const QString& account,const QString& password,const QString& nickname,const QString& repassword);
+    QNetworkReply* http_get_user_video_lists_info(int opt);
 private:
     QNetworkAccessManager* m_manager;
     QNetworkReply* m_files_info_reply;

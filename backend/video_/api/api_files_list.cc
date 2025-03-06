@@ -23,16 +23,51 @@ void apiFilesList(char* wbuf,int wbuf_sz,struct mg_http_message hm,ConfRead& con
         std::cout<<"1111:"<<par_strategy_value<<"\n";
         return;
     }
+    char par_username_value[32];
+    if(mg_http_get_var(&hm.query,"username",par_username_value,sizeof(par_username_value))<=0){
+        std::cout<<"mg_http_get_var error\n";
+        std::cout<<"1111:"<<par_username_value<<"\n";
+        return;
+    }
+    
     //策略为random时调用的数据组织函数
     std::cout<<"hhhhhhh\n";
+    char sql[256];
+    isNumber(std::string(par_files_value));    
+    int file_cnt=std::stoi(par_files_value);
     if(strcmp(par_strategy_value,"random")==0){
-        isNumber(std::string(par_files_value));
-        std::cout<<"kkkkkkkkkkk\n";
-        constructFileRandom(std::stoi(par_files_value),wbuf,wbuf_sz);
+        constructFileListsInfoRandom(file_cnt,wbuf,wbuf_sz);
+    }
+    else if(strcmp(par_strategy_value,"userowned")==0){
+        std::cout<<"enter userowned\n";
+        constructFileListsInfoUserowned(file_cnt,wbuf,wbuf_sz,par_username_value);
+    }
+    else if(strcmp(par_strategy_value,"userhistory")==0){
+        constructFileListsInfoUserhistory(file_cnt,wbuf,wbuf_sz,par_username_value);
+    }
+    else{
+        std::cout<<"par_strategy_value is invalid\n";
+        return;
     }
     
 }
-void constructFileRandom(int file_cnt,char* wbuf,int wbuf_sz){
+void constructFileListsInfoUserowned(int file_cnt,char* wbuf,int wbuf_sz,char* username){
+    MysqlConn sql_conn{};
+    char query_[256];
+    sprintf(query_,"select * from `aav_user_file` A  join `aav_file_info` B on A.file_md5 = B.file_md5 where A.username='%s'",username);
+    MYSQL_RES* res=sql_conn.mysqlQuery(query_);
+    if(res==nullptr){
+        std::cout<<"error with constructFileListsInfoUserowned\n";
+        return ;
+    }
+    std::cout<<"enter constructFileListsInfoUserowned\n";
+    fileListResponseSuccess(res,wbuf,wbuf_sz);
+    mysql_free_result(res);
+}
+void constructFileListsInfoUserhistory(int file_cnt,char* wbuf,int wbuf_sz,char* username){
+
+}
+void constructFileListsInfoRandom(int file_cnt,char* wbuf,int wbuf_sz){
     //首先就是去数据库中查找这个个数是否足够，如果够了则继续组织数据
     std::cout<<"pppppppppppp\n";
     MysqlConn sql_conn{};
@@ -59,6 +94,7 @@ void constructFileRandom(int file_cnt,char* wbuf,int wbuf_sz){
 void fileListResponseSuccess(MYSQL_RES* res,char* wbuf,int wbuf_sz){
     //现在的情况下status=0表示成功
     //先读取数据库返回的记录
+    std::cout<<"enter fileListResponseSuccess\n";
     int row_num=mysql_num_rows(res);
     std::cout<<"row_num:"<<row_num<<'\n';
     int field_num=mysql_num_fields(res);

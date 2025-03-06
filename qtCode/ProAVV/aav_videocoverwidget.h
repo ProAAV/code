@@ -15,7 +15,7 @@ class VideoCoverWidget : public QWidget
     Q_OBJECT
 
 public:
-    explicit VideoCoverWidget(VideoDisplay* vdis,QWidget *parent = nullptr);
+    explicit VideoCoverWidget(QWidget *parent = nullptr);
     ~VideoCoverWidget();
 
 
@@ -38,6 +38,7 @@ signals:
     void sigRequestImg(QString& file_img_path);
 public slots:
     void sloRequestImg(QString& file_img_path);
+    void sloCloseDisplayer();
 
 };
 

@@ -31,7 +31,9 @@ void recvCallback(int fd,EventLoop& evloop){
     /*正确的做法应当是通过获取content-length的方式来判断后续内容是否还要继续接收，从而决定注册EPOLLIN还是
     EPOLLOUT*/
     char* recv_buffer=evloop.m_map[fd]->getReadBuffer();
+    memset(recv_buffer,0,RBUF_SIZE);
     int ret=recv(fd,recv_buffer,RBUF_SIZE,0);
+
     std::cout<<"first recv1:"<<recv_buffer<<'\n';
     std::cout<<"recv size:"<<strlen(recv_buffer)<<'\n';
     if(ret==0){
@@ -99,7 +101,11 @@ void sendCallback(int fd,EventLoop& evloop){
     int ret=send(fd,write_buffer,strlen(write_buffer),0);
 
     if(ret==-1){
-        std::cout<<"send failed\n";
+        printf("send() failed with error: %s\n", strerror(errno));
+        perror("send() failed");
+        close(fd);
+        epoll_ctl(evloop.m_epollfd,EPOLL_CTL_DEL,fd,nullptr);
+        evloop.m_map.erase(fd);
         return;
     }
     else {

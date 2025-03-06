@@ -22,29 +22,31 @@ VideoList::VideoList(QWidget *parent) :
     视频列表展示类
     */
 
-    VideoDisplay* vdis=new VideoDisplay();
-    m_widget_1=new VideoCoverWidget(vdis,this);
+    //VideoDisplay* vdis_1=new VideoDisplay();
+    m_widget_1=new VideoCoverWidget(this);
 
-    m_widget_1->setStyleSheet("QWidget{background-color: red;}");
+    //m_widget_1->setStyleSheet("QWidget{background-color: red;}");
     ui->gridLayout->addWidget(m_widget_1,0,0);
 
+    //VideoDisplay* vdis_2=new VideoDisplay();
+    m_widget_2=new VideoCoverWidget(this);
 
-    m_widget_2=new VideoCoverWidget(vdis,this);
-
-    m_widget_2->setStyleSheet("QWidget{background-color: green;}");
+    //m_widget_2->setStyleSheet("QWidget{background-color: green;}");
     ui->gridLayout->addWidget(m_widget_2,0,1);
 
 
 
+    //VideoDisplay* vdis_3=new VideoDisplay();
+    m_widget_3=new VideoCoverWidget(this);
 
-    m_widget_3=new VideoCoverWidget(vdis,this);
-
-    m_widget_3->setStyleSheet("QWidget{background-color: black;}");
+    //m_widget_3->setStyleSheet("QWidget{background-color: black;}");
     ui->gridLayout->addWidget(m_widget_3,1,0);
 
-    m_widget_4=new VideoCoverWidget(vdis,this);
 
-    m_widget_4->setStyleSheet("QWidget{background-color: blue;}");
+    //VideoDisplay* vdis_4=new VideoDisplay();
+    m_widget_4=new VideoCoverWidget(this);
+
+    //m_widget_4->setStyleSheet("QWidget{background-color: blue;}");
     ui->gridLayout->addWidget(m_widget_4,1,1);
 
     vec_wids.push_back(m_widget_1);
@@ -57,6 +59,20 @@ VideoList::VideoList(QWidget *parent) :
 VideoList::~VideoList()
 {
     delete ui;
+}
+
+void VideoList::setUserVideoListsInfo()
+{
+    NetWorkManager net_manager{};
+    QNetworkReply* reply=net_manager.http_get_user_video_lists_info(0);
+    sloShowFilesInfo(reply);
+}
+
+void VideoList::setUserHistoryVideoListsInfo()
+{
+    NetWorkManager net_manager{};
+    QNetworkReply* reply=net_manager.http_get_user_video_lists_info(1);
+    sloShowFilesInfo(reply);
 }
 
 void VideoList::sloShowFilesInfo(QNetworkReply* reply)
