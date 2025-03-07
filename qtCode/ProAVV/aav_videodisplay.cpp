@@ -1,5 +1,6 @@
 #include "aav_videodisplay.h"
 #include "ui_aav_videodisplay.h"
+#include"aav_usermanager.h"
 #include"aav_networkmanager.h"
 #include<QMediaPlayer>
 #include<QVideoWidget>
@@ -12,11 +13,12 @@
 #include<QVariantList>
 #include<QCloseEvent>
 #include<unistd.h>
-VideoDisplay::VideoDisplay(QWidget *parent) :
+VideoDisplay::VideoDisplay(QString& file_md5,QWidget *parent) :
     QWidget(parent),ui(new Ui::VideoDisplay),m_file_path("")
 {
     ui->setupUi(this);
     m_cnt_pause_player=0;
+    m_file_md5=file_md5;
     qDebug()<<"videodisplay init";
     /*
      视频播放类
@@ -129,9 +131,16 @@ void VideoDisplay::sloPlayerMove(int pos){
     m_player->setPosition(pos);
 }
 
-QString VideoDisplay::integraTime(qint64 tim){
+QString VideoDisplay::integraTime(qint64 tim,int opt){
+    //opt作为一个判断参数，0表示传入的不是秒数，1表示传入秒数
+    qint64 time_as=0;
+    if(opt==1){
+        time_as=tim;
+    }
     //tim是毫秒，先得到秒
-    qint64 time_as=tim/1000;
+    else if(opt==0){
+        time_as=tim/1000;
+    }
     //再计算小时数
     qint64 time_h=time_as/3600;
     //再计算分钟数
@@ -179,10 +188,10 @@ void VideoDisplay::play()
 
 }
 void VideoDisplay::updatePresentTimeLab(qint64 tim){
-    m_lab_present_time->setText(integraTime(tim));
+    m_lab_present_time->setText(integraTime(tim,0));
 }
 void VideoDisplay::updateDurationTimeLab(qint64 tim){
-    m_lab_dur_time->setText(integraTime(tim));
+    m_lab_dur_time->setText(integraTime(tim,0));
 }
 void VideoDisplay::sloPlayerPause(){
     //偶数次暂停，奇数次继续
@@ -239,7 +248,7 @@ void VideoDisplay::sloVolumeChanged(int position)
 void VideoDisplay::closeEvent(QCloseEvent *event)
 {
     qDebug()<<"close event";
-
+    int progress_value= m_slider_video_process->value();
     m_player->stop(); // 停止播放
 
 
@@ -248,8 +257,17 @@ void VideoDisplay::closeEvent(QCloseEvent *event)
     m_player->setMedia(QMediaContent());
 
     m_video_widget->close();
-    QWidget::closeEvent(event);
+
+    //更新用户历史观看记录表
+    QString username=UserManager::instance()->getUserName();
+    if(username!=""){
+        NetWorkManager net_manager{};
+
+        net_manager.http_insert_user_history_log(username,m_file_md5,progress_value);
+    }
     emit sigClose();
+    QWidget::closeEvent(event);
+
 }
 
 

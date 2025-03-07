@@ -37,9 +37,7 @@ VideoCoverWidget::VideoCoverWidget(QWidget *parent)
     m_vlayout->setStretchFactor(m_lab_intro,2);
 
 
-    m_lab_duration->setText("17:23");
-    m_lab_upload_date->setText("2025-2-1");
-    m_lab_intro->setText("hhhhhhhhhhhhhh");
+
     m_lab_img->setFixedSize(200,200);
 
     this->setLayout(m_vlayout);
@@ -57,7 +55,7 @@ bool VideoCoverWidget::eventFilter(QObject *obj, QEvent *event)
     if(obj==m_lab_img&&event->type()==QEvent::MouseButtonPress){
         qDebug()<<"clicked and show";
         qDebug()<<"file_path:"<<m_file_path;
-        m_vdis=new VideoDisplay(nullptr);
+        m_vdis=new VideoDisplay(m_file_md5,nullptr);
         connect(m_vdis,&VideoDisplay::sigClose,this,&VideoCoverWidget::sloCloseDisplayer);
 
         m_vdis->setVideoFilePath(m_file_path);
@@ -74,11 +72,33 @@ bool VideoCoverWidget::eventFilter(QObject *obj, QEvent *event)
 void VideoCoverWidget::sloRequestImg(QString& file_img_path)
 {
     NetWorkManager net_manager{};
-    qDebug()<<"file_img_path:"<<file_img_path;
-    if(file_img_path==""){
+    qDebug()<<this<<"file_img_path:"<<file_img_path;
+    //不仅仅时请求图片数据，顺便把文件数据一起设置了
+    //先转换duration秒为HH:MM:SS形式
+    bool ok;
+    qDebug()<<"m_duration:"<<m_duration;
+    QString integerPart = m_duration.split('.')[0];
+    qint64 duration=integerPart.toInt(&ok);
+    if(!ok){
+        qDebug()<<"error toInt";
+    }
+    qDebug()<<"duration:"<<duration;
+    QString dd=VideoDisplay::integraTime(duration,1);
+    qDebug()<<"dd:"<<dd;
+    m_lab_duration->setText(dd);
+    qDebug()<<"m_date_time:"<<m_date_time;
+
+    m_lab_upload_date->setText(m_date_time);
+    m_lab_intro->setText(m_intro);
+
+
+    if(file_img_path=="null"){
         qDebug()<<"file_img_path is null";
         //如果图片是空，那么直接使用qt自定义的一张图片展示封面
-
+        QPixmap pix_(":/aa7243c933094e26b927243ee7e2856f.png");
+        m_lab_img->setPixmap(pix_.scaled(m_lab_img->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation));
+        m_lab_img->setAlignment(Qt::AlignCenter);
+        m_lab_img->setScaledContents(true);
         return;
     }
     QNetworkReply* reply=net_manager.http_get_img_cover(file_img_path);
@@ -89,8 +109,8 @@ void VideoCoverWidget::sloRequestImg(QString& file_img_path)
         return;
     }
     m_lab_img->setPixmap(pix.scaled(m_lab_img->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation));
-            m_lab_img->setAlignment(Qt::AlignCenter);
-            m_lab_img->setScaledContents(true);
+    m_lab_img->setAlignment(Qt::AlignCenter);
+    m_lab_img->setScaledContents(true);
     reply->deleteLater();
 
 }

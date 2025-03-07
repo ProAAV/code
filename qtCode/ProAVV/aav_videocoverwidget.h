@@ -21,6 +21,10 @@ public:
 
     QString m_file_path;
     QString m_file_img_path;
+    QString m_file_md5;
+    QString m_date_time;
+    QString m_duration;
+    QString m_intro;
 
 
     Ui::VideoCoverWidget *ui;

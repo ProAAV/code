@@ -19,7 +19,8 @@ class UsrPage : public QWidget
 public:
     explicit UsrPage(QWidget *parent = nullptr);
     ~UsrPage();
-
+    void setUserInfo();QLabel* lab_username;
+    QLabel* lab_usernickname;
 private:
     Ui::UsrPage *ui;
     QStackedWidget* m_stack_wid;
@@ -28,6 +29,10 @@ private:
     QPushButton* m_btn_history;
     VideoList* m_video_lists_wid;
     VideoList* m_video_lists_history_wid;
+
+    QPushButton* m_btn_logout;
+
+
 protected:
     void showEvent(QShowEvent *event) override;
 };

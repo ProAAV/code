@@ -23,6 +23,12 @@ CMakeFiles/video_server.dir/api/api_register.cc.o
  /home/hcc/share/code/project/code/backend/video_/base/config_read.h
  /home/hcc/share/code/project/code/backend/video_/base/mongoose.h
  /home/hcc/share/code/project/code/backend/video_/base/mysqlconn.h
+CMakeFiles/video_server.dir/api/api_update_user_history.cc.o
+ /home/hcc/share/code/project/code/backend/video_/api/api_update_user_history.cc
+ /home/hcc/share/code/project/code/backend/video_/api/api_update_user_history.h
+ /home/hcc/share/code/project/code/backend/video_/base/config_read.h
+ /home/hcc/share/code/project/code/backend/video_/base/mongoose.h
+ /home/hcc/share/code/project/code/backend/video_/base/mysqlconn.h
 CMakeFiles/video_server.dir/api/api_upload.cc.o
  /home/hcc/share/FastDfs/fastdfs/client/client_func.h
  /home/hcc/share/FastDfs/fastdfs/client/client_global.h
@@ -42,6 +48,12 @@ CMakeFiles/video_server.dir/api/api_upload.cc.o
  /home/hcc/share/code/project/code/backend/video_/base/file_info.h
  /home/hcc/share/code/project/code/backend/video_/base/mongoose.h
  /home/hcc/share/code/project/code/backend/video_/base/mysqlconn.h
+CMakeFiles/video_server.dir/api/api_user_info.cc.o
+ /home/hcc/share/code/project/code/backend/video_/api/api_user_info.cc
+ /home/hcc/share/code/project/code/backend/video_/api/api_user_info.h
+ /home/hcc/share/code/project/code/backend/video_/base/config_read.h
+ /home/hcc/share/code/project/code/backend/video_/base/mongoose.h
+ /home/hcc/share/code/project/code/backend/video_/base/mysqlconn.h
 CMakeFiles/video_server.dir/base/config_read.cc.o
  /home/hcc/share/code/project/code/backend/video_/base/common.h
  /home/hcc/share/code/project/code/backend/video_/base/config_read.cc
@@ -53,7 +65,9 @@ CMakeFiles/video_server.dir/base/http_layer.cc.o
  /home/hcc/share/code/project/code/backend/video_/api/api_files_list.h
  /home/hcc/share/code/project/code/backend/video_/api/api_login.h
  /home/hcc/share/code/project/code/backend/video_/api/api_register.h
+ /home/hcc/share/code/project/code/backend/video_/api/api_update_user_history.h
  /home/hcc/share/code/project/code/backend/video_/api/api_upload.h
+ /home/hcc/share/code/project/code/backend/video_/api/api_user_info.h
  /home/hcc/share/code/project/code/backend/video_/base/common.h
  /home/hcc/share/code/project/code/backend/video_/base/config_read.h
  /home/hcc/share/code/project/code/backend/video_/base/file_info.h

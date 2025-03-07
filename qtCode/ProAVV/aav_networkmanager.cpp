@@ -253,6 +253,9 @@ bool NetWorkManager::http_register(const QString &account, const QString &passwo
 
 QNetworkReply* NetWorkManager::http_get_user_video_lists_info(int opt)
 {
+    //查看为什么出现点击一次btn_user_page结果调用两次http_get_user_video_lists_info的原因
+
+
     //利用opt实现代码复用,对于user_video_lists_info和user_history_video_lists_info这两个请求来说，通过opt传入参数不同区分,0,1
 
     /*QString s="http://192.168.208.128:8888/api/filesList?files=1&strategy=random";
@@ -300,6 +303,39 @@ QNetworkReply* NetWorkManager::http_get_user_video_lists_info(int opt)
     qDebug()<<"http_get_user_video_lists_info out";
     return reply;
 
+}
+
+void NetWorkManager::http_insert_user_history_log(QString& username,QString& file_md5,int progress_)
+{
+    QString s="http://192.168.208.128:8888/api/uphistory";
+    QUrl url(s);
+    QNetworkRequest request(url);
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+    QJsonObject root;
+
+    root.insert("username",username);
+    root.insert("file_md5",file_md5);
+    root.insert("progress_data",QString::number(progress_));
+    QJsonDocument js_doc(root);
+    QByteArray post_data = js_doc.toJson(QJsonDocument::Compact);
+    QNetworkReply* reply=m_manager->post(request,post_data);
+    QEventLoop loop;
+    connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
+    loop.exec();
+}
+
+QNetworkReply* NetWorkManager::http_get_user_info()
+{
+    QString username=UserManager::instance()->getUserName();
+    QString s="http://192.168.208.128:8888/api/userinfo?username="+username;
+    qDebug()<<"http_get_user_info:"<<s;
+    QUrl url(s);
+    QNetworkRequest request(url);
+    QNetworkReply* reply=m_manager->get(request);
+    QEventLoop loop;
+    connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
+    loop.exec();
+    return reply;
 }
 
 

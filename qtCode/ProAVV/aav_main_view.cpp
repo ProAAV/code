@@ -47,26 +47,19 @@ MainView::MainView(QWidget *parent)
 
 
 
-    /*connect(ui->btn_usr_page,&QPushButton::clicked,ui->stackw,[=](){
 
-        ui->stackw->setCurrentWidget(w1);
-    });*/
     connect(ui->btn_video_list,&QPushButton::clicked,ui->stackw,[=](){
         ui->stackw->setCurrentWidget(video_page_wid);
     });
 
     connect(ui->btn_usr_page,&QPushButton::clicked,this,&MainView::sloBtnUserPageHandle);
-    /*VideoDisplay* vdis=new VideoDisplay();
-
-    connect(ui->btn_video_disp,&QPushButton::clicked,ui->stackw,[=](){
-        vdis->show();
-
-
-    });*/
 
     connect(ui->btn_upload,&QPushButton::clicked,this,[=](){
         if(UserManager::instance()->getUserName()==""){
             qDebug()<<"user is not login,can not upload files";
+            m_login_and_regis_wid=new UserLoginAndRegis();
+            m_login_and_regis_wid->show();
+            connect(m_login_and_regis_wid->m_login_wid,&UserLogin::sigLoginSuccess,this,&MainView::sloUserLoginSuccess2);
             return;
         }
         m_wid_upload_select=new UploadSelect();
@@ -86,20 +79,27 @@ void MainView::sloBtnUserPageHandle()
     //用户点击usr_page页面时会先进行用户登录验证，如果用户验证信息过期或者没有验证则打开一个userlogin页面
     //要是用户验证信息未过期，直接显示userpage
     //暂时没有实现token功能
+    if(UserManager::instance()->getUserName()!=""){
+        qDebug()<<"enter sloBtnUserPageHandle";
+        //m_userpage->setUserInfo();
+        ui->stackw->setCurrentWidget(m_userpage);
+        return;
+    }
+
     m_login_and_regis_wid=new UserLoginAndRegis();
     m_login_and_regis_wid->show();
-
-
     connect(m_login_and_regis_wid->m_login_wid,&UserLogin::sigLoginSuccess,this,&MainView::sloUserLoginSuccess);
-    /*UserLogin* ulogin=new UserLogin();
-    connect(ulogin,&UserLogin::sigLoginSuccess,this,[=](){
-        ulogin->show();
-    });
-            ulogin->show();*/
+
 }
 
 void MainView::sloUserLoginSuccess()
 {
     m_login_and_regis_wid->close();
+    m_userpage->setUserInfo();
     ui->stackw->setCurrentWidget(m_userpage);
+}
+
+void MainView::sloUserLoginSuccess2()
+{
+    m_login_and_regis_wid->close();
 }

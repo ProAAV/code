@@ -13,3 +13,4 @@ void constructFileListsInfoUserowned(int file_cnt,char* wbuf,int wbuf_sz,char* u
 void constructFileListsInfoUserhistory(int file_cnt,char* wbuf,int wbuf_sz,char* username);
 
 void fileListResponseSuccess(MYSQL_RES* res,char* wbuf,int wbuf_sz);
+void fileListResponseFailed(MYSQL_RES* res,char* wbuf,int wbuf_sz);

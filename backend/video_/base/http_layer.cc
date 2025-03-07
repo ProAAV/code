@@ -4,6 +4,8 @@
 #include"../api/api_files_list.h"
 #include"../api/api_login.h"
 #include"../api/api_register.h"
+#include"../api/api_update_user_history.h"
+#include"../api/api_user_info.h"
 #include<string.h>
 #include<iostream>
 HttpServer::HttpServer(const char* msg,ConfRead& conf_reader):m_msg(msg),m_conf_reader(conf_reader){
@@ -41,6 +43,13 @@ void HttpServer::http_route_url(char* wbuf,int wbuf_sz){
     else if(url=="/api/register"){
         apiRegister(wbuf,wbuf_sz,m_http_msg,m_conf_reader);
     }
+    else if(url=="/api/uphistory"){
+        apiHandleUpdateUserHistory(wbuf,wbuf_sz,m_http_msg,m_conf_reader);
+    }
+    else if(url=="/api/userinfo"){
+        apiUserInfo(wbuf,wbuf_sz,m_http_msg,m_conf_reader);
+    }
+
 }
 int HttpServer::http_get_content_length_from_request_header(){
     struct mg_str* content_len=mg_http_get_header(&m_http_msg,"content-length");

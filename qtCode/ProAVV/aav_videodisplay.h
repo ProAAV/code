@@ -17,11 +17,11 @@ class VideoDisplay : public QWidget
     Q_OBJECT
 
 public:
-    explicit VideoDisplay(QWidget *parent = nullptr);
+    explicit VideoDisplay(QString& file_md5,QWidget *parent = nullptr);
     ~VideoDisplay() override;
     void updatePresentTimeLab(qint64 tim);
     void updateDurationTimeLab(qint64 tim);
-    QString integraTime(qint64 tim);
+    static QString integraTime(qint64 tim,int opt);
     void setVideoFilePath(QString& file_path);
     void play();
 private:
@@ -38,6 +38,7 @@ private:
     QMenu* m_menu_rate;
     VolumeButton* m_btn_vlm;
     QString m_file_path;
+    QString m_file_md5;
 public slots:
     void sloSetSliderDura(qint64 dur);
     void sloSetSliderPos(qint64 dur);

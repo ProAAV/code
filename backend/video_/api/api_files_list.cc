@@ -43,6 +43,7 @@ void apiFilesList(char* wbuf,int wbuf_sz,struct mg_http_message hm,ConfRead& con
         constructFileListsInfoUserowned(file_cnt,wbuf,wbuf_sz,par_username_value);
     }
     else if(strcmp(par_strategy_value,"userhistory")==0){
+        std::cout<<"enter userhistory\n";
         constructFileListsInfoUserhistory(file_cnt,wbuf,wbuf_sz,par_username_value);
     }
     else{
@@ -65,7 +66,18 @@ void constructFileListsInfoUserowned(int file_cnt,char* wbuf,int wbuf_sz,char* u
     mysql_free_result(res);
 }
 void constructFileListsInfoUserhistory(int file_cnt,char* wbuf,int wbuf_sz,char* username){
-
+    MysqlConn sql_conn{};
+    char query_[256];
+    sprintf(query_,"select B.*,A.date_time,A.progress_data from  aav_user_history_view as A inner join aav_file_info as B on A.file_md5=B.file_md5 where A.username='%s' order by A.date_time desc limit 6 ",username);
+    MYSQL_RES* res=sql_conn.mysqlQuery(query_);
+    
+    if(mysql_num_rows(res)<=0){
+        fileListResponseFailed(res,wbuf,wbuf_sz);
+        mysql_free_result(res);
+        return;
+    }
+    fileListResponseSuccess(res,wbuf,wbuf_sz);
+    mysql_free_result(res);
 }
 void constructFileListsInfoRandom(int file_cnt,char* wbuf,int wbuf_sz){
     //首先就是去数据库中查找这个个数是否足够，如果够了则继续组织数据
@@ -84,7 +96,8 @@ void constructFileListsInfoRandom(int file_cnt,char* wbuf,int wbuf_sz){
         mysql_free_result(res);
         return;
     }*/
-    sprintf(query_,"select * from aav_file_info where id%%2 = floor(rand()*2) limit 10");
+
+    sprintf(query_,"select B.*,A.date_time,A.progress_data from  aav_user_history_view as A inner join aav_file_info as B on A.file_md5=B.file_md5 where B.id%%2 = floor(rand()*2) limit 10");
     res=sql_conn.mysqlQuery(query_);
     std::cout<<"000000\n";
     //组织回发数据
@@ -129,4 +142,8 @@ void fileListResponseSuccess(MYSQL_RES* res,char* wbuf,int wbuf_sz){
     }
     memcpy(wbuf,response.c_str(),response.size());
     std::cout<<"response success\n";
+}
+
+void fileListResponseFailed(MYSQL_RES* res,char* wbuf,int wbuf_sz){
+
 }

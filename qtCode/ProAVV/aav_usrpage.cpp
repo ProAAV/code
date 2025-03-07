@@ -4,7 +4,11 @@
 #include<QPushButton>
 #include<QHBoxLayout>
 #include<QVBoxLayout>
-
+#include"aav_networkmanager.h"
+#include<QJsonDocument>
+#include<QJsonObject>
+#include<QJsonArray>
+#include<QJsonValue>
 UsrPage::UsrPage(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::UsrPage)
@@ -20,9 +24,22 @@ UsrPage::UsrPage(QWidget *parent) :
 
     //暂时先这样设置m_user_info_wid的布局
     QHBoxLayout* hlayout_user_info_wid=new QHBoxLayout(m_user_info_wid);
-    QLabel* lab_username=new QLabel(m_user_info_wid);
+    lab_username=new QLabel(m_user_info_wid);
+    lab_usernickname=new QLabel(m_user_info_wid);
+    m_btn_logout=new QPushButton(m_user_info_wid);
+    m_btn_logout->setText("退出登录");
+    QLabel* lab_tips_username=new QLabel(m_user_info_wid);
+    QLabel* lab_tips_usernickname=new QLabel(m_user_info_wid);
+    lab_tips_username->setText("账号:");
+    lab_tips_usernickname->setText("昵称:");
+
+    hlayout_user_info_wid->addWidget(lab_tips_username);
     hlayout_user_info_wid->addWidget(lab_username);
-    lab_username->setText("hcc");
+    hlayout_user_info_wid->addWidget(lab_tips_usernickname);
+    hlayout_user_info_wid->addWidget(lab_usernickname);
+    hlayout_user_info_wid->addWidget(m_btn_logout);
+
+
 
     m_btn_videos=new QPushButton(this);
     m_btn_history=new QPushButton(this);
@@ -33,11 +50,12 @@ UsrPage::UsrPage(QWidget *parent) :
     m_stack_wid->addWidget(m_video_lists_history_wid);
 
     connect(m_btn_videos,&QPushButton::clicked,this,[=](){
-        //m_video_lists_wid->setUserVideoListsInfo();
+        m_video_lists_wid->setUserVideoListsInfo();
+        qDebug()<<"111111111111111111111111111111111111:";
         m_stack_wid->setCurrentWidget(m_video_lists_wid);
     });
     connect(m_btn_history,&QPushButton::clicked,this,[=](){
-        //m_video_lists_history_wid->setUserHistoryVideoListsInfo();
+        m_video_lists_history_wid->setUserHistoryVideoListsInfo();
         m_stack_wid->setCurrentWidget(m_video_lists_history_wid);
     });
 
@@ -64,9 +82,36 @@ UsrPage::~UsrPage()
     delete ui;
 }
 
+void UsrPage::setUserInfo()
+{
+    NetWorkManager net_manager{};
+    QNetworkReply* reply=net_manager.http_get_user_info();
+    QByteArray byte_array=reply->readAll();
+    qDebug()<<"hhhhhhhhhhhhh:"<<byte_array;
+    QJsonDocument json_docm=QJsonDocument::fromJson(byte_array);
+    if(json_docm.isNull()){
+        qDebug()<<"json document is null";
+        return;
+    }
+    QJsonObject obj_root=json_docm.object();
+    QString status=obj_root.value("status").toString();
+    QString username=obj_root.value("username").toString();
+    QString nickname=obj_root.value("nickname").toString();
+    if(status=="0"){
+        qDebug()<<"user info get failed";
+        return;
+    }
+
+    lab_username->setText(username);
+    lab_usernickname->setText(nickname);
+}
+
 void UsrPage::showEvent(QShowEvent *event)
 {
     //显示出来后直接发送一次http请求得到user_video_lists_info的信息显示出来
-    m_video_lists_wid->setUserVideoListsInfo();
+    qDebug()<<"enter showEvent";
     QWidget::showEvent(event);
+
+    m_video_lists_wid->setUserVideoListsInfo();
+
 }

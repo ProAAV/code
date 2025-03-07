@@ -24,6 +24,8 @@ public:
     bool http_login(const QString& account,const QString& password);
     bool http_register(const QString& account,const QString& password,const QString& nickname,const QString& repassword);
     QNetworkReply* http_get_user_video_lists_info(int opt);
+    void http_insert_user_history_log(QString& username,QString& file_md5,int progress_);
+    QNetworkReply* http_get_user_info();
 private:
     QNetworkAccessManager* m_manager;
     QNetworkReply* m_files_info_reply;

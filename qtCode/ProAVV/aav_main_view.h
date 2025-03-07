@@ -30,6 +30,7 @@ signals:
 public slots:
     void sloBtnUserPageHandle();
     void sloUserLoginSuccess();
+    void sloUserLoginSuccess2();
 
 };
 #endif // AVV_MAIN_VIEW_H

@@ -560,7 +560,7 @@ int uploadFileToFastdfs(CfileInfo& file_info,ConfRead& conf_reader,const bool& i
     conn.mysqlQuery(query);
     //之后更新aav_user_file这张表
     std::string username=file_info.getFileInfoMap().at("username");
-    sprintf(query,"insert into `aav_user_file` (username,file_md5) value('%s','%s')",username.c_str(),update_file_md5.c_str());
+    sprintf(query,"insert into `aav_user_file` (username,file_md5,date_time) value('%s','%s',now())",username.c_str(),update_file_md5.c_str());
     conn.mysqlQuery(query);
 
     tracker_close_connection(trackerServer);

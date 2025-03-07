@@ -204,6 +204,33 @@ api/api_register.cc.s:
 	$(MAKE) -f CMakeFiles/video_server.dir/build.make CMakeFiles/video_server.dir/api/api_register.cc.s
 .PHONY : api/api_register.cc.s
 
+api/api_update_user_history.o: api/api_update_user_history.cc.o
+
+.PHONY : api/api_update_user_history.o
+
+# target to build an object file
+api/api_update_user_history.cc.o:
+	$(MAKE) -f CMakeFiles/video_server.dir/build.make CMakeFiles/video_server.dir/api/api_update_user_history.cc.o
+.PHONY : api/api_update_user_history.cc.o
+
+api/api_update_user_history.i: api/api_update_user_history.cc.i
+
+.PHONY : api/api_update_user_history.i
+
+# target to preprocess a source file
+api/api_update_user_history.cc.i:
+	$(MAKE) -f CMakeFiles/video_server.dir/build.make CMakeFiles/video_server.dir/api/api_update_user_history.cc.i
+.PHONY : api/api_update_user_history.cc.i
+
+api/api_update_user_history.s: api/api_update_user_history.cc.s
+
+.PHONY : api/api_update_user_history.s
+
+# target to generate assembly for a file
+api/api_update_user_history.cc.s:
+	$(MAKE) -f CMakeFiles/video_server.dir/build.make CMakeFiles/video_server.dir/api/api_update_user_history.cc.s
+.PHONY : api/api_update_user_history.cc.s
+
 api/api_upload.o: api/api_upload.cc.o
 
 .PHONY : api/api_upload.o
@@ -230,6 +257,33 @@ api/api_upload.s: api/api_upload.cc.s
 api/api_upload.cc.s:
 	$(MAKE) -f CMakeFiles/video_server.dir/build.make CMakeFiles/video_server.dir/api/api_upload.cc.s
 .PHONY : api/api_upload.cc.s
+
+api/api_user_info.o: api/api_user_info.cc.o
+
+.PHONY : api/api_user_info.o
+
+# target to build an object file
+api/api_user_info.cc.o:
+	$(MAKE) -f CMakeFiles/video_server.dir/build.make CMakeFiles/video_server.dir/api/api_user_info.cc.o
+.PHONY : api/api_user_info.cc.o
+
+api/api_user_info.i: api/api_user_info.cc.i
+
+.PHONY : api/api_user_info.i
+
+# target to preprocess a source file
+api/api_user_info.cc.i:
+	$(MAKE) -f CMakeFiles/video_server.dir/build.make CMakeFiles/video_server.dir/api/api_user_info.cc.i
+.PHONY : api/api_user_info.cc.i
+
+api/api_user_info.s: api/api_user_info.cc.s
+
+.PHONY : api/api_user_info.s
+
+# target to generate assembly for a file
+api/api_user_info.cc.s:
+	$(MAKE) -f CMakeFiles/video_server.dir/build.make CMakeFiles/video_server.dir/api/api_user_info.cc.s
+.PHONY : api/api_user_info.cc.s
 
 base/config_read.o: base/config_read.cc.o
 
@@ -465,9 +519,15 @@ help:
 	@echo "... api/api_register.o"
 	@echo "... api/api_register.i"
 	@echo "... api/api_register.s"
+	@echo "... api/api_update_user_history.o"
+	@echo "... api/api_update_user_history.i"
+	@echo "... api/api_update_user_history.s"
 	@echo "... api/api_upload.o"
 	@echo "... api/api_upload.i"
 	@echo "... api/api_upload.s"
+	@echo "... api/api_user_info.o"
+	@echo "... api/api_user_info.i"
+	@echo "... api/api_user_info.s"
 	@echo "... base/config_read.o"
 	@echo "... base/config_read.i"
 	@echo "... base/config_read.s"

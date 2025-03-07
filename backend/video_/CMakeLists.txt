@@ -16,6 +16,8 @@ set(SOURCES
     api/api_files_list.cc
     api/api_login.cc
     api/api_register.cc
+    api/api_update_user_history.cc
+    api/api_user_info.cc
 )
 add_executable(video_server ${SOURCES})
 add_compile_options(-g)
