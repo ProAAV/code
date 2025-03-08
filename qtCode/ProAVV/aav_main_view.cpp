@@ -9,11 +9,13 @@
 #include"aav_networkmanager.h"
 #include"aav_userlogin.h"
 #include"aav_usermanager.h"
+#include"aav_networkthread.h"
 MainView::MainView(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::MainView)
 {
     ui->setupUi(this);
+    m_wid_upload_select=nullptr;
     /*
      暂时是提供两个窗口，一个是usrpage,一个是videolist,通过左边导航栏不同按钮可以
      切换不同的窗口，usrpage窗口就是用户窗口，提供用户各种信息，videolist窗口是视
@@ -28,12 +30,17 @@ MainView::MainView(QWidget *parent)
     VideoList* video_list_wid=new VideoList(this);
     QWidget* video_page_wid=new QWidget(this);
 
-    QLineEdit* ledit_search=new QLineEdit(video_page_wid);
+    m_search_video_lists=new VideoList(this);
+
+
+    m_ledit_search=new LineEditSearch(video_page_wid);
     QPushButton* btn_search=new QPushButton(video_page_wid);
     btn_search->setText("搜索");
+    connect(btn_search,&QPushButton::clicked,this,&MainView::sloBtnSearch);
+
 
     QHBoxLayout* hlayout=new QHBoxLayout();
-    hlayout->addWidget(ledit_search);
+    hlayout->addWidget(m_ledit_search);
     hlayout->addWidget(btn_search);
     QVBoxLayout* vlayout=new QVBoxLayout(video_page_wid);
     vlayout->addLayout(hlayout);
@@ -44,7 +51,7 @@ MainView::MainView(QWidget *parent)
 
     ui->stackw->addWidget(video_page_wid);
     ui->stackw->addWidget(m_userpage);
-
+    ui->stackw->addWidget(m_search_video_lists);
 
 
 
@@ -62,7 +69,7 @@ MainView::MainView(QWidget *parent)
             connect(m_login_and_regis_wid->m_login_wid,&UserLogin::sigLoginSuccess,this,&MainView::sloUserLoginSuccess2);
             return;
         }
-        m_wid_upload_select=new UploadSelect();
+        if(!m_wid_upload_select)m_wid_upload_select=new UploadSelect();
         m_wid_upload_select->show();
     });
 
@@ -102,4 +109,18 @@ void MainView::sloUserLoginSuccess()
 void MainView::sloUserLoginSuccess2()
 {
     m_login_and_regis_wid->close();
+    if(!m_wid_upload_select)m_wid_upload_select=new UploadSelect();
+    m_wid_upload_select->show();
+}
+
+void MainView::sloBtnSearch()
+{
+    //先向服务器发送用户搜索日志插入请求
+    QString search_key=m_ledit_search->text();
+    NetWorkThread* thread=new NetWorkThread(this);
+    thread->m_net_manager->http_insert_search_log(search_key);
+    //再返回根据关键字查找到的所有的视频信息
+
+    ui->stackw->setCurrentWidget(m_search_video_lists);
+    thread->m_net_manager->http_get_search_video_lists_info(m_search_video_lists,search_key);
 }

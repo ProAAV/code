@@ -59,9 +59,12 @@ bool VideoCoverWidget::eventFilter(QObject *obj, QEvent *event)
         connect(m_vdis,&VideoDisplay::sigClose,this,&VideoCoverWidget::sloCloseDisplayer);
 
         m_vdis->setVideoFilePath(m_file_path);
+        qint64 pro=m_progress_data.toInt();
+        qDebug()<<"pro :::::::"<<pro;
 
         m_vdis->show();
         m_vdis->play();
+        m_vdis->setVideoFileProgressData(pro);
     }
 
 

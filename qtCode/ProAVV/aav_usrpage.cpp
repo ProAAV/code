@@ -5,6 +5,7 @@
 #include<QHBoxLayout>
 #include<QVBoxLayout>
 #include"aav_networkmanager.h"
+#include"aav_networkthread.h"
 #include<QJsonDocument>
 #include<QJsonObject>
 #include<QJsonArray>
@@ -84,9 +85,12 @@ UsrPage::~UsrPage()
 
 void UsrPage::setUserInfo()
 {
-    NetWorkManager net_manager{};
-    QNetworkReply* reply=net_manager.http_get_user_info();
-    QByteArray byte_array=reply->readAll();
+    /*NetWorkManager net_manager{};
+    QNetworkReply* reply=net_manager.http_get_user_info();*/
+    NetWorkThread* thread=new NetWorkThread();
+    thread->start();
+    thread->m_net_manager->http_get_user_info(lab_username,lab_usernickname);
+    /*QByteArray byte_array=reply->readAll();
     qDebug()<<"hhhhhhhhhhhhh:"<<byte_array;
     QJsonDocument json_docm=QJsonDocument::fromJson(byte_array);
     if(json_docm.isNull()){
@@ -103,7 +107,7 @@ void UsrPage::setUserInfo()
     }
 
     lab_username->setText(username);
-    lab_usernickname->setText(nickname);
+    lab_username->setText(nickname);*/
 }
 
 void UsrPage::showEvent(QShowEvent *event)

@@ -11,6 +11,12 @@ CMakeFiles/video_server.dir/api/api_files_list.cc.o: ../base/config_read.h
 CMakeFiles/video_server.dir/api/api_files_list.cc.o: ../base/mongoose.h
 CMakeFiles/video_server.dir/api/api_files_list.cc.o: ../base/mysqlconn.h
 
+CMakeFiles/video_server.dir/api/api_get_search_log.cc.o: ../api/api_get_search_log.cc
+CMakeFiles/video_server.dir/api/api_get_search_log.cc.o: ../api/api_get_search_log.h
+CMakeFiles/video_server.dir/api/api_get_search_log.cc.o: ../base/config_read.h
+CMakeFiles/video_server.dir/api/api_get_search_log.cc.o: ../base/mongoose.h
+CMakeFiles/video_server.dir/api/api_get_search_log.cc.o: ../base/mysqlconn.h
+
 CMakeFiles/video_server.dir/api/api_login.cc.o: ../api/api_login.cc
 CMakeFiles/video_server.dir/api/api_login.cc.o: ../api/api_login.h
 CMakeFiles/video_server.dir/api/api_login.cc.o: ../base/config_read.h
@@ -22,6 +28,18 @@ CMakeFiles/video_server.dir/api/api_register.cc.o: ../api/api_register.h
 CMakeFiles/video_server.dir/api/api_register.cc.o: ../base/config_read.h
 CMakeFiles/video_server.dir/api/api_register.cc.o: ../base/mongoose.h
 CMakeFiles/video_server.dir/api/api_register.cc.o: ../base/mysqlconn.h
+
+CMakeFiles/video_server.dir/api/api_search.cc.o: ../api/api_search.cc
+CMakeFiles/video_server.dir/api/api_search.cc.o: ../api/api_search.h
+CMakeFiles/video_server.dir/api/api_search.cc.o: ../base/config_read.h
+CMakeFiles/video_server.dir/api/api_search.cc.o: ../base/mongoose.h
+CMakeFiles/video_server.dir/api/api_search.cc.o: ../base/mysqlconn.h
+
+CMakeFiles/video_server.dir/api/api_search_log.cc.o: ../api/api_search_log.cc
+CMakeFiles/video_server.dir/api/api_search_log.cc.o: ../api/api_search_log.h
+CMakeFiles/video_server.dir/api/api_search_log.cc.o: ../base/config_read.h
+CMakeFiles/video_server.dir/api/api_search_log.cc.o: ../base/mongoose.h
+CMakeFiles/video_server.dir/api/api_search_log.cc.o: ../base/mysqlconn.h
 
 CMakeFiles/video_server.dir/api/api_update_user_history.cc.o: ../api/api_update_user_history.cc
 CMakeFiles/video_server.dir/api/api_update_user_history.cc.o: ../api/api_update_user_history.h
@@ -62,8 +80,11 @@ CMakeFiles/video_server.dir/base/file_info.cc.o: ../base/file_info.cc
 CMakeFiles/video_server.dir/base/file_info.cc.o: ../base/file_info.h
 
 CMakeFiles/video_server.dir/base/http_layer.cc.o: ../api/api_files_list.h
+CMakeFiles/video_server.dir/base/http_layer.cc.o: ../api/api_get_search_log.h
 CMakeFiles/video_server.dir/base/http_layer.cc.o: ../api/api_login.h
 CMakeFiles/video_server.dir/base/http_layer.cc.o: ../api/api_register.h
+CMakeFiles/video_server.dir/base/http_layer.cc.o: ../api/api_search.h
+CMakeFiles/video_server.dir/base/http_layer.cc.o: ../api/api_search_log.h
 CMakeFiles/video_server.dir/base/http_layer.cc.o: ../api/api_update_user_history.h
 CMakeFiles/video_server.dir/base/http_layer.cc.o: ../api/api_upload.h
 CMakeFiles/video_server.dir/base/http_layer.cc.o: ../api/api_user_info.h

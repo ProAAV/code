@@ -170,6 +170,11 @@ void VideoDisplay::setVideoFilePath(QString &file_path)
     m_file_path=file_path;
 }
 
+void VideoDisplay::setVideoFileProgressData(qint64 progress)
+{
+    m_player->setPosition(progress);
+}
+
 void VideoDisplay::play()
 {
     //播放视频

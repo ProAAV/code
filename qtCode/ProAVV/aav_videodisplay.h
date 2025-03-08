@@ -23,6 +23,7 @@ public:
     void updateDurationTimeLab(qint64 tim);
     static QString integraTime(qint64 tim,int opt);
     void setVideoFilePath(QString& file_path);
+    void setVideoFileProgressData(qint64 progress);
     void play();
 private:
     Ui::VideoDisplay *ui;

@@ -11,6 +11,7 @@
 #include"aav_videodisplay.h"
 #include<QJsonDocument>
 #include<QJsonObject>
+#include"aav_networkthread.h"
 #include<QJsonArray>
 #include<QJsonValue>
 VideoList::VideoList(QWidget *parent) :
@@ -63,16 +64,18 @@ VideoList::~VideoList()
 
 void VideoList::setUserVideoListsInfo()
 {
-    NetWorkManager net_manager{};
-    QNetworkReply* reply=net_manager.http_get_user_video_lists_info(0);
-    sloShowFilesInfo(reply);
+    /*NetWorkManager net_manager{};
+    QNetworkReply* reply=net_manager.http_get_user_video_lists_info(0);*/
+    NetWorkThread* thread=new NetWorkThread(this);
+    thread->m_net_manager->http_get_user_video_lists_info(0,this);
+    //sloShowFilesInfo(reply);
 }
 
 void VideoList::setUserHistoryVideoListsInfo()
 {
-    NetWorkManager net_manager{};
-    QNetworkReply* reply=net_manager.http_get_user_video_lists_info(1);
-    sloShowFilesInfo(reply);
+    NetWorkThread* thread=new NetWorkThread(this);
+    thread->m_net_manager->http_get_user_video_lists_info(1,this);
+    //sloShowFilesInfo(reply);
 }
 
 void VideoList::sloShowFilesInfo(QNetworkReply* reply)
@@ -102,10 +105,13 @@ void VideoList::sloShowFilesInfo(QNetworkReply* reply)
         QString file_md5=sobj.value("file_md5").toString();
         QString date_time=sobj.value("date_time").toString();
         QString file_playback_duration=sobj.value("file_playback_duration").toString();
+        QString progress_data=sobj.value("progress_data").toString();
         vec_wids[i]->m_file_path=file_path;
         vec_wids[i]->m_file_img_path=file_img_path;
         vec_wids[i]->m_intro=file_title;
         vec_wids[i]->m_file_md5=file_md5;
+        qDebug()<<"m_progress_data"<<progress_data;
+        vec_wids[i]->m_progress_data=progress_data;
         qDebug()<<"send date_time:"<<date_time;
         vec_wids[i]->m_date_time=date_time;
         vec_wids[i]->m_duration=file_playback_duration;

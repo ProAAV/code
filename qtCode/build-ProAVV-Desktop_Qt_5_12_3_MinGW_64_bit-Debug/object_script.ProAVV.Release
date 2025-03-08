@@ -1,5 +1,7 @@
+release/aav_lineeditsearch.o
 release/aav_main_view.o
 release/aav_networkmanager.o
+release/aav_networkthread.o
 release/aav_uploadfile.o
 release/aav_uploadselect.o
 release/aav_userlogin.o
@@ -14,6 +16,7 @@ release/aav_volumebutton.o
 release/aav_widgetvlume.o
 release/main.o
 release/qrc_src.o
+release/moc_aav_lineeditsearch.o
 release/moc_aav_main_view.o
 release/moc_aav_networkmanager.o
 release/moc_aav_uploadfile.o

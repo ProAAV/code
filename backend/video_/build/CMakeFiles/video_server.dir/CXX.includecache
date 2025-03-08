@@ -6,21 +6,37 @@
 
 #IncludeRegexTransform: 
 
-/home/hcc/share/code/project/code/backend/video_/api/api_user_info.cc
-api_user_info.h
-/home/hcc/share/code/project/code/backend/video_/api/api_user_info.h
-iostream
+/home/hcc/share/code/project/code/backend/video_/api/api_files_list.cc
+api_files_list.h
+/home/hcc/share/code/project/code/backend/video_/api/api_files_list.h
+../base/common.h
+/home/hcc/share/code/project/code/backend/video_/base/common.h
+string.h
 -
 json/json.h
 -
+iostream
+-
 
-/home/hcc/share/code/project/code/backend/video_/api/api_user_info.h
+/home/hcc/share/code/project/code/backend/video_/api/api_files_list.h
 ../base/config_read.h
 /home/hcc/share/code/project/code/backend/video_/base/config_read.h
 ../base/mysqlconn.h
 /home/hcc/share/code/project/code/backend/video_/base/mysqlconn.h
 ../base/mongoose.h
 /home/hcc/share/code/project/code/backend/video_/base/mongoose.h
+
+/home/hcc/share/code/project/code/backend/video_/base/common.h
+cstdlib
+-
+string
+-
+iostream
+-
+regex
+-
+unistd.h
+-
 
 /home/hcc/share/code/project/code/backend/video_/base/config_read.h
 string

@@ -1,5 +1,7 @@
+debug/aav_lineeditsearch.o
 debug/aav_main_view.o
 debug/aav_networkmanager.o
+debug/aav_networkthread.o
 debug/aav_uploadfile.o
 debug/aav_uploadselect.o
 debug/aav_userlogin.o
@@ -14,6 +16,7 @@ debug/aav_volumebutton.o
 debug/aav_widgetvlume.o
 debug/main.o
 debug/qrc_src.o
+debug/moc_aav_lineeditsearch.o
 debug/moc_aav_main_view.o
 debug/moc_aav_networkmanager.o
 debug/moc_aav_uploadfile.o

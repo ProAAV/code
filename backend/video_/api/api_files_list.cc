@@ -23,14 +23,20 @@ void apiFilesList(char* wbuf,int wbuf_sz,struct mg_http_message hm,ConfRead& con
         std::cout<<"1111:"<<par_strategy_value<<"\n";
         return;
     }
+    std::cout<<"par_strategy_value:"<<par_strategy_value<<'\n';
     char par_username_value[32];
     if(mg_http_get_var(&hm.query,"username",par_username_value,sizeof(par_username_value))<=0){
         std::cout<<"mg_http_get_var error\n";
         std::cout<<"1111:"<<par_username_value<<"\n";
         return;
     }
-    
+    std::cout<<"par_search_key_value start\n";
+    char par_search_key_value[32];
+    if(mg_http_get_var(&hm.query,"key",par_search_key_value,sizeof(par_search_key_value))<=0){
+        goto next;
+    }std::cout<<"par_search_key_value out\n";
     //策略为random时调用的数据组织函数
+next:
     std::cout<<"hhhhhhh\n";
     char sql[256];
     isNumber(std::string(par_files_value));    
@@ -45,6 +51,10 @@ void apiFilesList(char* wbuf,int wbuf_sz,struct mg_http_message hm,ConfRead& con
     else if(strcmp(par_strategy_value,"userhistory")==0){
         std::cout<<"enter userhistory\n";
         constructFileListsInfoUserhistory(file_cnt,wbuf,wbuf_sz,par_username_value);
+    }
+    else if(strcmp(par_strategy_value,"search")==0){
+        std::cout<<"enter search\n";
+        constructFileListsInfoSearch(file_cnt,wbuf,wbuf_sz,par_search_key_value);
     }
     else{
         std::cout<<"par_strategy_value is invalid\n";
@@ -78,6 +88,23 @@ void constructFileListsInfoUserhistory(int file_cnt,char* wbuf,int wbuf_sz,char*
     }
     fileListResponseSuccess(res,wbuf,wbuf_sz);
     mysql_free_result(res);
+}
+void constructFileListsInfoSearch(int file_cnt,char* wbuf,int wbuf_sz,char* search_key){
+    std::cout<<"enter constructFileListsInfoSearch\n";
+    MysqlConn sql_conn{};
+    char query_[256];
+    sprintf(query_,"select * from `aav_file_info` where file_title like '%%%s%%'  limit 6 ",search_key);
+    std::cout<<"constructFileListsInfoSearch sql:"<<query_<<'\n';
+    MYSQL_RES* res=sql_conn.mysqlQuery(query_);
+    
+    if(mysql_num_rows(res)<=0){
+        fileListResponseFailed(res,wbuf,wbuf_sz);
+        mysql_free_result(res);
+        return;
+    }
+    fileListResponseSuccess(res,wbuf,wbuf_sz);
+    mysql_free_result(res);
+    std::cout<<"out constructFileListsInfoSearch\n";
 }
 void constructFileListsInfoRandom(int file_cnt,char* wbuf,int wbuf_sz){
     //首先就是去数据库中查找这个个数是否足够，如果够了则继续组织数据

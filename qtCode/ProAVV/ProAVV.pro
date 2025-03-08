@@ -9,8 +9,10 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    aav_lineeditsearch.cpp \
     aav_main_view.cpp \
     aav_networkmanager.cpp \
+    aav_networkthread.cpp \
     aav_uploadfile.cpp \
     aav_uploadselect.cpp \
     aav_userlogin.cpp \
@@ -26,8 +28,10 @@ SOURCES += \
     main.cpp
 
 HEADERS += \
+    aav_lineeditsearch.h \
     aav_main_view.h \
     aav_networkmanager.h \
+    aav_networkthread.h \
     aav_uploadfile.h \
     aav_uploadselect.h \
     aav_userlogin.h \

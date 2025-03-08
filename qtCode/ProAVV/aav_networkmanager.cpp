@@ -12,7 +12,6 @@
 #include<QJsonObject>
 #include<QJsonArray>
 #include<QTimer>
-#include"aav_usermanager.h"
 #include<QJsonValue>
 NetWorkManager::NetWorkManager(QObject *parent): QObject{parent}
 {
@@ -39,7 +38,7 @@ void NetWorkManager::http_upload_file(double file_playback_duration,QString& fil
 
 
     // 创建网络管理器
-    QNetworkAccessManager networkManager;
+
 
     // 创建一个多部分对象
     QHttpMultiPart *multiPart = new QHttpMultiPart(QHttpMultiPart::FormDataType);
@@ -111,23 +110,26 @@ void NetWorkManager::http_upload_file(double file_playback_duration,QString& fil
     request.setHeader(QNetworkRequest::ContentTypeHeader, "multipart/form-data; boundary=" + boundary);
 
     // 发起 POST 请求
-    QNetworkReply *reply = networkManager.post(request, multiPart);
+    QNetworkReply *reply = m_manager->post(request, multiPart);
     multiPart->setParent(reply); // 确保多部分对象在响应销毁时不会泄漏
 
     // 使用事件循环等待响应
-    QEventLoop loop;
+    /*QEventLoop loop;
     connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
-    loop.exec();
+    loop.exec();*/
 
     // 处理响应
-    if (reply->error()) {
-        qDebug() << "上传失败：" << reply->errorString();
-    } else {
-        qDebug() << "上传成功，服务器响应：" << reply->readAll();
-    }
+    connect(reply,&QNetworkReply::finished,this,[=](){
+        if (reply->error()) {
+            qDebug() << "上传失败：" << reply->errorString();
+        } else {
+            qDebug() << "上传成功，服务器响应：" << reply->readAll();
+        }
 
-    reply->deleteLater();
+        reply->deleteLater();
+    });
 
+    qDebug()<<"out out out";
 
 }
 
@@ -251,23 +253,13 @@ bool NetWorkManager::http_register(const QString &account, const QString &passwo
     return false;
 }
 
-QNetworkReply* NetWorkManager::http_get_user_video_lists_info(int opt)
+void NetWorkManager::http_get_user_video_lists_info(int opt,VideoList* video_list)
 {
     //查看为什么出现点击一次btn_user_page结果调用两次http_get_user_video_lists_info的原因
 
 
     //利用opt实现代码复用,对于user_video_lists_info和user_history_video_lists_info这两个请求来说，通过opt传入参数不同区分,0,1
 
-    /*QString s="http://192.168.208.128:8888/api/filesList?files=1&strategy=random";
-    QUrl url(s);
-    QNetworkRequest request(url);
-    qDebug()<<"enter  http_get_files_info";
-    QNetworkReply* reply=m_manager->get(request);
-    QEventLoop loop;
-    connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
-    loop.exec();
-
-    return reply;*/
 
     QString username=UserManager::instance()->getUserName();
     QString s="";
@@ -279,14 +271,17 @@ QNetworkReply* NetWorkManager::http_get_user_video_lists_info(int opt)
     }
     else{
         qDebug()<<"error with http_get_user_video_lists_info";
-        return nullptr;
+        return ;
     }
     qDebug()<<"uuuurl:"<<s;
     QUrl url(s);
     QNetworkRequest request(url);
     qDebug()<<"enter  http_get_user_video_lists_info";
     QNetworkReply* reply=m_manager->get(request);
-    QEventLoop loop;
+    connect(reply,&QNetworkReply::finished,video_list,[=](){
+        video_list->sloShowFilesInfo(reply);
+    });
+    /*QEventLoop loop;
     connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
     QTimer timer;
     connect(&timer, &QTimer::timeout, [&]() {
@@ -299,10 +294,29 @@ QNetworkReply* NetWorkManager::http_get_user_video_lists_info(int opt)
 
     timer.start(2000);
     loop.exec();
-    timer.stop();
+    timer.stop();*/
     qDebug()<<"http_get_user_video_lists_info out";
-    return reply;
 
+
+}
+
+void NetWorkManager::http_get_search_video_lists_info(VideoList *video_list, const QString &key)
+{
+    QString username=UserManager::instance()->getUserName();
+    if(username==""){
+        username="null";
+    }
+    QString s="http://192.168.208.128:8888/api/filesList?files=4&strategy=search&username="+username+"&key="+key;
+
+    QUrl url(s);
+    QNetworkRequest request(url);
+    qDebug()<<"enter  http_get_search_video_lists_info";
+    QNetworkReply* reply=m_manager->get(request);
+    connect(reply,&QNetworkReply::finished,video_list,[=](){
+
+        video_list->sloShowFilesInfo(reply);
+    });
+    qDebug()<<"http_get_search_video_lists_info out";
 }
 
 void NetWorkManager::http_insert_user_history_log(QString& username,QString& file_md5,int progress_)
@@ -324,11 +338,57 @@ void NetWorkManager::http_insert_user_history_log(QString& username,QString& fil
     loop.exec();
 }
 
-QNetworkReply* NetWorkManager::http_get_user_info()
+void NetWorkManager::http_get_user_info(QLabel* lab1,QLabel* lab2)
 {
     QString username=UserManager::instance()->getUserName();
     QString s="http://192.168.208.128:8888/api/userinfo?username="+username;
     qDebug()<<"http_get_user_info:"<<s;
+    QUrl url(s);
+    QNetworkRequest request(url);
+    QNetworkReply* reply=m_manager->get(request);
+    connect(reply,&QNetworkReply::finished,this,[=](){
+        onGetUserInfo(lab1,lab2,reply);
+    });
+    /*QEventLoop loop;
+    connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
+    loop.exec();*/
+    return;
+}
+
+void NetWorkManager::http_insert_search_log(QString& search_key)
+{
+    QString username=UserManager::instance()->getUserName();
+    QString s="http://192.168.208.128:8888/api/searchlog";
+    QUrl url(s);
+    QNetworkRequest request(url);
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+    QJsonObject root;
+
+    if(username==""){
+        //游客状态搜索
+        return;
+    }
+    else{
+        //登录状态搜索
+        root.insert("username",username);
+        root.insert("search_key",search_key);
+
+        QJsonDocument js_doc(root);
+        QByteArray post_data = js_doc.toJson(QJsonDocument::Compact);
+        QNetworkReply* reply=m_manager->post(request,post_data);
+        connect(reply,&QNetworkReply::finished,this,[=](){
+            if(reply->error()){
+                qDebug()<<"error http_insert_search_log with reply";
+                return;
+            }
+        });
+    }
+}
+
+QNetworkReply* NetWorkManager::http_get_search_log(const QString& key)
+{
+    QString username=UserManager::instance()->getUserName();
+    QString s="http://192.168.208.128:8888/api/getsearchlog?username="+username+"&key="+key;
     QUrl url(s);
     QNetworkRequest request(url);
     QNetworkReply* reply=m_manager->get(request);
@@ -380,4 +440,27 @@ QBuffer *NetWorkManager::sloHandleVideosInfo(QNetworkReply *reply)
     for(int i=0;i<file_info_cnt;i++){
 
     }*/
+}
+
+void NetWorkManager::onGetUserInfo(QLabel *lab1, QLabel *lab2,QNetworkReply* reply)
+{
+
+    QByteArray byte_array=reply->readAll();
+    qDebug()<<"hhhhhhhhhhhhh:"<<byte_array;
+    QJsonDocument json_docm=QJsonDocument::fromJson(byte_array);
+    if(json_docm.isNull()){
+        qDebug()<<"json document is null";
+        return;
+    }
+    QJsonObject obj_root=json_docm.object();
+    QString status=obj_root.value("status").toString();
+    QString username=obj_root.value("username").toString();
+    QString nickname=obj_root.value("nickname").toString();
+    if(status=="0"){
+        qDebug()<<"user info get failed";
+        return;
+    }
+
+    lab1->setText(username);
+    lab2->setText(nickname);
 }

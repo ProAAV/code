@@ -25,7 +25,7 @@ public:
     QString m_date_time;
     QString m_duration;
     QString m_intro;
-
+    QString m_progress_data;
 
     Ui::VideoCoverWidget *ui;
     QLabel* m_lab_img;

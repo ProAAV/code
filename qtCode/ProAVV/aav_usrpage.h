@@ -19,7 +19,8 @@ class UsrPage : public QWidget
 public:
     explicit UsrPage(QWidget *parent = nullptr);
     ~UsrPage();
-    void setUserInfo();QLabel* lab_username;
+    void setUserInfo();
+    QLabel* lab_username;
     QLabel* lab_usernickname;
 private:
     Ui::UsrPage *ui;

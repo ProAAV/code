@@ -6,6 +6,9 @@
 #include"../api/api_register.h"
 #include"../api/api_update_user_history.h"
 #include"../api/api_user_info.h"
+#include"../api/api_search_log.h"
+#include"../api/api_search.h"
+#include"../api/api_get_search_log.h"
 #include<string.h>
 #include<iostream>
 HttpServer::HttpServer(const char* msg,ConfRead& conf_reader):m_msg(msg),m_conf_reader(conf_reader){
@@ -48,6 +51,15 @@ void HttpServer::http_route_url(char* wbuf,int wbuf_sz){
     }
     else if(url=="/api/userinfo"){
         apiUserInfo(wbuf,wbuf_sz,m_http_msg,m_conf_reader);
+    }
+    else if(url=="/api/searchlog"){
+        apiSearchLog(wbuf,wbuf_sz,m_http_msg,m_conf_reader);
+    }
+    else if(url=="/api/search"){
+        apiSearch(wbuf,wbuf_sz,m_http_msg,m_conf_reader);
+    }
+    else if(url=="/api/getsearchlog"){
+        apiGetSearchLog(wbuf,wbuf_sz,m_http_msg,m_conf_reader);
     }
 
 }

@@ -7,6 +7,7 @@
 #include<QLineEdit>
 #include<QHBoxLayout>
 #include<QVBoxLayout>
+#include"aav_networkthread.h"
 #include"aav_networkmanager.h"
 extern "C"{
     #include<libavcodec/avcodec.h>
@@ -64,8 +65,9 @@ UploadFile::UploadFile(QString& file_path,QWidget *parent)
 }
 void UploadFile::sendVdoFile(QString& file_title,double file_playback_duration){
     qDebug()<<"send";
-    NetWorkManager manager;
-    manager.http_upload_file(file_playback_duration,file_title,m_file_path,"http://192.168.208.128:8888/api/upload");
+    NetWorkThread* thread=new NetWorkThread();
+    thread->start();
+    thread->m_net_manager->http_upload_file(file_playback_duration,file_title,m_file_path,"http://192.168.208.128:8888/api/upload");
 
 }
 
