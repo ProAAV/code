@@ -2,6 +2,7 @@
 #include "ui_aav_videodisplay.h"
 #include"aav_usermanager.h"
 #include"aav_networkmanager.h"
+#include"aav_networkthread.h"
 #include<QMediaPlayer>
 #include<QVideoWidget>
 #include<QLabel>
@@ -13,6 +14,7 @@
 #include<QVariantList>
 #include<QCloseEvent>
 #include<unistd.h>
+#include"aav_videocoverwidlistloop.h"
 VideoDisplay::VideoDisplay(QString& file_md5,QWidget *parent) :
     QWidget(parent),ui(new Ui::VideoDisplay),m_file_path("")
 {
@@ -42,58 +44,79 @@ VideoDisplay::VideoDisplay(QString& file_md5,QWidget *parent) :
     hlayout_slider->addWidget(lab_sepra);
     hlayout_slider->addWidget(m_lab_dur_time);
     hlayout_slider->addWidget(m_slider_video_process);
-    //视频上一集，暂停，下一集,倍速，音量的按钮
-    QPushButton* btn_video_pre=new QPushButton(this);
-    btn_video_pre->setText("ooooo");
+    //暂停，视频下一集,倍速，音量的按钮，播放模式按钮
+
     QPushButton* btn_video_pause=new QPushButton(this);
-    btn_video_pause->setText("kkkkk");
+    btn_video_pause->setText("暂停");
     QPushButton* btn_video_next=new QPushButton(this);
-    btn_video_next->setText("jjjjj");
+    btn_video_next->setText("下一集");
+    QPushButton* btn_play_mode=new QPushButton(this);
+    btn_play_mode->setText("模式");
     m_btn_rate=new QPushButton(this);
+    m_menu_mode=new QMenu(this);
     m_menu_rate=new QMenu(this);
-    QAction* act_1=new QAction(this);
-    act_1->setText("0.5X");
-    QAction* act_2=new QAction(this);
-    act_2->setText("0.75X");
-    QAction* act_3=new QAction(this);
-    act_3->setText("1.0X");
-    QAction* act_4=new QAction(this);
-    act_4->setText("1.5X");
-    QAction* act_5=new QAction(this);
-    act_5->setText("2.0X");
-    m_menu_rate->addAction(act_1);
-    m_menu_rate->addAction(act_2);
-    m_menu_rate->addAction(act_3);
-    m_menu_rate->addAction(act_4);
-    m_menu_rate->addAction(act_5);
+    QAction* act_rate_1=new QAction(this);
+    act_rate_1->setText("0.5X");
+    QAction* act_rate_2=new QAction(this);
+    act_rate_2->setText("0.75X");
+    QAction* act_rate_3=new QAction(this);
+    act_rate_3->setText("1.0X");
+    QAction* act_rate_4=new QAction(this);
+    act_rate_4->setText("1.5X");
+    QAction* act_rate_5=new QAction(this);
+    act_rate_5->setText("2.0X");
+    m_menu_rate->addAction(act_rate_1);
+    m_menu_rate->addAction(act_rate_2);
+    m_menu_rate->addAction(act_rate_3);
+    m_menu_rate->addAction(act_rate_4);
+    m_menu_rate->addAction(act_rate_5);
     m_btn_rate->setMenu(m_menu_rate);
 
+    QAction* act_mode_1=new QAction(this);
+    act_mode_1->setText(" 顺序播放");
+    QAction* act_mode_2=new QAction(this);
+    act_mode_2->setText("随机播放");
+    QAction* act_mode_3=new QAction(this);
+    act_mode_3->setText("单个播放");
+    QAction* act_mode_4=new QAction(this);
+    act_mode_4->setText("单个循环");
+    QAction* act_mode_5=new QAction(this);
+    act_mode_5->setText("列表循环");
+    m_menu_mode->addAction(act_mode_1);
+    m_menu_mode->addAction(act_mode_2);
+    m_menu_mode->addAction(act_mode_3);
+    m_menu_mode->addAction(act_mode_4);
+    m_menu_mode->addAction(act_mode_5);
+    btn_play_mode->setMenu(m_menu_mode);
+
+
     m_btn_vlm=new VolumeButton(this);
-    m_btn_vlm->setText("volume");
+    m_btn_vlm->setText("音量");
 
     m_hlayout=new QHBoxLayout;
-    m_hlayout->addWidget(btn_video_pre);
+
     m_hlayout->addWidget(btn_video_pause);
     m_hlayout->addWidget(btn_video_next);
     m_hlayout->addWidget(m_btn_rate);
     m_hlayout->addWidget(m_btn_vlm);
+    m_hlayout->addWidget(btn_play_mode);
 
     //实现暂停，倍速播放
     connect(btn_video_pause,&QPushButton::clicked,this,&VideoDisplay::sloPlayerPause);
     connect(m_btn_rate,&QPushButton::clicked,this,&VideoDisplay::sloMenuUnfold);
-    connect(act_1,&QAction::triggered,this,[=](){
+    connect(act_rate_1,&QAction::triggered,this,[=](){
         this->sloAdjRate(1);
     });
-    connect(act_2,&QAction::triggered,this,[=](){
+    connect(act_rate_2,&QAction::triggered,this,[=](){
         this->sloAdjRate(2);
     });
-    connect(act_3,&QAction::triggered,this,[=](){
+    connect(act_rate_3,&QAction::triggered,this,[=](){
         this->sloAdjRate(3);
     });
-    connect(act_4,&QAction::triggered,this,[=](){
+    connect(act_rate_4,&QAction::triggered,this,[=](){
         this->sloAdjRate(4);
     });
-    connect(act_5,&QAction::triggered,this,[=](){
+    connect(act_rate_5,&QAction::triggered,this,[=](){
         this->sloAdjRate(5);
     });
     //最后用一个垂直布局将三个板块合并
@@ -114,6 +137,34 @@ VideoDisplay::VideoDisplay(QString& file_md5,QWidget *parent) :
     connect(m_btn_vlm->getSlider(),&QSlider::sliderMoved,this,[this](int position){
         this->sloVolumeChanged(position);
     });
+
+    //实现推荐列表的显示
+    NetWorkThread* thread=new NetWorkThread(this);
+    thread->m_net_manager->http_get_recommend_audio_lists(file_md5);
+    QVBoxLayout* vlayout_list_loop=new QVBoxLayout();
+
+    VideoCoverWidListLoop* cover_wid_list_loop_1=new VideoCoverWidListLoop(ui->widget);
+    VideoCoverWidListLoop* cover_wid_list_loop_2=new VideoCoverWidListLoop(ui->widget);
+    VideoCoverWidListLoop* cover_wid_list_loop_3=new VideoCoverWidListLoop(ui->widget);
+    VideoCoverWidListLoop* cover_wid_list_loop_4=new VideoCoverWidListLoop(ui->widget);
+    VideoCoverWidListLoop* cover_wid_list_loop_5=new VideoCoverWidListLoop(ui->widget);
+    cover_wid_list_loop_1->setFixedSize(500,500);
+    cover_wid_list_loop_2->setFixedSize(500,500);
+    cover_wid_list_loop_3->setFixedSize(500,500);
+    cover_wid_list_loop_4->setFixedSize(500,500);
+    cover_wid_list_loop_5->setFixedSize(500,500);
+
+
+    vlayout_list_loop->addWidget(cover_wid_list_loop_1);
+    vlayout_list_loop->addWidget(cover_wid_list_loop_2);
+    vlayout_list_loop->addWidget(cover_wid_list_loop_3);
+    vlayout_list_loop->addWidget(cover_wid_list_loop_4);
+    vlayout_list_loop->addWidget(cover_wid_list_loop_5);
+
+
+
+    ui->widget->setLayout(vlayout_list_loop);
+
 }
 
 
@@ -266,9 +317,14 @@ void VideoDisplay::closeEvent(QCloseEvent *event)
     //更新用户历史观看记录表
     QString username=UserManager::instance()->getUserName();
     if(username!=""){
-        NetWorkManager net_manager{};
+        /*NetWorkManager net_manager{};
 
-        net_manager.http_insert_user_history_log(username,m_file_md5,progress_value);
+        net_manager.http_insert_user_history_log(username,m_file_md5,progress_value);*/
+        NetWorkThread* thread=new NetWorkThread();
+        thread->m_net_manager->http_insert_user_history_log(username,m_file_md5,progress_value);
+        connect(thread,&NetWorkThread::finished,this,[thread](){
+            thread->deleteLater();
+        });
     }
     emit sigClose();
     QWidget::closeEvent(event);

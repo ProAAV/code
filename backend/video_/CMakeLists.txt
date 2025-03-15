@@ -1,3 +1,7 @@
+
+
+
+
 cmake_minimum_required(VERSION 3.16)
 
 project(video)
@@ -21,14 +25,16 @@ set(SOURCES
     api/api_search.cc
     api/api_search_log.cc
     api/api_get_search_log.cc
+    base/py_script.cc
 )
 add_executable(video_server ${SOURCES})
 add_compile_options(-g)
 include_directories(/usr/include/x86_64-linux-gnu/
                     /home/hcc/share/FastDfs/fastdfs/client
                     /home/hcc/share/FastDfs/fastdfs/tracker/
-                    /home/hcc/share/FastDfs/fastdfs/common)
+                    /home/hcc/share/FastDfs/fastdfs/common
+                    /usr/include/python3.8
+                    )
 
-target_link_directories(video_server PRIVATE /usr/lib/x86_64-linux-gnu)
-target_link_libraries(video_server PRIVATE avcodec avutil avformat swscale avdevice avfilter fdfsclient mysqlclient jsoncpp)
-
+target_link_directories(video_server PRIVATE /usr/lib/x86_64-linux-gnu /usr/lib/python3.8/config-3.8-x86_64-linux-gnu /usr/lib)
+target_link_libraries(video_server PRIVATE avcodec avutil avformat swscale avdevice avfilter fdfsclient mysqlclient jsoncpp python3.8 crypt pthread dl util m)

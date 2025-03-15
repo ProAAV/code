@@ -45,17 +45,21 @@ UsrPage::UsrPage(QWidget *parent) :
     m_btn_videos=new QPushButton(this);
     m_btn_history=new QPushButton(this);
 
-    m_video_lists_wid=new VideoList(m_stack_wid);
-    m_video_lists_history_wid=new VideoList(m_stack_wid);
+    m_video_lists_wid=new VideoList(1,m_stack_wid);
+    m_video_lists_history_wid=new VideoList(2,m_stack_wid);
     m_stack_wid->addWidget(m_video_lists_wid);
     m_stack_wid->addWidget(m_video_lists_history_wid);
 
     connect(m_btn_videos,&QPushButton::clicked,this,[=](){
+        m_video_lists_wid->reload();
+
         m_video_lists_wid->setUserVideoListsInfo();
         qDebug()<<"111111111111111111111111111111111111:";
         m_stack_wid->setCurrentWidget(m_video_lists_wid);
     });
     connect(m_btn_history,&QPushButton::clicked,this,[=](){
+        qDebug("clicked m_btn_history");
+        m_video_lists_history_wid->reload();
         m_video_lists_history_wid->setUserHistoryVideoListsInfo();
         m_stack_wid->setCurrentWidget(m_video_lists_history_wid);
     });
@@ -115,7 +119,7 @@ void UsrPage::showEvent(QShowEvent *event)
     //显示出来后直接发送一次http请求得到user_video_lists_info的信息显示出来
     qDebug()<<"enter showEvent";
     QWidget::showEvent(event);
-
+    m_video_lists_wid->reload();
     m_video_lists_wid->setUserVideoListsInfo();
 
 }

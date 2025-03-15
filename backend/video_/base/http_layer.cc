@@ -47,6 +47,7 @@ void HttpServer::http_route_url(char* wbuf,int wbuf_sz){
         apiRegister(wbuf,wbuf_sz,m_http_msg,m_conf_reader);
     }
     else if(url=="/api/uphistory"){
+        std::cout<<"url==/api/uphistory\n";
         apiHandleUpdateUserHistory(wbuf,wbuf_sz,m_http_msg,m_conf_reader);
     }
     else if(url=="/api/userinfo"){

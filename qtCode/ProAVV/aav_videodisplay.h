@@ -37,6 +37,7 @@ private:
     qint64 m_cnt_pause_player;
     QPushButton* m_btn_rate;
     QMenu* m_menu_rate;
+    QMenu* m_menu_mode;
     VolumeButton* m_btn_vlm;
     QString m_file_path;
     QString m_file_md5;

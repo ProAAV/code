@@ -7,7 +7,6 @@
 #include"aav_networkmanager.h"
 #include<QJsonDocument>
 #include<QJsonObject>
-#include"aav_networkthread.h"
 #include<QJsonArray>
 #include<QJsonValue>
 #include <QAbstractItemView>

@@ -28,6 +28,7 @@ private:
     UsrPage* m_userpage;
     LineEditSearch* m_ledit_search;
     VideoList* m_search_video_lists;
+    QStackedWidget* stack_video_page_wid;
 signals:
     void sigFilesInfo(QNetworkReply* reply);
 public slots:

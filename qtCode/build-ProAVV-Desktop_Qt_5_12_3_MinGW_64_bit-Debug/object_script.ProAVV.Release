@@ -10,6 +10,7 @@ release/aav_usermanager.o
 release/aav_userregister.o
 release/aav_usrpage.o
 release/aav_videocoverwidget.o
+release/aav_videocoverwidlistloop.o
 release/aav_videodisplay.o
 release/aav_videolist.o
 release/aav_volumebutton.o
@@ -27,6 +28,7 @@ release/moc_aav_usermanager.o
 release/moc_aav_userregister.o
 release/moc_aav_usrpage.o
 release/moc_aav_videocoverwidget.o
+release/moc_aav_videocoverwidlistloop.o
 release/moc_aav_videodisplay.o
 release/moc_aav_videolist.o
 release/moc_aav_volumebutton.o

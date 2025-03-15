@@ -3,7 +3,7 @@
 #include<QLineEdit>
 #include<QNetworkReply>
 #include<QStringListModel>
-#include<QCompleter>
+//#include<QCompleter>
 class LineEditSearch : public QLineEdit
 {
     Q_OBJECT

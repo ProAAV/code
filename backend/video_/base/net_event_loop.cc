@@ -167,7 +167,8 @@ void EventLoop::enterLoop(EventLoop& evloop){
             }
             else if(errno==EINTR){
                 std::cout<<"epoll interrput\n";
-                continue;
+                
+                exit(0);
             }
             else if(errno==EINVAL){
                 std::cout<<"epoll EPOLL_EVENTS_MAX is invalid\n";

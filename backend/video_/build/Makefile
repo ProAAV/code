@@ -555,6 +555,33 @@ base/net_socket.cc.s:
 	$(MAKE) -f CMakeFiles/video_server.dir/build.make CMakeFiles/video_server.dir/base/net_socket.cc.s
 .PHONY : base/net_socket.cc.s
 
+base/py_script.o: base/py_script.cc.o
+
+.PHONY : base/py_script.o
+
+# target to build an object file
+base/py_script.cc.o:
+	$(MAKE) -f CMakeFiles/video_server.dir/build.make CMakeFiles/video_server.dir/base/py_script.cc.o
+.PHONY : base/py_script.cc.o
+
+base/py_script.i: base/py_script.cc.i
+
+.PHONY : base/py_script.i
+
+# target to preprocess a source file
+base/py_script.cc.i:
+	$(MAKE) -f CMakeFiles/video_server.dir/build.make CMakeFiles/video_server.dir/base/py_script.cc.i
+.PHONY : base/py_script.cc.i
+
+base/py_script.s: base/py_script.cc.s
+
+.PHONY : base/py_script.s
+
+# target to generate assembly for a file
+base/py_script.cc.s:
+	$(MAKE) -f CMakeFiles/video_server.dir/build.make CMakeFiles/video_server.dir/base/py_script.cc.s
+.PHONY : base/py_script.cc.s
+
 main.o: main.cc.o
 
 .PHONY : main.o
@@ -639,6 +666,9 @@ help:
 	@echo "... base/net_socket.o"
 	@echo "... base/net_socket.i"
 	@echo "... base/net_socket.s"
+	@echo "... base/py_script.o"
+	@echo "... base/py_script.i"
+	@echo "... base/py_script.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"

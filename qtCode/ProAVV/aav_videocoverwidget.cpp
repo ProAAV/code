@@ -1,6 +1,7 @@
 #include "aav_videocoverwidget.h"
 #include "ui_aav_videocoverwidget.h"
 #include"aav_networkmanager.h"
+#include"aav_networkthread.h"
 #include<QByteArray>
 #include<QPixmap>
 #include"aav_videodisplay.h"
@@ -16,7 +17,7 @@ VideoCoverWidget::VideoCoverWidget(QWidget *parent)
     m_lab_duration=new QLabel(this);
     m_lab_upload_date=new QLabel(this);
     m_lab_intro=new QLabel(this);
-
+    m_lab_username=new QLabel(this);
 
     //将lab_img的时间过滤器装到VideoCoverWidget上
     m_lab_img->installEventFilter(this);
@@ -24,7 +25,7 @@ VideoCoverWidget::VideoCoverWidget(QWidget *parent)
     m_hlayout=new QHBoxLayout();
     m_vlayout=new QVBoxLayout();
 
-
+    m_hlayout->addWidget(m_lab_username);
     m_hlayout->addWidget(m_lab_upload_date);
     m_hlayout->addWidget(m_lab_duration);
 
@@ -93,6 +94,7 @@ void VideoCoverWidget::sloRequestImg(QString& file_img_path)
 
     m_lab_upload_date->setText(m_date_time);
     m_lab_intro->setText(m_intro);
+    m_lab_username->setText(m_username);
 
 
     if(file_img_path=="null"){
@@ -104,7 +106,9 @@ void VideoCoverWidget::sloRequestImg(QString& file_img_path)
         m_lab_img->setScaledContents(true);
         return;
     }
-    QNetworkReply* reply=net_manager.http_get_img_cover(file_img_path);
+    NetWorkThread* thread=new NetWorkThread{};
+    thread->m_net_manager->http_get_img_cover(file_img_path,m_lab_img);
+    /*QNetworkReply* reply=net_manager.http_get_img_cover(file_img_path);
     QByteArray byte_arr=reply->readAll();
     QPixmap pix;
     if(!pix.loadFromData(byte_arr)){
@@ -114,7 +118,7 @@ void VideoCoverWidget::sloRequestImg(QString& file_img_path)
     m_lab_img->setPixmap(pix.scaled(m_lab_img->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation));
     m_lab_img->setAlignment(Qt::AlignCenter);
     m_lab_img->setScaledContents(true);
-    reply->deleteLater();
+    reply->deleteLater();*/
 
 }
 

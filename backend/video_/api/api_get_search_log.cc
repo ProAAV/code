@@ -26,7 +26,8 @@ void apiGetSearchLog(char* wbuf,int wbuf_sz,struct mg_http_message hm,ConfRead& 
     
     MysqlConn sql_conn{};
     char query_[256];
-    sprintf(query_,"select file_title from `aav_file_info` where file_title like '%%%s%%' limit 10",par_key_value);
+    sprintf(query_,"select A.*,B.file_title from aav_file_info as A inner join aav_user_file as B on A.file_md5=B.file_md5 where B.file_title like '%%%s%%' limit 10",par_key_value);
+
     std::cout<<"rrrrrrrrrrrrrrrrr:"<<query_<<'\n';
 
     MYSQL_RES* res=sql_conn.mysqlQuery(query_);

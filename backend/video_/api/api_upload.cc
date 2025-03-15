@@ -8,6 +8,7 @@
 #include"tracker_client.h"
 #include"../base/config_read.h"
 #include"../base/mysqlconn.h"
+#include"../base/py_script.h"
 extern "C"{
     #include<libavcodec/avcodec.h>
     #include<libavformat/avformat.h>
@@ -82,6 +83,8 @@ void apiUpload(char* wbuf,int wbuf_sz,struct mg_http_message hm,ConfRead& conf_r
         upload_responSuccess(wbuf,wbuf_sz);
         return;
     }
+   
+
     //先将文件分为多个ts文件和一个m3u8文件
     if(uploadHandleFileTLS(file_info,conf_reader)){
         upload_responFailed(wbuf,wbuf_sz);
@@ -93,6 +96,7 @@ void apiUpload(char* wbuf,int wbuf_sz,struct mg_http_message hm,ConfRead& conf_r
 bool fileMd5InfoCheckout(CfileInfo& file_info){
     std::cout<<"enter fileMd5InfoCheckout\n";
     std::string file_md5=file_info.getFileInfoMap().at("file_md5");
+    std::string file_title=file_info.getFileInfoMap().at("file_title");
     MysqlConn sql_conn{};
     char query_[256];
     sprintf(query_,"select * from aav_file_info where file_md5 = '%s'",file_md5.c_str());
@@ -109,7 +113,7 @@ bool fileMd5InfoCheckout(CfileInfo& file_info){
             return true;
         }
         //如果该用户没有该文件的一条记录，那么更新数据库表再return就行了；
-        sprintf(query_,"insert into aav_user_file (username,file_md5) value('%s','%s')",username.c_str(),file_md5.c_str());
+        sprintf(query_,"insert into aav_user_file (username,file_md5,date_time,file_title) value('%s','%s',now(),'%s')",username.c_str(),file_md5.c_str(),file_title.c_str());
         std::cout<<"sql:"<<query_<<'\n';
         sql_conn.mysqlQuery(query_);
         mysql_free_result(res);
@@ -161,7 +165,7 @@ int uploadHandleFileTLS(CfileInfo& file_info,ConfRead& conf_reader){
         std::cout<<command<<" is failed\n";
         return 1;
     }
-    //再拼凑整个完整路径，这里还没写完。。。。。。。。。。。。
+    //再拼凑整个完整路径。
     checkEnd(ts_and_m3u8_and_pic_dir);
     std::string file_md5=file_info.getFileInfoMap().at("file_md5");
     std::string m3u8_file_name=ts_and_m3u8_and_pic_dir+file_md5+".m3u8";
@@ -235,6 +239,21 @@ int uploadHandleFileTLS(CfileInfo& file_info,ConfRead& conf_reader){
     //生成一张封面图片
     bool is_audio;
     generateCoverPic(file_info,conf_reader,is_audio);
+    //先判断文件中有无视频流，如果没有就直接判定为音频流，那么就可以调用py接口分析标签,可以考虑异步执行
+    if(is_audio){
+
+        PyScript pyscript{};
+        pyscript.pyscrpt_init();
+        std::string strr=pyscript.pyscrpt_audio_interface(file_path);
+        upload_extract_file_features(strr);
+        std::cout<<"pyscrpt_audio_interface----------\n";
+    }
+    else if(!is_audio){
+        PyScript pyscript{};
+        pyscript.pyscrpt_init();
+        std::string strr=pyscript.pyscrpt_video_interface(file_path);
+        std::cout<<"pyscrpt_video_interface----------\n";
+    }
     //上传文件到fastdfs中
     std::cout<<"enter uploadHandleFileTLS\n";
     //在这之前就是生成ts文件和m3u8文件和视封面图片文件，存放到指定的/tmp文件夹下，之后应该是修改m3u8文件中的ts文件路径
@@ -243,6 +262,31 @@ int uploadHandleFileTLS(CfileInfo& file_info,ConfRead& conf_reader){
     }
     return 0;
 
+}
+void upload_extract_file_features(std::string str){
+    std::cout<<"enter upload_extract_file_features\n";
+    if(str==""){
+        std::cout<<"upload_extract_file_features invalid params\n";
+        return;
+    }
+    std::cout<<"str raw:"<<str<<'\n';
+    
+    std::cout<<"str:"<<str<<"\n";
+    int s_pos=0;
+    int pos=0;
+    vec_file_features.clear();
+    
+    do{
+        pos=str.find(",",s_pos);
+        std::string feature=str.substr(s_pos,pos-s_pos);
+        std::cout<<"str_tags:"<<feature<<'\n';
+        vec_file_features.push_back(feature);
+        s_pos=pos+2;
+    }while(pos!=std::string::npos);
+    
+    std::cout<<"end upload_extract_file_features\n";
+    return;
+    
 }
 int generateCoverPic(CfileInfo& file_info,ConfRead& conf_reader,bool& is_audio) {
     AVFormatContext* format_context = nullptr;
@@ -552,15 +596,37 @@ int uploadFileToFastdfs(CfileInfo& file_info,ConfRead& conf_reader,const bool& i
     
     
     //得到数据之后更新aav_file_info这张表
-    char query[256];
+    char query[512];
     MysqlConn conn{};
-    sprintf(query,"insert into `aav_file_info` (file_path,file_md5,file_size,file_title,file_playback_duration,file_image_path) value('%s','%s','%s','%s','%s','%s')",update_file_path.c_str(),update_file_md5.c_str(),update_file_size.c_str(),update_file_title.c_str(),update_file_playback_duration.c_str(),update_file_image_path.c_str());
+    if(vec_file_features.size()!=5&&is_audio){
+        std::cout<<"vec_file_features size:"<<vec_file_features.size()<<'\n';
+        for(auto i:vec_file_features){
+            std::cout<<"feature:"<<i<<'\n';
+        }
+        std::cout<<"vec_file_features.size()!=5\n";
+        return 1;
+    }
+    std::string file_type;
+    if(is_audio){
+        //"0"表示音频文件
+        file_type="0";
+        /*std::string emotion=vec_file_features.at(4);
+        emotion.find("：",0);
+        std::string str_emotion=emotion.substr(emotion.find("：",0)+3,std::string::npos);
+        std::cout<<"emotion str:"<<str_emotion<<'\n';
+        vec_file_features[4]=str_emotion;*/
+    }
+    else{
+        file_type="1";
+        for(int i=0;i<5;i++)vec_file_features.push_back("");
+    }
+    sprintf(query,"insert into `aav_file_info` (file_path,file_md5,file_size,file_playback_duration,file_image_path,file_feature_1,file_feature_2,file_feature_3,file_feature_4,file_feature_5,file_type) value('%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s')",update_file_path.c_str(),update_file_md5.c_str(),update_file_size.c_str(),update_file_playback_duration.c_str(),update_file_image_path.c_str(),vec_file_features[0].c_str(),vec_file_features[1].c_str(),vec_file_features[2].c_str(),vec_file_features[3].c_str(),vec_file_features[4].c_str(),file_type.c_str());
     std::cout<<"query::::"<<query<<"\n";
     
     conn.mysqlQuery(query);
     //之后更新aav_user_file这张表
     std::string username=file_info.getFileInfoMap().at("username");
-    sprintf(query,"insert into `aav_user_file` (username,file_md5,date_time) value('%s','%s',now())",username.c_str(),update_file_md5.c_str());
+    sprintf(query,"insert into `aav_user_file` (username,file_md5,date_time,file_title) value('%s','%s',now(),'%s')",username.c_str(),update_file_md5.c_str(),update_file_title.c_str());
     conn.mysqlQuery(query);
 
     tracker_close_connection(trackerServer);
@@ -570,7 +636,9 @@ int uploadFileToFastdfs(CfileInfo& file_info,ConfRead& conf_reader,const bool& i
     if(removeFilesInTmp(conf_reader)){
         return 1;
     }
+    std::cout<<"out dfs upload\n";
     return 0;
+    
 }
 int removeFilesInTmp(ConfRead& conf_reader){
     std::string command="rm -rf "+conf_reader.confGetMap().at("ts_and_m3u8_and_pic_dir");

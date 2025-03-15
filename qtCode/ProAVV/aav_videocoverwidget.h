@@ -26,6 +26,7 @@ public:
     QString m_duration;
     QString m_intro;
     QString m_progress_data;
+    QString m_username;
 
     Ui::VideoCoverWidget *ui;
     QLabel* m_lab_img;
@@ -33,9 +34,11 @@ public:
     QLabel* m_lab_upload_date;
     QLabel* m_lab_intro;
     QLabel* m_lab_auth;
+    QLabel* m_lab_username;
     QHBoxLayout* m_hlayout;
     QVBoxLayout* m_vlayout;
     VideoDisplay* m_vdis;
+    QString m_file_type;
 protected:
     bool eventFilter(QObject *obj, QEvent *event)override;
 signals:

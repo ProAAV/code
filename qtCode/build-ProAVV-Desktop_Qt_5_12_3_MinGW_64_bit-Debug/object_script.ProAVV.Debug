@@ -10,6 +10,7 @@ debug/aav_usermanager.o
 debug/aav_userregister.o
 debug/aav_usrpage.o
 debug/aav_videocoverwidget.o
+debug/aav_videocoverwidlistloop.o
 debug/aav_videodisplay.o
 debug/aav_videolist.o
 debug/aav_volumebutton.o
@@ -27,6 +28,7 @@ debug/moc_aav_usermanager.o
 debug/moc_aav_userregister.o
 debug/moc_aav_usrpage.o
 debug/moc_aav_videocoverwidget.o
+debug/moc_aav_videocoverwidlistloop.o
 debug/moc_aav_videodisplay.o
 debug/moc_aav_videolist.o
 debug/moc_aav_volumebutton.o

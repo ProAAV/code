@@ -11,7 +11,6 @@
 #include"aav_videolist.h"
 #include<QStringList>
 #include<QStringListModel>
-#include<QCompleter>
 #include"aav_lineeditsearch.h"
 class NetWorkManager : public QObject
 {
@@ -24,10 +23,10 @@ public:
     void http_upload_file(double file_playback_duration,QString& file_title,const QString& file_path,const QString& url);
     QBuffer* http_download_file();
     QBuffer *getBuffer();
-    QNetworkReply* http_get_files_info();
+    void http_get_files_info(VideoList* video_list_wid);
     QBuffer* m_buffer;
     QNetworkReply* getFilesInfoReply();
-    QNetworkReply *http_get_img_cover(QString& file_img_path);
+    QNetworkReply* http_get_img_cover(QString& file_img_path,QLabel* lab_img);
     bool http_login(const QString& account,const QString& password);
     bool http_register(const QString& account,const QString& password,const QString& nickname,const QString& repassword);
     //改造完成
@@ -39,6 +38,12 @@ public:
     void http_insert_search_log(QString& search_key);
     //自动补全
     QNetworkReply* http_get_search_log(const QString& key);
+
+    void http_get_recommend_audio_lists(const QString& file_md5);
+
+    void http_get_random_audios(VideoList* video_list_wid);
+    void http_get_random_videos(VideoList* video_list_wid);
+    void http_get_new_video_lists_file_info(int flag,VideoList* video_list,int offset);
 private:
     QNetworkAccessManager* m_manager;
     QNetworkReply* m_files_info_reply;
@@ -47,6 +52,7 @@ public slots:
     QBuffer* sloHandleDownloadData(QNetworkReply* reply);
     QBuffer* sloHandleVideosInfo(QNetworkReply* reply);
     void onGetUserInfo(QLabel* lab1,QLabel* lab2,QNetworkReply* reply);
+    void sloHandleRecommendFeatures(QNetworkReply* reply);
 };
 
 #endif // AAV_NETWORKMANAGER_H

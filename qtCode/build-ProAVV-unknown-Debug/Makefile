@@ -64,6 +64,7 @@ SOURCES       = ../ProAVV/aav_lineeditsearch.cpp \
 		../ProAVV/aav_userregister.cpp \
 		../ProAVV/aav_usrpage.cpp \
 		../ProAVV/aav_videocoverwidget.cpp \
+		../ProAVV/aav_videocoverwidlistloop.cpp \
 		../ProAVV/aav_videodisplay.cpp \
 		../ProAVV/aav_videolist.cpp \
 		../ProAVV/aav_volumebutton.cpp \
@@ -80,6 +81,7 @@ SOURCES       = ../ProAVV/aav_lineeditsearch.cpp \
 		moc_aav_userregister.cpp \
 		moc_aav_usrpage.cpp \
 		moc_aav_videocoverwidget.cpp \
+		moc_aav_videocoverwidlistloop.cpp \
 		moc_aav_videodisplay.cpp \
 		moc_aav_videolist.cpp \
 		moc_aav_volumebutton.cpp \
@@ -96,6 +98,7 @@ OBJECTS       = aav_lineeditsearch.o \
 		aav_userregister.o \
 		aav_usrpage.o \
 		aav_videocoverwidget.o \
+		aav_videocoverwidlistloop.o \
 		aav_videodisplay.o \
 		aav_videolist.o \
 		aav_volumebutton.o \
@@ -113,6 +116,7 @@ OBJECTS       = aav_lineeditsearch.o \
 		moc_aav_userregister.o \
 		moc_aav_usrpage.o \
 		moc_aav_videocoverwidget.o \
+		moc_aav_videocoverwidlistloop.o \
 		moc_aav_videodisplay.o \
 		moc_aav_videolist.o \
 		moc_aav_volumebutton.o \
@@ -211,6 +215,7 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		../ProAVV/aav_userregister.h \
 		../ProAVV/aav_usrpage.h \
 		../ProAVV/aav_videocoverwidget.h \
+		../ProAVV/aav_videocoverwidlistloop.h \
 		../ProAVV/aav_videodisplay.h \
 		../ProAVV/aav_videolist.h \
 		../ProAVV/aav_volumebutton.h \
@@ -226,6 +231,7 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		../ProAVV/aav_userregister.cpp \
 		../ProAVV/aav_usrpage.cpp \
 		../ProAVV/aav_videocoverwidget.cpp \
+		../ProAVV/aav_videocoverwidlistloop.cpp \
 		../ProAVV/aav_videodisplay.cpp \
 		../ProAVV/aav_videolist.cpp \
 		../ProAVV/aav_volumebutton.cpp \
@@ -239,7 +245,7 @@ TARGET        = ProAVV
 first: all
 ####### Build rules
 
-ProAVV: ui_aav_main_view.h ui_aav_uploadfile.h ui_aav_uploadselect.h ui_aav_userlogin.h ui_aav_userloginandregis.h ui_aav_userregister.h ui_aav_usrpage.h ui_aav_videocoverwidget.h ui_aav_videodisplay.h ui_aav_videolist.h $(OBJECTS)  
+ProAVV: ui_aav_main_view.h ui_aav_uploadfile.h ui_aav_uploadselect.h ui_aav_userlogin.h ui_aav_userloginandregis.h ui_aav_userregister.h ui_aav_usrpage.h ui_aav_videocoverwidget.h ui_aav_videocoverwidlistloop.h ui_aav_videodisplay.h ui_aav_videolist.h $(OBJECTS)  
 	$(LINK) $(LFLAGS) -o $(TARGET) $(OBJECTS) $(OBJCOMP) $(LIBS)
 
 Makefile: ../ProAVV/ProAVV.pro /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++/qmake.conf /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
@@ -427,9 +433,9 @@ distdir: FORCE
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents ../ProAVV/src.qrc $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../ProAVV/aav_lineeditsearch.h ../ProAVV/aav_main_view.h ../ProAVV/aav_networkmanager.h ../ProAVV/aav_networkthread.h ../ProAVV/aav_uploadfile.h ../ProAVV/aav_uploadselect.h ../ProAVV/aav_userlogin.h ../ProAVV/aav_userloginandregis.h ../ProAVV/aav_usermanager.h ../ProAVV/aav_userregister.h ../ProAVV/aav_usrpage.h ../ProAVV/aav_videocoverwidget.h ../ProAVV/aav_videodisplay.h ../ProAVV/aav_videolist.h ../ProAVV/aav_volumebutton.h ../ProAVV/aav_widgetvlume.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../ProAVV/aav_lineeditsearch.cpp ../ProAVV/aav_main_view.cpp ../ProAVV/aav_networkmanager.cpp ../ProAVV/aav_networkthread.cpp ../ProAVV/aav_uploadfile.cpp ../ProAVV/aav_uploadselect.cpp ../ProAVV/aav_userlogin.cpp ../ProAVV/aav_userloginandregis.cpp ../ProAVV/aav_usermanager.cpp ../ProAVV/aav_userregister.cpp ../ProAVV/aav_usrpage.cpp ../ProAVV/aav_videocoverwidget.cpp ../ProAVV/aav_videodisplay.cpp ../ProAVV/aav_videolist.cpp ../ProAVV/aav_volumebutton.cpp ../ProAVV/aav_widgetvlume.cpp ../ProAVV/main.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../ProAVV/aav_main_view.ui ../ProAVV/aav_uploadfile.ui ../ProAVV/aav_uploadselect.ui ../ProAVV/aav_userlogin.ui ../ProAVV/aav_userloginandregis.ui ../ProAVV/aav_userregister.ui ../ProAVV/aav_usrpage.ui ../ProAVV/aav_videocoverwidget.ui ../ProAVV/aav_videodisplay.ui ../ProAVV/aav_videolist.ui $(DISTDIR)/
+	$(COPY_FILE) --parents ../ProAVV/aav_lineeditsearch.h ../ProAVV/aav_main_view.h ../ProAVV/aav_networkmanager.h ../ProAVV/aav_networkthread.h ../ProAVV/aav_uploadfile.h ../ProAVV/aav_uploadselect.h ../ProAVV/aav_userlogin.h ../ProAVV/aav_userloginandregis.h ../ProAVV/aav_usermanager.h ../ProAVV/aav_userregister.h ../ProAVV/aav_usrpage.h ../ProAVV/aav_videocoverwidget.h ../ProAVV/aav_videocoverwidlistloop.h ../ProAVV/aav_videodisplay.h ../ProAVV/aav_videolist.h ../ProAVV/aav_volumebutton.h ../ProAVV/aav_widgetvlume.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../ProAVV/aav_lineeditsearch.cpp ../ProAVV/aav_main_view.cpp ../ProAVV/aav_networkmanager.cpp ../ProAVV/aav_networkthread.cpp ../ProAVV/aav_uploadfile.cpp ../ProAVV/aav_uploadselect.cpp ../ProAVV/aav_userlogin.cpp ../ProAVV/aav_userloginandregis.cpp ../ProAVV/aav_usermanager.cpp ../ProAVV/aav_userregister.cpp ../ProAVV/aav_usrpage.cpp ../ProAVV/aav_videocoverwidget.cpp ../ProAVV/aav_videocoverwidlistloop.cpp ../ProAVV/aav_videodisplay.cpp ../ProAVV/aav_videolist.cpp ../ProAVV/aav_volumebutton.cpp ../ProAVV/aav_widgetvlume.cpp ../ProAVV/main.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../ProAVV/aav_main_view.ui ../ProAVV/aav_uploadfile.ui ../ProAVV/aav_uploadselect.ui ../ProAVV/aav_userlogin.ui ../ProAVV/aav_userloginandregis.ui ../ProAVV/aav_userregister.ui ../ProAVV/aav_usrpage.ui ../ProAVV/aav_videocoverwidget.ui ../ProAVV/aav_videocoverwidlistloop.ui ../ProAVV/aav_videodisplay.ui ../ProAVV/aav_videolist.ui $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -467,9 +473,9 @@ compiler_moc_predefs_clean:
 moc_predefs.h: /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp
 	g++ -pipe -g -std=gnu++1z -Wall -W -dM -E -o moc_predefs.h /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp
 
-compiler_moc_header_make_all: moc_aav_lineeditsearch.cpp moc_aav_main_view.cpp moc_aav_networkmanager.cpp moc_aav_uploadfile.cpp moc_aav_uploadselect.cpp moc_aav_userlogin.cpp moc_aav_userloginandregis.cpp moc_aav_usermanager.cpp moc_aav_userregister.cpp moc_aav_usrpage.cpp moc_aav_videocoverwidget.cpp moc_aav_videodisplay.cpp moc_aav_videolist.cpp moc_aav_volumebutton.cpp moc_aav_widgetvlume.cpp
+compiler_moc_header_make_all: moc_aav_lineeditsearch.cpp moc_aav_main_view.cpp moc_aav_networkmanager.cpp moc_aav_uploadfile.cpp moc_aav_uploadselect.cpp moc_aav_userlogin.cpp moc_aav_userloginandregis.cpp moc_aav_usermanager.cpp moc_aav_userregister.cpp moc_aav_usrpage.cpp moc_aav_videocoverwidget.cpp moc_aav_videocoverwidlistloop.cpp moc_aav_videodisplay.cpp moc_aav_videolist.cpp moc_aav_volumebutton.cpp moc_aav_widgetvlume.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_aav_lineeditsearch.cpp moc_aav_main_view.cpp moc_aav_networkmanager.cpp moc_aav_uploadfile.cpp moc_aav_uploadselect.cpp moc_aav_userlogin.cpp moc_aav_userloginandregis.cpp moc_aav_usermanager.cpp moc_aav_userregister.cpp moc_aav_usrpage.cpp moc_aav_videocoverwidget.cpp moc_aav_videodisplay.cpp moc_aav_videolist.cpp moc_aav_volumebutton.cpp moc_aav_widgetvlume.cpp
+	-$(DEL_FILE) moc_aav_lineeditsearch.cpp moc_aav_main_view.cpp moc_aav_networkmanager.cpp moc_aav_uploadfile.cpp moc_aav_uploadselect.cpp moc_aav_userlogin.cpp moc_aav_userloginandregis.cpp moc_aav_usermanager.cpp moc_aav_userregister.cpp moc_aav_usrpage.cpp moc_aav_videocoverwidget.cpp moc_aav_videocoverwidlistloop.cpp moc_aav_videodisplay.cpp moc_aav_videolist.cpp moc_aav_volumebutton.cpp moc_aav_widgetvlume.cpp
 moc_aav_lineeditsearch.cpp: ../ProAVV/aav_lineeditsearch.h \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
@@ -488,6 +494,7 @@ moc_aav_main_view.cpp: ../ProAVV/aav_main_view.h \
 		../ProAVV/aav_videodisplay.h \
 		../ProAVV/aav_volumebutton.h \
 		../ProAVV/aav_widgetvlume.h \
+		../ProAVV/aav_lineeditsearch.h \
 		../ProAVV/aav_usrpage.h \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
@@ -500,6 +507,7 @@ moc_aav_networkmanager.cpp: ../ProAVV/aav_networkmanager.h \
 		../ProAVV/aav_videodisplay.h \
 		../ProAVV/aav_volumebutton.h \
 		../ProAVV/aav_widgetvlume.h \
+		../ProAVV/aav_lineeditsearch.h \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
 	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/hcc/share/code/project/code/qtCode/build-ProAVV-unknown-Debug/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/hcc/share/code/project/code/qtCode/ProAVV -I/usr/local/include -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtMultimediaWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtMultimedia -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include ../ProAVV/aav_networkmanager.h -o moc_aav_networkmanager.cpp
@@ -530,6 +538,7 @@ moc_aav_userloginandregis.cpp: ../ProAVV/aav_userloginandregis.h \
 		../ProAVV/aav_videodisplay.h \
 		../ProAVV/aav_volumebutton.h \
 		../ProAVV/aav_widgetvlume.h \
+		../ProAVV/aav_lineeditsearch.h \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
 	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/hcc/share/code/project/code/qtCode/build-ProAVV-unknown-Debug/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/hcc/share/code/project/code/qtCode/ProAVV -I/usr/local/include -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtMultimediaWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtMultimedia -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include ../ProAVV/aav_userloginandregis.h -o moc_aav_userloginandregis.cpp
@@ -562,6 +571,11 @@ moc_aav_videocoverwidget.cpp: ../ProAVV/aav_videocoverwidget.h \
 		/usr/lib/qt5/bin/moc
 	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/hcc/share/code/project/code/qtCode/build-ProAVV-unknown-Debug/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/hcc/share/code/project/code/qtCode/ProAVV -I/usr/local/include -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtMultimediaWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtMultimedia -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include ../ProAVV/aav_videocoverwidget.h -o moc_aav_videocoverwidget.cpp
 
+moc_aav_videocoverwidlistloop.cpp: ../ProAVV/aav_videocoverwidlistloop.h \
+		moc_predefs.h \
+		/usr/lib/qt5/bin/moc
+	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/hcc/share/code/project/code/qtCode/build-ProAVV-unknown-Debug/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/hcc/share/code/project/code/qtCode/ProAVV -I/usr/local/include -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtMultimediaWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtMultimedia -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include ../ProAVV/aav_videocoverwidlistloop.h -o moc_aav_videocoverwidlistloop.cpp
+
 moc_aav_videodisplay.cpp: ../ProAVV/aav_videodisplay.h \
 		../ProAVV/aav_volumebutton.h \
 		../ProAVV/aav_widgetvlume.h \
@@ -593,9 +607,9 @@ compiler_moc_objc_header_make_all:
 compiler_moc_objc_header_clean:
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
-compiler_uic_make_all: ui_aav_main_view.h ui_aav_uploadfile.h ui_aav_uploadselect.h ui_aav_userlogin.h ui_aav_userloginandregis.h ui_aav_userregister.h ui_aav_usrpage.h ui_aav_videocoverwidget.h ui_aav_videodisplay.h ui_aav_videolist.h
+compiler_uic_make_all: ui_aav_main_view.h ui_aav_uploadfile.h ui_aav_uploadselect.h ui_aav_userlogin.h ui_aav_userloginandregis.h ui_aav_userregister.h ui_aav_usrpage.h ui_aav_videocoverwidget.h ui_aav_videocoverwidlistloop.h ui_aav_videodisplay.h ui_aav_videolist.h
 compiler_uic_clean:
-	-$(DEL_FILE) ui_aav_main_view.h ui_aav_uploadfile.h ui_aav_uploadselect.h ui_aav_userlogin.h ui_aav_userloginandregis.h ui_aav_userregister.h ui_aav_usrpage.h ui_aav_videocoverwidget.h ui_aav_videodisplay.h ui_aav_videolist.h
+	-$(DEL_FILE) ui_aav_main_view.h ui_aav_uploadfile.h ui_aav_uploadselect.h ui_aav_userlogin.h ui_aav_userloginandregis.h ui_aav_userregister.h ui_aav_usrpage.h ui_aav_videocoverwidget.h ui_aav_videocoverwidlistloop.h ui_aav_videodisplay.h ui_aav_videolist.h
 ui_aav_main_view.h: ../ProAVV/aav_main_view.ui \
 		/usr/lib/qt5/bin/uic
 	/usr/lib/qt5/bin/uic ../ProAVV/aav_main_view.ui -o ui_aav_main_view.h
@@ -628,6 +642,10 @@ ui_aav_videocoverwidget.h: ../ProAVV/aav_videocoverwidget.ui \
 		/usr/lib/qt5/bin/uic
 	/usr/lib/qt5/bin/uic ../ProAVV/aav_videocoverwidget.ui -o ui_aav_videocoverwidget.h
 
+ui_aav_videocoverwidlistloop.h: ../ProAVV/aav_videocoverwidlistloop.ui \
+		/usr/lib/qt5/bin/uic
+	/usr/lib/qt5/bin/uic ../ProAVV/aav_videocoverwidlistloop.ui -o ui_aav_videocoverwidlistloop.h
+
 ui_aav_videodisplay.h: ../ProAVV/aav_videodisplay.ui \
 		/usr/lib/qt5/bin/uic
 	/usr/lib/qt5/bin/uic ../ProAVV/aav_videodisplay.ui -o ui_aav_videodisplay.h
@@ -646,7 +664,14 @@ compiler_clean: compiler_rcc_clean compiler_moc_predefs_clean compiler_moc_heade
 
 ####### Compile
 
-aav_lineeditsearch.o: ../ProAVV/aav_lineeditsearch.cpp ../ProAVV/aav_lineeditsearch.h
+aav_lineeditsearch.o: ../ProAVV/aav_lineeditsearch.cpp ../ProAVV/aav_lineeditsearch.h \
+		../ProAVV/aav_usermanager.h \
+		../ProAVV/aav_networkmanager.h \
+		../ProAVV/aav_videolist.h \
+		../ProAVV/aav_videocoverwidget.h \
+		../ProAVV/aav_videodisplay.h \
+		../ProAVV/aav_volumebutton.h \
+		../ProAVV/aav_widgetvlume.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o aav_lineeditsearch.o ../ProAVV/aav_lineeditsearch.cpp
 
 aav_main_view.o: ../ProAVV/aav_main_view.cpp ../ProAVV/aav_main_view.h \
@@ -662,6 +687,7 @@ aav_main_view.o: ../ProAVV/aav_main_view.cpp ../ProAVV/aav_main_view.h \
 		../ProAVV/aav_videodisplay.h \
 		../ProAVV/aav_volumebutton.h \
 		../ProAVV/aav_widgetvlume.h \
+		../ProAVV/aav_lineeditsearch.h \
 		../ProAVV/aav_usrpage.h \
 		ui_aav_main_view.h \
 		../ProAVV/aav_networkthread.h
@@ -673,7 +699,8 @@ aav_networkmanager.o: ../ProAVV/aav_networkmanager.cpp ../ProAVV/aav_networkmana
 		../ProAVV/aav_videocoverwidget.h \
 		../ProAVV/aav_videodisplay.h \
 		../ProAVV/aav_volumebutton.h \
-		../ProAVV/aav_widgetvlume.h
+		../ProAVV/aav_widgetvlume.h \
+		../ProAVV/aav_lineeditsearch.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o aav_networkmanager.o ../ProAVV/aav_networkmanager.cpp
 
 aav_networkthread.o: ../ProAVV/aav_networkthread.cpp ../ProAVV/aav_networkthread.h \
@@ -683,7 +710,8 @@ aav_networkthread.o: ../ProAVV/aav_networkthread.cpp ../ProAVV/aav_networkthread
 		../ProAVV/aav_videocoverwidget.h \
 		../ProAVV/aav_videodisplay.h \
 		../ProAVV/aav_volumebutton.h \
-		../ProAVV/aav_widgetvlume.h
+		../ProAVV/aav_widgetvlume.h \
+		../ProAVV/aav_lineeditsearch.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o aav_networkthread.o ../ProAVV/aav_networkthread.cpp
 
 aav_uploadfile.o: ../ProAVV/aav_uploadfile.cpp ../ProAVV/aav_uploadfile.h \
@@ -695,7 +723,8 @@ aav_uploadfile.o: ../ProAVV/aav_uploadfile.cpp ../ProAVV/aav_uploadfile.h \
 		../ProAVV/aav_videocoverwidget.h \
 		../ProAVV/aav_videodisplay.h \
 		../ProAVV/aav_volumebutton.h \
-		../ProAVV/aav_widgetvlume.h
+		../ProAVV/aav_widgetvlume.h \
+		../ProAVV/aav_lineeditsearch.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o aav_uploadfile.o ../ProAVV/aav_uploadfile.cpp
 
 aav_uploadselect.o: ../ProAVV/aav_uploadselect.cpp ../ProAVV/aav_uploadselect.h \
@@ -711,7 +740,8 @@ aav_userlogin.o: ../ProAVV/aav_userlogin.cpp ../ProAVV/aav_userlogin.h \
 		../ProAVV/aav_videocoverwidget.h \
 		../ProAVV/aav_videodisplay.h \
 		../ProAVV/aav_volumebutton.h \
-		../ProAVV/aav_widgetvlume.h
+		../ProAVV/aav_widgetvlume.h \
+		../ProAVV/aav_lineeditsearch.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o aav_userlogin.o ../ProAVV/aav_userlogin.cpp
 
 aav_userloginandregis.o: ../ProAVV/aav_userloginandregis.cpp ../ProAVV/aav_userloginandregis.h \
@@ -724,6 +754,7 @@ aav_userloginandregis.o: ../ProAVV/aav_userloginandregis.cpp ../ProAVV/aav_userl
 		../ProAVV/aav_videodisplay.h \
 		../ProAVV/aav_volumebutton.h \
 		../ProAVV/aav_widgetvlume.h \
+		../ProAVV/aav_lineeditsearch.h \
 		ui_aav_userloginandregis.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o aav_userloginandregis.o ../ProAVV/aav_userloginandregis.cpp
 
@@ -738,7 +769,8 @@ aav_userregister.o: ../ProAVV/aav_userregister.cpp ../ProAVV/aav_userregister.h 
 		../ProAVV/aav_videocoverwidget.h \
 		../ProAVV/aav_videodisplay.h \
 		../ProAVV/aav_volumebutton.h \
-		../ProAVV/aav_widgetvlume.h
+		../ProAVV/aav_widgetvlume.h \
+		../ProAVV/aav_lineeditsearch.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o aav_userregister.o ../ProAVV/aav_userregister.cpp
 
 aav_usrpage.o: ../ProAVV/aav_usrpage.cpp ../ProAVV/aav_usrpage.h \
@@ -751,6 +783,7 @@ aav_usrpage.o: ../ProAVV/aav_usrpage.cpp ../ProAVV/aav_usrpage.h \
 		../ProAVV/aav_userlogin.h \
 		../ProAVV/aav_networkmanager.h \
 		../ProAVV/aav_usermanager.h \
+		../ProAVV/aav_lineeditsearch.h \
 		../ProAVV/aav_networkthread.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o aav_usrpage.o ../ProAVV/aav_usrpage.cpp
 
@@ -761,8 +794,14 @@ aav_videocoverwidget.o: ../ProAVV/aav_videocoverwidget.cpp ../ProAVV/aav_videoco
 		ui_aav_videocoverwidget.h \
 		../ProAVV/aav_networkmanager.h \
 		../ProAVV/aav_usermanager.h \
-		../ProAVV/aav_videolist.h
+		../ProAVV/aav_videolist.h \
+		../ProAVV/aav_lineeditsearch.h \
+		../ProAVV/aav_networkthread.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o aav_videocoverwidget.o ../ProAVV/aav_videocoverwidget.cpp
+
+aav_videocoverwidlistloop.o: ../ProAVV/aav_videocoverwidlistloop.cpp ../ProAVV/aav_videocoverwidlistloop.h \
+		ui_aav_videocoverwidlistloop.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o aav_videocoverwidlistloop.o ../ProAVV/aav_videocoverwidlistloop.cpp
 
 aav_videodisplay.o: ../ProAVV/aav_videodisplay.cpp ../ProAVV/aav_videodisplay.h \
 		../ProAVV/aav_volumebutton.h \
@@ -771,7 +810,10 @@ aav_videodisplay.o: ../ProAVV/aav_videodisplay.cpp ../ProAVV/aav_videodisplay.h 
 		../ProAVV/aav_usermanager.h \
 		../ProAVV/aav_networkmanager.h \
 		../ProAVV/aav_videolist.h \
-		../ProAVV/aav_videocoverwidget.h
+		../ProAVV/aav_videocoverwidget.h \
+		../ProAVV/aav_lineeditsearch.h \
+		../ProAVV/aav_networkthread.h \
+		../ProAVV/aav_videocoverwidlistloop.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o aav_videodisplay.o ../ProAVV/aav_videodisplay.cpp
 
 aav_videolist.o: ../ProAVV/aav_videolist.cpp ../ProAVV/aav_videolist.h \
@@ -782,6 +824,7 @@ aav_videolist.o: ../ProAVV/aav_videolist.cpp ../ProAVV/aav_videolist.h \
 		ui_aav_videolist.h \
 		../ProAVV/aav_networkmanager.h \
 		../ProAVV/aav_usermanager.h \
+		../ProAVV/aav_lineeditsearch.h \
 		../ProAVV/aav_networkthread.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o aav_videolist.o ../ProAVV/aav_videolist.cpp
 
@@ -807,6 +850,7 @@ main.o: ../ProAVV/main.cpp ../ProAVV/aav_main_view.h \
 		../ProAVV/aav_videodisplay.h \
 		../ProAVV/aav_volumebutton.h \
 		../ProAVV/aav_widgetvlume.h \
+		../ProAVV/aav_lineeditsearch.h \
 		../ProAVV/aav_usrpage.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../ProAVV/main.cpp
 
@@ -845,6 +889,9 @@ moc_aav_usrpage.o: moc_aav_usrpage.cpp
 
 moc_aav_videocoverwidget.o: moc_aav_videocoverwidget.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_aav_videocoverwidget.o moc_aav_videocoverwidget.cpp
+
+moc_aav_videocoverwidlistloop.o: moc_aav_videocoverwidlistloop.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_aav_videocoverwidlistloop.o moc_aav_videocoverwidlistloop.cpp
 
 moc_aav_videodisplay.o: moc_aav_videodisplay.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_aav_videodisplay.o moc_aav_videodisplay.cpp

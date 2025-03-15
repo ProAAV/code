@@ -5,25 +5,28 @@
 #include<QStandardItemModel>
 #include<QListView>
 #include"aav_videocoverwidget.h"
+#include"aav_networkthread.h"
 #include<QWidget>
 #include<QLabel>
 #include<aav_networkmanager.h>
 #include"aav_videodisplay.h"
 #include<QJsonDocument>
 #include<QJsonObject>
-#include"aav_networkthread.h"
 #include<QJsonArray>
 #include<QJsonValue>
-VideoList::VideoList(QWidget *parent) :
+#include<QScrollBar>
+VideoList::VideoList(int flag,QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::VideoList)
+    ui(new Ui::VideoList),m_x{0},m_y{0},m_idx{0},m_offset{0}
 {
     ui->setupUi(this);
+    m_flag=flag;
+    m_thread=new NetWorkThread(this);
     /*
     视频列表展示类
     */
 
-    //VideoDisplay* vdis_1=new VideoDisplay();
+    /*//VideoDisplay* vdis_1=new VideoDisplay();
     m_widget_1=new VideoCoverWidget(this);
 
     //m_widget_1->setStyleSheet("QWidget{background-color: red;}");
@@ -50,10 +53,25 @@ VideoList::VideoList(QWidget *parent) :
     //m_widget_4->setStyleSheet("QWidget{background-color: blue;}");
     ui->gridLayout->addWidget(m_widget_4,1,1);
 
-    vec_wids.push_back(m_widget_1);
-    vec_wids.push_back(m_widget_2);
-    vec_wids.push_back(m_widget_3);
-    vec_wids.push_back(m_widget_4);
+    m_vec_video_cover_wids.push_back(m_widget_1);
+    m_vec_video_cover_wids.push_back(m_widget_2);
+    m_vec_video_cover_wids.push_back(m_widget_3);
+    m_vec_video_cover_wids.push_back(m_widget_4);*/
+
+    /*addVideoCoverWidget(0,0);
+    addVideoCoverWidget(0,1);
+    addVideoCoverWidget(1,0);
+    addVideoCoverWidget(1,1);*/
+
+    /*addVideoCoverWidget(m_x,m_y);
+    addVideoCoverWidget(m_x,m_y);
+    addVideoCoverWidget(m_x,m_y);
+    addVideoCoverWidget(m_x,m_y);*/
+
+    //连接scroll滚动条的事件与槽
+    connect(ui->scrollArea->verticalScrollBar(),&QScrollBar::valueChanged,this,[=](int value){
+        this->sloHandleScrollBarValueChanged(value);
+    });
 
 }
 
@@ -66,20 +84,95 @@ void VideoList::setUserVideoListsInfo()
 {
     /*NetWorkManager net_manager{};
     QNetworkReply* reply=net_manager.http_get_user_video_lists_info(0);*/
-    NetWorkThread* thread=new NetWorkThread(this);
-    thread->m_net_manager->http_get_user_video_lists_info(0,this);
+    if(!m_thread){
+        m_thread=new NetWorkThread(this);
+    }
+    //NetWorkThread* thread=new NetWorkThread(this);
+    if(!m_thread->isRunning()){
+        m_thread->m_net_manager->http_get_user_video_lists_info(0,this);
+        connect(m_thread,&NetWorkThread::finished,this,[=](){
+            m_thread->deleteLater();
+        });
+    }
+
     //sloShowFilesInfo(reply);
 }
 
 void VideoList::setUserHistoryVideoListsInfo()
 {
-    NetWorkThread* thread=new NetWorkThread(this);
-    thread->m_net_manager->http_get_user_video_lists_info(1,this);
+    if(!m_thread){
+        m_thread=new NetWorkThread(this);
+    }
+    //NetWorkThread* thread=new NetWorkThread(this);
+    if(!m_thread->isRunning()){
+        m_thread->m_net_manager->http_get_user_video_lists_info(1,this);
+        connect(m_thread,&NetWorkThread::finished,this,[=](){
+            m_thread->deleteLater();
+        });
+    }
     //sloShowFilesInfo(reply);
+}
+
+void VideoList::getNewVideoListsInfo(VideoList* list)
+{
+    if(!m_thread){
+        m_thread=new NetWorkThread(this);
+    }
+    //NetWorkThread* thread=new NetWorkThread(this);
+    if(!m_thread->isRunning()){
+        m_thread->m_net_manager->http_get_new_video_lists_file_info(m_flag,list,m_offset);
+        connect(m_thread,&NetWorkThread::finished,this,[=](){
+            m_thread->deleteLater();
+        });
+    }
+}
+
+VideoCoverWidget* VideoList::addVideoCoverWidget(int x,int y)
+{
+    qDebug()<<"x:"<<x<<" "<<"y:"<<y;
+    VideoCoverWidget* video_cover_wid=new VideoCoverWidget();
+    if(!video_cover_wid){
+        qDebug("erorr to create video_cover_wid");
+        return nullptr;
+    }
+
+    ui->gridLayout->addWidget(video_cover_wid,x,y);
+    m_vec_video_cover_wids.push_back(video_cover_wid);
+    if(y==1){
+        m_x+=1;
+    }
+    m_y=(m_y+1)%2;
+    return video_cover_wid;
+}
+
+void VideoList::reload()
+{
+
+    m_x=0;
+    m_y=0;
+    m_idx=0;
+    m_offset=0;
+    //qDeleteAll(m_vec_video_cover_wids);
+    int size=m_vec_video_cover_wids.size();
+    qDebug()<<"reload size:"<<size;
+    for(int i=0;i<size;i++){
+        auto wid=m_vec_video_cover_wids.last();
+        m_vec_video_cover_wids.pop_back();
+        delete wid;
+    }
+    //m_vec_video_cover_wids.clear();
+
+    qDebug()<<"m_vec_video_cover_wids size:"<<m_vec_video_cover_wids.size();
+    /*addVideoCoverWidget(m_x,m_y);
+    addVideoCoverWidget(m_x,m_y);
+    addVideoCoverWidget(m_x,m_y);
+    addVideoCoverWidget(m_x,m_y);*/
+
 }
 
 void VideoList::sloShowFilesInfo(QNetworkReply* reply)
 {
+    qDebug()<<"offset:"<<m_offset;
     if(!reply){
         qDebug()<<"sloShowFilesInfo param is invalid";
         return;
@@ -94,6 +187,10 @@ void VideoList::sloShowFilesInfo(QNetworkReply* reply)
     QJsonObject obj_root=json_docm.object();
     QString status=obj_root.value("status").toString();
     int file_info_cnt=obj_root.value("file_info_cnt").toInt();
+    //直接根据数据库返回记录数动态创建对应的VideoCover
+    for(int i=0;i<file_info_cnt;i++){
+        addVideoCoverWidget(m_x,m_y);
+    }
     for(int i=0;i<file_info_cnt;i++){
         //给视频封面对象赋值
         qDebug()<<"i:::::"<<i;
@@ -106,23 +203,52 @@ void VideoList::sloShowFilesInfo(QNetworkReply* reply)
         QString date_time=sobj.value("date_time").toString();
         QString file_playback_duration=sobj.value("file_playback_duration").toString();
         QString progress_data=sobj.value("progress_data").toString();
-        vec_wids[i]->m_file_path=file_path;
-        vec_wids[i]->m_file_img_path=file_img_path;
-        vec_wids[i]->m_intro=file_title;
-        vec_wids[i]->m_file_md5=file_md5;
+        QString file_username=sobj.value("username").toString();
+        QString file_type=sobj.value("file_type").toString();
+        m_vec_video_cover_wids[m_idx]->m_file_path=file_path;
+        m_vec_video_cover_wids[m_idx]->m_file_img_path=file_img_path;
+        m_vec_video_cover_wids[m_idx]->m_intro=file_title;
+        m_vec_video_cover_wids[m_idx]->m_file_md5=file_md5;
+        m_vec_video_cover_wids[m_idx]->m_username=file_username;
+        m_vec_video_cover_wids[m_idx]->m_file_type=file_type;
+        qDebug()<<"file_path"<<file_path;
+        qDebug()<<"file_img_path"<<file_img_path;
+        qDebug()<<"file_title"<<file_title;
+        qDebug()<<"file_md5"<<file_md5;
+        qDebug()<<"file_username"<<file_username;
+        qDebug()<<"file_type"<<file_type;
         qDebug()<<"m_progress_data"<<progress_data;
-        vec_wids[i]->m_progress_data=progress_data;
+        m_vec_video_cover_wids[m_idx]->m_progress_data=progress_data;
         qDebug()<<"send date_time:"<<date_time;
-        vec_wids[i]->m_date_time=date_time;
-        vec_wids[i]->m_duration=file_playback_duration;
+        m_vec_video_cover_wids[m_idx]->m_date_time=date_time;
+        m_vec_video_cover_wids[m_idx]->m_duration=file_playback_duration;
         //赋值完毕后就触发信号去执行http请求
-        //vec_wids[i]->sloRequestImg(file_img_path);
-        connect(vec_wids[i],&VideoCoverWidget::sigRequestImg,vec_wids[i],&VideoCoverWidget::sloRequestImg);
-        emit vec_wids[i]->sigRequestImg(file_img_path);
+        //m_vec_video_cover_wids[i]->sloRequestImg(file_img_path);
+        m_vec_video_cover_wids[m_idx]->sloRequestImg(file_img_path);
+        m_idx++;
+        /*connect(m_vec_video_cover_wids[m_idx],&VideoCoverWidget::sigRequestImg,m_vec_video_cover_wids[m_idx],&VideoCoverWidget::sloRequestImg);
+        emit m_vec_video_cover_wids[m_idx]->sigRequestImg(file_img_path);
         //使用完立即解绑，不然会造成多次绑定，一次emit会触发多次slo处理
-        disconnect(vec_wids[i], &VideoCoverWidget::sigRequestImg, vec_wids[i], &VideoCoverWidget::sloRequestImg);
-
+        disconnect(m_vec_video_cover_wids[m_idx], &VideoCoverWidget::sigRequestImg, m_vec_video_cover_wids[m_idx], &VideoCoverWidget::sloRequestImg);
+        m_idx++;*/
     }
+    m_offset+=file_info_cnt;
     qDebug()<<"delete reply";
     delete reply;
+}
+
+void VideoList::sloHandleScrollBarValueChanged(int value)
+{
+    qDebug("enter sloHandleScrollBarValueChanged");
+    int scrollBarMaximum = ui->scrollArea->verticalScrollBar()->maximum();
+    if (value >= scrollBarMaximum - 100){
+        //快到底部时动态加载4个视频
+
+        /*for(int i=0;i<4;i++){
+            addVideoCoverWidget(m_x,m_y);
+        }*/
+        qDebug("enter sloHandleScrollBarValueChanged create new finished");
+        //请求数据
+        getNewVideoListsInfo(this);
+    }
 }

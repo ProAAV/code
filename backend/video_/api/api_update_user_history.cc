@@ -38,6 +38,7 @@ void UpdateUserHistoryResponFailed(char* wbuf,int wbuf_sz){
 }
 
 void apiHandleUpdateUserHistory(char* wbuf,int wbuf_sz,struct mg_http_message hm,ConfRead& conf_reader){
+    std::cout<<"enter apiHandleUpdateUserHistory\n";
     std::string method(hm.method.buf,hm.method.len);
     if(method!="POST"){
         std::cout<<"apiHandleUpdateUserHistory error ,the method is not POST\n";
