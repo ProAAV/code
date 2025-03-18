@@ -26,6 +26,8 @@ set(SOURCES
     api/api_search_log.cc
     api/api_get_search_log.cc
     base/py_script.cc
+    api/api_list_loop.cc
+    api/api_analysis_messages.cc
 )
 add_executable(video_server ${SOURCES})
 add_compile_options(-g)

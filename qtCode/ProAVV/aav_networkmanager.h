@@ -12,6 +12,8 @@
 #include<QStringList>
 #include<QStringListModel>
 #include"aav_lineeditsearch.h"
+#include"aav_videocoverwidlistloop.h"
+#include"aav_videodisplay.h"
 class NetWorkManager : public QObject
 {
     //貌似对于qt来说它的http的post请求总是请求头和请求体分两次传输
@@ -39,11 +41,19 @@ public:
     //自动补全
     QNetworkReply* http_get_search_log(const QString& key);
 
-    void http_get_recommend_audio_lists(const QString& file_md5);
+    void http_get_recommend_audio_lists(const QString& file_md5,const QString& file_type,VideoDisplay* vdis);
 
     void http_get_random_audios(VideoList* video_list_wid);
     void http_get_random_videos(VideoList* video_list_wid);
+
+    void http_get_search_audios(VideoList* video_list_wid,QString key_search);
+    void http_get_search_videos(VideoList* video_list_wid,QString key_search);
+
+
+
     void http_get_new_video_lists_file_info(int flag,VideoList* video_list,int offset);
+    //获取视频需要的情感分析素材
+    void http_get_video_analysis_messages(const QString& file_md5,VideoDisplay* vdis,int index);
 private:
     QNetworkAccessManager* m_manager;
     QNetworkReply* m_files_info_reply;

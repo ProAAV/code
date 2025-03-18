@@ -13,6 +13,7 @@
 #include<QJsonArray>
 #include<QTimer>
 #include<QJsonValue>
+
 NetWorkManager::NetWorkManager(QObject *parent): QObject{parent}
 {
     m_manager=new QNetworkAccessManager(this);
@@ -423,22 +424,87 @@ QNetworkReply* NetWorkManager::http_get_search_log(const QString& key)
     return reply;
 }
 
-void NetWorkManager::http_get_recommend_audio_lists(const QString& file_md5)
+void NetWorkManager::http_get_recommend_audio_lists(const QString& file_md5,const QString& file_type,VideoDisplay* vdis)
 {
-    //先查找当前播放的音频文件属于什么类型的，标签是什么样的
+    //先上传当前播放的音频文件属于什么类型的，后端查询标签是什么样的，返回类似的
     QString username=UserManager::instance()->getUserName();
-    QString s="http://192.168.208.128:8888/api/listloop?username="+username+"&file_md5="+file_md5;
-    QString feature_1;
+    //QString s="http://192.168.208.128:8888/api/listloop?username="+username+"&file_md5="+file_md5;
+    QString s="http://192.168.208.128:8888/api/listloop";
+    /*QString feature_1;
     QString feature_2;
     QString feature_3;
     QString feature_4;
-    QString feature_5;
-    QUrl url(s);
-    QNetworkRequest request(url);
-    QNetworkReply* reply=m_manager->get(request);
+    QString feature_5;*/
+    QJsonObject root;
+
+    if(username==""){
+        //游客状态推荐
+        username="null";
+        root.insert("username",username);
+        root.insert("file_md5",file_md5);
+        root.insert("file_type",file_type);
+
+        QJsonDocument js_doc(root);
+        QByteArray post_data = js_doc.toJson(QJsonDocument::Compact);
+        QUrl url(s);
+        QNetworkRequest request(url);
+        request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+        QNetworkReply* reply=m_manager->post(request,post_data);
+        QEventLoop loop;
+        connect(reply, &QNetworkReply::finished, &loop, [&]() {  // 确保 loop 不是常量
+            vdis->listLoopCoverShowInfo(reply);
+            reply->deleteLater();
+            loop.quit();  // 正确调用 quit()
+        });
+        loop.exec();
+        /*connect(reply,&QNetworkReply::finished,this,[=](){
+            if(reply->error()){
+                qDebug()<<"error http_insert_search_log with reply";
+                reply->deleteLater();
+                return;
+            }
+
+            vdis->listLoopCoverShowInfo(reply);
+            reply->deleteLater();
+        });*/
+        return;
+    }
+    else{
+        //登录状态搜索
+        //username="null";
+        root.insert("username",username);
+        root.insert("file_md5",file_md5);
+        root.insert("file_type",file_type);
+
+        QJsonDocument js_doc(root);
+        QByteArray post_data = js_doc.toJson(QJsonDocument::Compact);
+        QUrl url(s);
+        QNetworkRequest request(url);
+        request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+        QNetworkReply* reply=m_manager->post(request,post_data);
+        /*connect(reply,&QNetworkReply::finished,this,[=](){
+            if(reply->error()){
+                qDebug()<<"error http_insert_search_log with reply";
+                reply->deleteLater();
+                return;
+            }
+            vdis->listLoopCoverShowInfo(reply);
+            reply->deleteLater();
+
+        });*/
+        QEventLoop loop;
+        connect(reply, &QNetworkReply::finished, &loop, [&]() {  // 确保 loop 不是常量
+            vdis->listLoopCoverShowInfo(reply);
+            reply->deleteLater();
+            loop.quit();  // 正确调用 quit()
+        });
+        loop.exec();
+        return;
+    }
+    /*QNetworkReply* reply=m_manager->get(request);
     connect(reply, &QNetworkReply::finished, this,[=](){
         this->sloHandleRecommendFeatures(reply);
-    });
+    });*/
 }
 
 void NetWorkManager::http_get_random_audios(VideoList* video_list_wid)
@@ -469,6 +535,36 @@ void NetWorkManager::http_get_random_videos(VideoList *video_list_wid)
     });
 }
 
+void NetWorkManager::http_get_search_audios(VideoList *video_list_wid, QString key_search)
+{
+    QString s="http://192.168.208.128:8888/api/filesList?files=4&strategy=random&username=null&key=0&key_search=%1";
+    s=s.arg(key_search);
+    QUrl url(s);
+    QNetworkRequest request(url);
+    qDebug()<<"enter  http_get_files_info";
+    QNetworkReply* reply=m_manager->get(request);
+    connect(reply,&QNetworkReply::finished,this,[=](){
+        qDebug()<<"http_get_random_audios--------------";
+         video_list_wid->sloShowFilesInfo(reply);
+        qDebug()<<"out http_get_random_audios--------------";
+    });
+}
+
+void NetWorkManager::http_get_search_videos(VideoList *video_list_wid, QString key_search)
+{
+    QString s="http://192.168.208.128:8888/api/filesList?files=4&strategy=random&username=null&key=1&key_search=%1";
+    s=s.arg(key_search);
+    QUrl url(s);
+    QNetworkRequest request(url);
+    qDebug()<<"enter  http_get_files_info";
+    QNetworkReply* reply=m_manager->get(request);
+    connect(reply,&QNetworkReply::finished,this,[=](){
+        qDebug()<<"http_get_random_audios--------------";
+         video_list_wid->sloShowFilesInfo(reply);
+        qDebug()<<"out http_get_random_audios--------------";
+    });
+}
+//未完
 void NetWorkManager::http_get_new_video_lists_file_info(int flag,VideoList* video_list,int offset)
 {
     if(!video_list){
@@ -477,7 +573,7 @@ void NetWorkManager::http_get_new_video_lists_file_info(int flag,VideoList* vide
     }
     qDebug()<<"enter http_get_new_video_lists_file_info";
     //根据flag来判断到底是什么新增，比如在home下的随机新增，在userown的用户上传新增，\
-    或者用户观看历史新增，或者用户搜索新增，或者home_audios新增,home_videos新增\
+    或者用户观看历史新增，或者用户搜索新增，或者home_audios新增,home_videos新增,search_audios新增，search_videos新增\
     都是复用这一个函数
     //依次0,1,2,3，4,5
     QString s="";
@@ -520,6 +616,20 @@ void NetWorkManager::http_get_new_video_lists_file_info(int flag,VideoList* vide
         });
     }
 
+}
+
+void NetWorkManager::http_get_video_analysis_messages(const QString& file_md5,VideoDisplay* vdis,int index)
+{
+    //实际上是获取一条弹幕信息
+
+    QString s="http://192.168.208.128:8888/api/analysismessages?file_md5="+file_md5;
+    QUrl url(s);
+    QNetworkRequest request(url);
+    qDebug()<<"enter  http_get_video_analysis_messages";
+    QNetworkReply* reply=m_manager->get(request);
+    connect(reply,&QNetworkReply::finished,this,[=](){
+        vdis->analyzeDanmuMessages(reply);
+    });
 }
 
 

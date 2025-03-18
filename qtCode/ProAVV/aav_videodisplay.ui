@@ -36,15 +36,11 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>211</width>
-          <height>519</height>
+          <width>207</width>
+          <height>509</height>
          </rect>
         </property>
-        <layout class="QVBoxLayout" name="verticalLayout">
-         <item>
-          <widget class="QWidget" name="widget" native="true"/>
-         </item>
-        </layout>
+        <layout class="QVBoxLayout" name="verticalLayout"/>
        </widget>
       </widget>
      </item>

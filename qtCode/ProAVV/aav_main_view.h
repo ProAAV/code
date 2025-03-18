@@ -29,6 +29,7 @@ private:
     LineEditSearch* m_ledit_search;
     VideoList* m_search_video_lists;
     QStackedWidget* stack_video_page_wid;
+    bool status_is_search;
 signals:
     void sigFilesInfo(QNetworkReply* reply);
 public slots:

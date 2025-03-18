@@ -12,9 +12,10 @@ void constructFileListsInfoRandom(int file_cnt,char* wbuf,int wbuf_sz,char* offs
 void constructFileListsInfoUserowned(int file_cnt,char* wbuf,int wbuf_sz,char* username,char* offset);
 void constructFileListsInfoUserhistory(int file_cnt,char* wbuf,int wbuf_sz,char* username,char* offset);
 void constructFileListsInfoSearch(int file_cnt,char* wbuf,int wbuf_sz,char* search_key);
-void constructFileListsAudio(int file_cnt,char* wbuf,int wbuf_sz,char* file_type);
-void constructFileListsVideo(int file_cnt,char* wbuf,int wbuf_sz,char* file_type);
-
+void constructFileListsAudio(int file_cnt,char* wbuf,int wbuf_sz);
+void constructFileListsVideo(int file_cnt,char* wbuf,int wbuf_sz);
+void constructFileListsAudio(int file_cnt,char* wbuf,int wbuf_sz,char* key_search);
+void constructFileListsVideo(int file_cnt,char* wbuf,int wbuf_sz,char* key_search);
 
 void fileListResponseSuccess(MYSQL_RES* res,char* wbuf,int wbuf_sz);
 void fileListResponseFailed(MYSQL_RES* res,char* wbuf,int wbuf_sz);

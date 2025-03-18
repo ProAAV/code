@@ -29,7 +29,7 @@ def get_video_frames(video_path, num_frames=128):
         formatted_ts = format_timestamp(timestamps[i])
         pil_img = Image.fromarray(frames[i])
         frames[i] = np.array(
-            overlay_timestamp(pil_img, formatted_ts, position=(10, 10), font_size=100, color=(255, 255, 255)))
+            overlay_timestamp(pil_img, formatted_ts, position=(10, 10), font_size=100, color=(255, 0, 0)))
 
         # 将每帧转换为 base64 编码
         buffered = io.BytesIO()
@@ -40,8 +40,8 @@ def get_video_frames(video_path, num_frames=128):
     return base64_frames, timestamps
 
 
-def overlay_timestamp(image, timestamp, position=(10, 10), font_path="C:\\Windows\\Fonts\\Arial.ttf", font_size=100,
-                      color=(255, 255, 255)):
+def overlay_timestamp(image, timestamp, position=(10, 10), font_path="/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", font_size=100,
+                      color=(255, 0, 0)):
     """
     在图像上叠加时间戳文本。
 
@@ -103,6 +103,7 @@ def slow_print(text, delay=0.1):
 def inference_with_openai(base64_frames, prompt):
     """Send audio data to OpenAI API for inference."""
     # Prepare the messages for the OpenAI API
+    print("hhhhhhh",prompt)
     video_data = [f"data:image/jpeg;base64,{frame}" for frame in base64_frames]
 
     messages = [
@@ -132,7 +133,7 @@ def inference_with_openai(base64_frames, prompt):
         try:
             # 获取当前片段
             chunk = response.choices[0].delta.content
-            #slow_print(chunk)
+            slow_print(chunk)
             resultStr+=chunk
         except Exception as e:
             pass
@@ -140,8 +141,11 @@ def inference_with_openai(base64_frames, prompt):
 
 if __name__ == '__main__':
     # Replace with your local audio file path
-    video_path = "/home/hcc/share/huishenghuiying.mp4"
-    prompt = "结合文字、图图像等内容，认识别角色的情感状态和情感变化。并且按照时间戳的HH:MM:SS组织时间"
+    video_path = "/home/hcc/share/2025-03-13 13-05-42.mkv"
+    #huishenghuiying.mp4
+    #2025-03-13 13-05-42.mkv
+    #prompt = "结合文字、图图像等内容，认识别角色的情感状态和情感变化。并且按照时间戳的HH:MM:SS组织时间"
+    prompt="结合文字、图图像等内容，认识别角色的情感状态和情感变化。并且按照左上角红色时间戳的HH:MM:SS组织时间,时间形式为**xx:xx:xx - xx:xx:xx**"
     num_frames = 32
 
     # 提取视频帧

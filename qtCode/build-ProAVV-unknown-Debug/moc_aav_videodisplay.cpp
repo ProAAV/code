@@ -21,8 +21,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_VideoDisplay_t {
-    QByteArrayData data[17];
-    char stringdata0[192];
+    QByteArrayData data[20];
+    char stringdata0[245];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -47,14 +47,19 @@ QT_MOC_LITERAL(12, 122, 10), // "sloPreload"
 QT_MOC_LITERAL(13, 133, 25), // "QMediaPlayer::MediaStatus"
 QT_MOC_LITERAL(14, 159, 6), // "status"
 QT_MOC_LITERAL(15, 166, 16), // "sloVolumeChanged"
-QT_MOC_LITERAL(16, 183, 8) // "position"
+QT_MOC_LITERAL(16, 183, 8), // "position"
+QT_MOC_LITERAL(17, 192, 17), // "getVideoDisplayUi"
+QT_MOC_LITERAL(18, 210, 17), // "Ui::VideoDisplay*"
+QT_MOC_LITERAL(19, 228, 16) // "sloHandleBtnNext"
 
     },
     "VideoDisplay\0sigClose\0\0sloSetSliderDura\0"
     "dur\0sloSetSliderPos\0sloPlayerMove\0pos\0"
     "sloPlayerPause\0sloMenuUnfold\0sloAdjRate\0"
     "num\0sloPreload\0QMediaPlayer::MediaStatus\0"
-    "status\0sloVolumeChanged\0position"
+    "status\0sloVolumeChanged\0position\0"
+    "getVideoDisplayUi\0Ui::VideoDisplay*\0"
+    "sloHandleBtnNext"
 };
 #undef QT_MOC_LITERAL
 
@@ -64,7 +69,7 @@ static const uint qt_meta_data_VideoDisplay[] = {
        8,       // revision
        0,       // classname
        0,    0, // classinfo
-       9,   14, // methods
+      11,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -72,17 +77,19 @@ static const uint qt_meta_data_VideoDisplay[] = {
        1,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    0,   59,    2, 0x06 /* Public */,
+       1,    0,   69,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       3,    1,   60,    2, 0x0a /* Public */,
-       5,    1,   63,    2, 0x0a /* Public */,
-       6,    1,   66,    2, 0x0a /* Public */,
-       8,    0,   69,    2, 0x0a /* Public */,
-       9,    0,   70,    2, 0x0a /* Public */,
-      10,    1,   71,    2, 0x0a /* Public */,
-      12,    1,   74,    2, 0x0a /* Public */,
-      15,    1,   77,    2, 0x0a /* Public */,
+       3,    1,   70,    2, 0x0a /* Public */,
+       5,    1,   73,    2, 0x0a /* Public */,
+       6,    1,   76,    2, 0x0a /* Public */,
+       8,    0,   79,    2, 0x0a /* Public */,
+       9,    0,   80,    2, 0x0a /* Public */,
+      10,    1,   81,    2, 0x0a /* Public */,
+      12,    1,   84,    2, 0x0a /* Public */,
+      15,    1,   87,    2, 0x0a /* Public */,
+      17,    0,   90,    2, 0x0a /* Public */,
+      19,    0,   91,    2, 0x0a /* Public */,
 
  // signals: parameters
     QMetaType::Void,
@@ -96,6 +103,8 @@ static const uint qt_meta_data_VideoDisplay[] = {
     QMetaType::Void, QMetaType::Int,   11,
     QMetaType::Void, 0x80000000 | 13,   14,
     QMetaType::Void, QMetaType::Int,   16,
+    0x80000000 | 18,
+    QMetaType::Void,
 
        0        // eod
 };
@@ -115,6 +124,9 @@ void VideoDisplay::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id
         case 6: _t->sloAdjRate((*reinterpret_cast< int(*)>(_a[1]))); break;
         case 7: _t->sloPreload((*reinterpret_cast< QMediaPlayer::MediaStatus(*)>(_a[1]))); break;
         case 8: _t->sloVolumeChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 9: { Ui::VideoDisplay* _r = _t->getVideoDisplayUi();
+            if (_a[0]) *reinterpret_cast< Ui::VideoDisplay**>(_a[0]) = std::move(_r); }  break;
+        case 10: _t->sloHandleBtnNext(); break;
         default: ;
         }
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
@@ -169,13 +181,13 @@ int VideoDisplay::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 9)
+        if (_id < 11)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 9;
+        _id -= 11;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 9)
+        if (_id < 11)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 9;
+        _id -= 11;
     }
     return _id;
 }

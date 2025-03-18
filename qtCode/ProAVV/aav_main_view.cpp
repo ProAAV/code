@@ -12,7 +12,7 @@
 #include"aav_networkthread.h"
 MainView::MainView(QWidget *parent)
     : QWidget(parent)
-    , ui(new Ui::MainView)
+    , ui(new Ui::MainView),status_is_search{false}
 {
     ui->setupUi(this);
     m_wid_upload_select=nullptr;
@@ -24,6 +24,7 @@ MainView::MainView(QWidget *parent)
     //先向服务器请求files_info数据,将要显示这些数据到videocoverwidget中
     /*NetWorkManager net_manager{};
     QNetworkReply* reply=net_manager.http_get_files_info();*/
+
 
 
     m_userpage=new UsrPage(this);
@@ -61,34 +62,66 @@ MainView::MainView(QWidget *parent)
 
     VideoList* video_list_home_audios=new VideoList(4,this);
     VideoList* video_list_home_videos=new VideoList(5,this);
+    VideoList* video_list_search_audios=new VideoList(6,this);
+    VideoList* video_list_search_videos=new VideoList(7,this);
     stack_video_page_wid->addWidget(video_list_wid);
     stack_video_page_wid->addWidget(m_search_video_lists);
     stack_video_page_wid->addWidget(video_list_home_audios);
     stack_video_page_wid->addWidget(video_list_home_videos);
+    stack_video_page_wid->addWidget(video_list_search_audios);
+    stack_video_page_wid->addWidget(video_list_search_videos);
 
     //默认情况下的按钮回应，之后还要考虑搜索情况下的回应
 
     connect(btn_audios,&QPushButton::clicked,this,[=](){
         qDebug()<<"clicked btn_audios----------------";
         NetWorkThread* thread=new NetWorkThread{this};
-        stack_video_page_wid->setCurrentWidget(video_list_home_audios);
-        video_list_home_audios->reload();
-        thread->m_net_manager->http_get_random_audios(video_list_home_audios);
-        connect(thread,&NetWorkThread::finished,this,[thread](){
-            thread->deleteLater();
-        });
-        qDebug()<<"out clicked btn_audios----------------";
+        if(status_is_search){
+            stack_video_page_wid->setCurrentWidget(video_list_search_audios);
+            video_list_search_audios->reload();
+            thread->m_net_manager->http_get_search_audios(video_list_search_audios,m_ledit_search->text());
+            connect(thread,&NetWorkThread::finished,this,[thread](){
+                thread->deleteLater();
+            });
+            qDebug()<<"out clicked btn_audios----------------";
+        }
+        else{
+
+            stack_video_page_wid->setCurrentWidget(video_list_home_audios);
+            video_list_home_audios->reload();
+            thread->m_net_manager->http_get_random_audios(video_list_home_audios);
+            connect(thread,&NetWorkThread::finished,this,[thread](){
+                thread->deleteLater();
+            });
+            qDebug()<<"out clicked btn_audios----------------";
+        }
+
     });
     connect(btn_videos,&QPushButton::clicked,this,[=](){
+
         qDebug()<<"clicked btn_videos----------------";
         NetWorkThread* thread=new NetWorkThread{this};
-        stack_video_page_wid->setCurrentWidget(video_list_home_videos);
-        video_list_home_videos->reload();
-        thread->m_net_manager->http_get_random_videos(video_list_home_videos);
-        connect(thread,&NetWorkThread::finished,this,[thread](){
-            thread->deleteLater();
-        });
-        qDebug()<<"out clicked btn_audios----------------";
+        if(status_is_search){
+            qDebug()<<"btn_videos_ search";
+            stack_video_page_wid->setCurrentWidget(video_list_search_videos);
+            video_list_search_videos->reload();
+            thread->m_net_manager->http_get_search_videos(video_list_search_videos,m_ledit_search->text());
+            connect(thread,&NetWorkThread::finished,this,[thread](){
+                thread->deleteLater();
+            });
+            qDebug()<<"out clicked btn_audios----------------";
+        }
+        else{
+
+            stack_video_page_wid->setCurrentWidget(video_list_home_videos);
+            video_list_home_videos->reload();
+            thread->m_net_manager->http_get_random_videos(video_list_home_videos);
+            connect(thread,&NetWorkThread::finished,this,[thread](){
+                thread->deleteLater();
+            });
+            qDebug()<<"out clicked btn_audios----------------";
+        }
+
     });
 
     //先向服务器请求files_info数据,将要显示这些数据到videocoverwidget中
@@ -114,6 +147,7 @@ MainView::MainView(QWidget *parent)
         connect(thread,&NetWorkThread::finished,this,[=](){
             thread->deleteLater();
         });
+        status_is_search=false;
     });
 
     connect(ui->btn_usr_page,&QPushButton::clicked,this,&MainView::sloBtnUserPageHandle);
@@ -192,4 +226,5 @@ void MainView::sloBtnSearch()
     connect(thread2,&NetWorkThread::finished,this,[thread2](){
         thread2->deleteLater();
     });
+    status_is_search=true;
 }

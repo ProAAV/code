@@ -14,11 +14,25 @@
 #include<QVariantList>
 #include<QCloseEvent>
 #include<unistd.h>
+#include<QJsonDocument>
+#include<QJsonObject>
+#include<QJsonArray>
+#include<QJsonValue>
 #include"aav_videocoverwidlistloop.h"
-VideoDisplay::VideoDisplay(QString& file_md5,QWidget *parent) :
-    QWidget(parent),ui(new Ui::VideoDisplay),m_file_path("")
+#include <QPropertyAnimation>
+#include <QRandomGenerator>
+#include<QSizePolicy>
+VideoDisplay::VideoDisplay(QString& file_md5,QString& file_type,QWidget *parent) :
+    QWidget(parent),ui(new Ui::VideoDisplay),m_file_path(""),m_file_type(file_type),m_ptr(0),animation{nullptr},danmuLabel{nullptr}
 {
     ui->setupUi(this);
+    qDebug()<<"VideoDisplay create and vec:"<<vec_list_loop_wids.size();
+
+
+    list_loop_wid=new QWidget(this);
+    vlayout_list_loop_wid=new QVBoxLayout(list_loop_wid);
+    vlayout_list_loop_wid->setAlignment(Qt::AlignTop);
+    ui->scrollArea->setWidget(list_loop_wid);
     m_cnt_pause_player=0;
     m_file_md5=file_md5;
     qDebug()<<"videodisplay init";
@@ -29,6 +43,9 @@ VideoDisplay::VideoDisplay(QString& file_md5,QWidget *parent) :
     m_player=new QMediaPlayer(this);
     m_video_widget=new QVideoWidget(this);
     m_player->setVideoOutput(m_video_widget);
+
+    //必须在player和video_widget初始化完成后再进行
+    //createDanmu("hello world!",5000);
     //当前进度，分隔符，总时长再加一个进度条的创建，作为当前页面的第二个板块
 
     m_lab_present_time=new QLabel(this);
@@ -49,7 +66,7 @@ VideoDisplay::VideoDisplay(QString& file_md5,QWidget *parent) :
     QPushButton* btn_video_pause=new QPushButton(this);
     btn_video_pause->setText("暂停");
     QPushButton* btn_video_next=new QPushButton(this);
-    btn_video_next->setText("下一集");
+    btn_video_next->setText("next");
     QPushButton* btn_play_mode=new QPushButton(this);
     btn_play_mode->setText("模式");
     m_btn_rate=new QPushButton(this);
@@ -100,6 +117,8 @@ VideoDisplay::VideoDisplay(QString& file_md5,QWidget *parent) :
     m_hlayout->addWidget(m_btn_rate);
     m_hlayout->addWidget(m_btn_vlm);
     m_hlayout->addWidget(btn_play_mode);
+    //下一集按钮
+    connect(btn_video_next,&QPushButton::clicked,this,&VideoDisplay::sloHandleBtnNext);
 
     //实现暂停，倍速播放
     connect(btn_video_pause,&QPushButton::clicked,this,&VideoDisplay::sloPlayerPause);
@@ -140,15 +159,18 @@ VideoDisplay::VideoDisplay(QString& file_md5,QWidget *parent) :
 
     //实现推荐列表的显示
     NetWorkThread* thread=new NetWorkThread(this);
-    thread->m_net_manager->http_get_recommend_audio_lists(file_md5);
-    QVBoxLayout* vlayout_list_loop=new QVBoxLayout();
+    thread->m_net_manager->http_get_recommend_audio_lists(file_md5,m_file_type,this);
+    connect(thread,&QThread::finished,this,[thread](){
+        thread->deleteLater();
+    });
+    //QVBoxLayout* vlayout_list_loop=new QVBoxLayout();
 
-    VideoCoverWidListLoop* cover_wid_list_loop_1=new VideoCoverWidListLoop(ui->widget);
+    /*VideoCoverWidListLoop* cover_wid_list_loop_1=new VideoCoverWidListLoop(ui->widget);
     VideoCoverWidListLoop* cover_wid_list_loop_2=new VideoCoverWidListLoop(ui->widget);
     VideoCoverWidListLoop* cover_wid_list_loop_3=new VideoCoverWidListLoop(ui->widget);
     VideoCoverWidListLoop* cover_wid_list_loop_4=new VideoCoverWidListLoop(ui->widget);
-    VideoCoverWidListLoop* cover_wid_list_loop_5=new VideoCoverWidListLoop(ui->widget);
-    cover_wid_list_loop_1->setFixedSize(500,500);
+    VideoCoverWidListLoop* cover_wid_list_loop_5=new VideoCoverWidListLoop(ui->widget);*/
+    /*cover_wid_list_loop_1->setFixedSize(500,500);
     cover_wid_list_loop_2->setFixedSize(500,500);
     cover_wid_list_loop_3->setFixedSize(500,500);
     cover_wid_list_loop_4->setFixedSize(500,500);
@@ -159,11 +181,11 @@ VideoDisplay::VideoDisplay(QString& file_md5,QWidget *parent) :
     vlayout_list_loop->addWidget(cover_wid_list_loop_2);
     vlayout_list_loop->addWidget(cover_wid_list_loop_3);
     vlayout_list_loop->addWidget(cover_wid_list_loop_4);
-    vlayout_list_loop->addWidget(cover_wid_list_loop_5);
+    vlayout_list_loop->addWidget(cover_wid_list_loop_5);*/
 
 
 
-    ui->widget->setLayout(vlayout_list_loop);
+    //ui->widget->setLayout(vlayout_list_loop);
 
 }
 
@@ -175,8 +197,15 @@ void VideoDisplay::sloSetSliderDura(qint64 dur){
 }
 void VideoDisplay::sloSetSliderPos(qint64 dur){
     int val=static_cast<int>(dur);
+    //qDebug()<<"val:"<<val<<" "<<"dur:"<<dur;
     m_slider_video_process->setValue(val);
     updatePresentTimeLab(dur);
+
+
+    int second=val/1000;
+    checkDanmuPresentTime(second);
+
+
 }
 void VideoDisplay::sloPlayerMove(int pos){
     m_player->setPosition(pos);
@@ -226,22 +255,405 @@ void VideoDisplay::setVideoFileProgressData(qint64 progress)
     m_player->setPosition(progress);
 }
 
-void VideoDisplay::play()
+void VideoDisplay::play(const QString& file_path,const QString& file_md5)
 {
     //播放视频
     //通过请求到ts视频文件的m3u8文件列表来实现QMediaPlayer配合m3u8文件来播放连续的ts视频文件
     //在这里videodisplay先被初始化也就是说先使用m_file_path开始了，只不过还没有show出来，但是这时候m_file_path还没有被设置
     qDebug()<<"play begin";
-    if(m_file_path==""){
+    if(file_path==""){
         qDebug()<<"file_path is invalid null";
         return;
     }
-    QUrl url(m_file_path);
+
+    QUrl url(file_path);
+    m_player->stop();
+
     m_player->setMedia(QMediaContent(url));
+
 
     connect(m_player,&QMediaPlayer::mediaStatusChanged,this,&VideoDisplay::sloPreload);
 
+    //每一次的视频播放都要解析弹幕需要的信息
+    /*NetWorkThread* thread=new NetWorkThread();
+    qDebug()<<"enter play 111";
+    thread->m_net_manager->http_get_video_analysis_messages(m_file_md5,this);
+    connect(thread,&QThread::finished,this,[thread](){
+        thread->deleteLater();
+    });*/
+    //异步获取数据并且解析
+    vec_end_time.clear();
+    vec_messages.clear();
+    vec_start_time.clear();
+    vec_descriptions.clear();
+    m_ptr=0;
+    vis.reset();
 
+    if(danmuLabel){
+        if(animation){
+            qDebug()<<"animation is ok";
+            animation->stop();
+        }
+        if(danmuLabel){
+            delete danmuLabel;
+            danmuLabel=nullptr;
+        }
+
+
+    }
+    qDebug()<<"我的发";
+    NetWorkThread* thread=new NetWorkThread();
+    thread->m_net_manager->http_get_video_analysis_messages(file_md5,this,9);
+    connect(thread,&QThread::finished,this,[thread](){
+        thread->deleteLater();
+    });
+
+    /*for(int i=1;i<=10;i++){
+        QTimer::singleShot(30000, this, [=](){
+            NetWorkThread* thread=new NetWorkThread();
+            qDebug()<<"enter play 111";
+            thread->m_net_manager->http_get_video_analysis_messages(m_file_md5,this,i);
+            connect(thread,&QThread::finished,this,[thread](){
+                thread->deleteLater();
+            });
+        });
+    }*/
+
+
+    //createDanmu("hhhhhhhhhh",3000);
+
+}
+
+void VideoDisplay::listLoopCoverShowInfo(QNetworkReply* reply)
+{
+    while (QLayoutItem *item = vlayout_list_loop_wid->takeAt(0)) {
+        // 获取子控件
+        QWidget *widget = item->widget();
+        if (widget) {
+            // 删除子控件
+            delete widget;
+        }
+        // 删除布局项
+        delete item;
+    }
+    vec_list_loop_wids.clear();
+    QByteArray byte_array=reply->readAll();
+
+    qDebug()<<"listLoopCoverShowInfo:"<<byte_array;
+    QJsonDocument json_docm=QJsonDocument::fromJson(byte_array);
+    if(json_docm.isNull()){
+        qDebug()<<"json document is null";
+        return;
+    }
+    QJsonObject obj_root=json_docm.object();
+    QString status=obj_root.value("status").toString();
+    qDebug()<<"status:"<<status;
+    if(status!="0"){
+        qDebug("error CoverListLoopShowInfo");
+        return;
+    }
+    int file_info_cnt=obj_root.value("file_info_cnt").toInt();
+    //直接根据数据库返回记录数动态创建对应的VideoCover
+    for(int i=0;i<file_info_cnt;i++){
+        qDebug()<<"listLoopCoverShowInfo cnt:"<<i;
+        VideoCoverWidListLoop* wid=new VideoCoverWidListLoop(list_loop_wid);
+        connect(wid,&VideoCoverWidListLoop::sigPlay,this,[=](){
+            //换播放地址，实现播放切换
+            qDebug()<<"changed!!!!!!!!!!!!!!!!!!";
+            this->play(wid->m_file_path,wid->m_file_md5);
+            NetWorkManager net_manager;
+            net_manager.http_get_recommend_audio_lists(wid->m_file_md5,wid->m_file_type,this);
+            //再来一遍listLoopCoverShowInfo过程
+            /*NetWorkThread* thread=new NetWorkThread();
+            thread->m_net_manager->http_get_recommend_audio_lists(wid->m_file_md5,wid->m_file_type,this);
+            connect(thread,&QThread::finished,this,[=](){
+                qDebug()<<"listLoopCoverShowInfo thread finished";
+                for(int i=0;i<vec_list_loop_wids.size();i++){
+                    //delete vec_list_loop_wids.last();
+                    vec_list_loop_wids.pop_back();
+                }
+                while (QLayoutItem *item = vlayout_list_loop_wid->takeAt(0)) {
+                        // 获取子控件
+                        QWidget *widget = item->widget();
+                        if (widget) {
+                            // 删除子控件
+                            delete widget;
+                        }
+                        // 删除布局项
+                        delete item;
+                }
+                thread->deleteLater();
+            });*/
+        });
+        wid->setFixedSize(200,200);
+        vlayout_list_loop_wid->addWidget(wid);
+        vec_list_loop_wids.push_back(wid);
+    }
+    for(int i=0;i<file_info_cnt;i++){
+        //给视频封面对象赋值
+        qDebug()<<"i:::::"<<i;
+        QJsonObject sobj=obj_root.value(QString::number(i)).toObject();
+        QString file_img_path=sobj.value("file_image_path").toString();
+        QString file_path=sobj.value("file_path").toString();
+        QString file_title=sobj.value("file_title").toString();
+        QString file_backplay_duration=sobj.value("file_backplay_duration").toString();
+        QString file_md5=sobj.value("file_md5").toString();
+        QString date_time=sobj.value("date_time").toString();
+        QString file_playback_duration=sobj.value("file_playback_duration").toString();
+        QString progress_data=sobj.value("progress_data").toString();
+        QString file_username=sobj.value("username").toString();
+        QString file_type=sobj.value("file_type").toString();
+        qDebug()<<"=========file_title:"<<file_title;
+        vec_list_loop_wids[i]->m_file_path=file_path;
+        vec_list_loop_wids[i]->m_file_img_path=file_img_path;
+        vec_list_loop_wids[i]->m_intro=file_title;
+        vec_list_loop_wids[i]->m_file_md5=file_md5;
+        vec_list_loop_wids[i]->m_username=file_username;
+        vec_list_loop_wids[i]->m_file_type=file_type;
+        //赋值完毕直接调用vec_list_loop_wids[i]的显示方法
+        vec_list_loop_wids[i]->showCover();
+    }
+}
+
+void VideoDisplay::createDanmu(const QString &text, int duration)
+{
+    qDebug()<<"createDanmu durayion:"<<duration;
+    if(animation){
+        delete animation;
+    }
+    //QTimer::singleShot(delay, this, [=]() {
+    qDebug()<<"text:"<<text;
+    danmuLabel = new QLabel(text, this);
+    danmuLabel->setStyleSheet("background: black; color: white; font-size: 12px;");
+    //danmuLabel->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Fixed);
+    //danmuLabel->setMinimumWidth(danmuLabel->fontMetrics().horizontalAdvance(danmuLabel->text()));
+
+    danmuLabel->setMinimumSize(danmuLabel->sizeHint());
+    danmuLabel->setMaximumSize(danmuLabel->sizeHint());
+
+    danmuLabel->setAlignment(Qt::AlignLeft | Qt::AlignVCenter);
+    //danmuLabel->setFixedHeight(40);
+    //danmuLabel->hide();
+    // 设置 QLabel 的初始位置
+    /*int startX=0;
+    int endX=0;
+    int y=0;*/
+    int startX = m_video_widget->width();
+    qDebug()<<"-000000000000--------:"<<startX;
+    int endX = -danmuLabel->width();
+    //int y = qrand() % (m_video_widget->height() - danmuLabel->height());
+    int y=50;
+    // 创建动画
+    int width=danmuLabel->width();
+    int height=danmuLabel->height();
+    animation = new QPropertyAnimation(danmuLabel, "geometry");
+    animation->setDuration(duration*1000); //
+    animation->setStartValue(QRect(startX-width, y, width, height));
+    animation->setEndValue(QRect(endX+width, y, danmuLabel->width(), danmuLabel->height()));
+    // 设置动画完成后删除 QLabel
+    connect(animation, &QPropertyAnimation::finished, danmuLabel, [=](){
+        if(danmuLabel){
+            delete danmuLabel;
+        }
+    });
+    // 延迟显示弹幕
+    //QTimer::singleShot(delay, this, [=]() {
+    danmuLabel->show();
+    animation->start();
+
+    //});
+    //});
+}
+
+void VideoDisplay::analyzeDanmuMessages(QNetworkReply* reply)
+{
+    qDebug("enter analyzeDanmuMessages");
+    if(!reply){
+        qDebug()<<"analyzeDanmuMessages reply is null";
+        reply->deleteLater();
+        return;
+    }
+    QByteArray byte_array=reply->readAll();
+    if(byte_array==""){
+        qDebug()<<"analyzeDanmuMessages recv null";
+        return;
+    }
+    qDebug()<<"analyzeDanmuMessages byte_array:"<<byte_array;
+    QJsonDocument json_docm=QJsonDocument::fromJson(byte_array);
+    if(json_docm.isNull()){
+        qDebug()<<"json document is null";
+        return;
+    }
+    QJsonObject obj_root=json_docm.object();
+    QString status=obj_root.value("status").toString();
+    if(status!="0"){
+        qDebug("error with analyzeDanmuMessages query");
+        reply->deleteLater();
+        return;
+    }
+    QString message=obj_root.value("message").toString();
+
+    parseMessages(message);
+
+    for(int i=0;i<vec_messages.size();i++){
+        QString str=vec_messages.at(i);
+        int start_pos=str.indexOf("**",0);
+        if(start_pos==-1){
+            continue;
+        }
+        QString start_time=str.mid(start_pos+2,8);
+        vec_start_time.push_back(timeToSeconds(start_time));
+        start_pos=str.indexOf("- ",start_pos);
+        if(start_pos==-1){
+            continue;
+        }
+        QString end_time=str.mid(start_pos+2,8);
+        vec_end_time.push_back(timeToSeconds(end_time));
+        start_pos=str.indexOf("- ",start_pos+2);
+        if(start_pos==-1){
+            continue;
+        }
+        QString file_description=str.mid(start_pos,-1);
+        vec_descriptions.push_back(file_description);
+        qDebug()<<start_time<<" "<<end_time<<" "<<file_description;
+    }
+    /*QString file_description_1=obj_root.value("file_description_1").toString();
+    QString file_description_2=obj_root.value("file_description_2").toString();
+    QString file_description_3=obj_root.value("file_description_3").toString();
+    QString file_description_4=obj_root.value("file_description_4").toString();
+
+    qDebug()<<"11111:"<<file_description_1;
+    qDebug()<<"22222:"<<file_description_2;
+    qDebug()<<"33333:"<<file_description_3;
+    qDebug()<<"44444:"<<file_description_4;
+
+
+    int start_pos=file_description_1.indexOf("**",0);
+    m_start_time_1=file_description_1.mid(start_pos+2,8);
+    start_pos=file_description_1.indexOf("- ",start_pos);
+    m_end_time_1=file_description_1.mid(start_pos+2,8);
+
+    start_pos=file_description_1.indexOf("- ",start_pos+2);
+    m_file_description_1=file_description_1.mid(start_pos,-1);
+    qDebug()<<m_start_time_1<<" "<<m_end_time_1<<" "<<m_file_description_1;
+
+
+
+    start_pos=file_description_2.indexOf("**",0);
+    m_start_time_2=file_description_2.mid(start_pos+2,8);
+    start_pos=file_description_2.indexOf("- ",start_pos);
+    m_end_time_2=file_description_2.mid(start_pos+2,8);
+
+    start_pos=file_description_2.indexOf("- ",start_pos+2);
+    m_file_description_2=file_description_2.mid(start_pos,-1);
+    qDebug()<<m_start_time_2<<" "<<m_end_time_2<<" "<<m_file_description_2;
+
+    start_pos=file_description_3.indexOf("**",0);
+    m_start_time_3=file_description_3.mid(start_pos+2,8);
+    start_pos=file_description_3.indexOf("- ",start_pos);
+    m_end_time_3=file_description_3.mid(start_pos+2,8);
+
+    start_pos=file_description_3.indexOf("- ",start_pos+2);
+    m_file_description_3=file_description_3.mid(start_pos,-1);
+    qDebug()<<m_start_time_3<<" "<<m_end_time_3<<" "<<m_file_description_3;
+
+
+
+    start_pos=file_description_4.indexOf("**",0);
+    m_start_time_4=file_description_4.mid(start_pos+2,8);
+    start_pos=file_description_4.indexOf("- ",start_pos);
+    m_end_time_4=file_description_4.mid(start_pos+2,8);
+
+    start_pos=file_description_4.indexOf("- ",start_pos+2);
+    m_file_description_4=file_description_4.mid(start_pos,-1);
+    qDebug()<<m_start_time_4<<" "<<m_end_time_4<<" "<<m_file_description_4;
+    st_1=timeToSeconds(m_start_time_1);
+    et_1=timeToSeconds(m_end_time_1);
+
+    qDebug()<<"st1:"<<st_1<<" "<<"et_1:"<<et_1;
+    st_2=timeToSeconds(m_start_time_2);
+    et_2=timeToSeconds(m_end_time_2);
+
+    st_3=timeToSeconds(m_start_time_3);
+    et_3=timeToSeconds(m_end_time_3);
+
+    st_4=timeToSeconds(m_start_time_4);
+    et_4=timeToSeconds(m_end_time_4);*/
+}
+
+int VideoDisplay::timeToSeconds(const QString &qtTimeStr)
+{
+
+        // 使用 split 方法按冒号分割字符串
+        QStringList parts = qtTimeStr.split(':');
+
+        // 检查分割后的部分数量是否正确
+        if (parts.size() != 3) {
+            throw std::invalid_argument("时间格式不正确，应为 HH:MM:SS");
+        }
+
+        // 提取小时、分钟和秒
+        bool ok;
+        int hours = parts[0].toInt(&ok);
+        if (!ok || hours < 0 || hours > 23) {
+            throw std::invalid_argument("小时部分无效或超出范围");
+        }
+
+        int minutes = parts[1].toInt(&ok);
+        if (!ok || minutes < 0 || minutes > 59) {
+            throw std::invalid_argument("分钟部分无效或超出范围");
+        }
+
+        int seconds = parts[2].toInt(&ok);
+        if (!ok || seconds < 0 || seconds > 59) {
+            throw std::invalid_argument("秒部分无效或超出范围");
+        }
+
+        // 计算总秒数
+        return hours * 3600 + minutes * 60 + seconds;
+
+}
+
+void VideoDisplay::parseMessages(QString &message)
+{
+    qDebug()<<"message:"<<message;
+    int cur_head_pos=0;
+    int cur_tail_pos=0;
+    while(1){
+        cur_head_pos=message.indexOf("**",cur_head_pos);
+        if(cur_head_pos==-1){
+            qDebug("break ok");
+            break;
+        }
+        cur_tail_pos=message.indexOf("\n\n",cur_head_pos);
+        if(cur_tail_pos==-1){
+            return;
+        }
+        QString substr=message.mid(cur_head_pos,cur_tail_pos-cur_head_pos);
+        qDebug()<<"parseMessages str:"<<substr;
+        cur_head_pos=cur_tail_pos+2;
+        vec_messages.push_back(substr);
+
+    }
+}
+
+void VideoDisplay::checkDanmuPresentTime(int second)
+{
+        qDebug()<<"enter checkDanmuPresentTime";
+        int i=static_cast<int>(m_ptr);
+        if(i>=vec_start_time.size()){
+            return;
+        }
+        if(vec_start_time.at(i)<=second&&vec_end_time.at(i)>second&&!vis[m_ptr]){
+            qDebug()<<"createDanmu";
+            qDebug()<<"m_ptr"<<m_ptr;
+            qDebug()<<vis[m_ptr];
+            qDebug()<<"create Danumu!!!!!";
+            createDanmu(vec_descriptions.at(i),vec_end_time.at(i)-vec_start_time.at(i));
+            vis[m_ptr]=true;
+            m_ptr++;
+
+        }
 }
 void VideoDisplay::updatePresentTimeLab(qint64 tim){
     m_lab_present_time->setText(integraTime(tim,0));
@@ -301,9 +713,29 @@ void VideoDisplay::sloVolumeChanged(int position)
     m_btn_vlm->getLabVlm()->setText(QString::number(position));
 }
 
+Ui::VideoDisplay *VideoDisplay::getVideoDisplayUi()
+{
+    return ui;
+}
+
+void VideoDisplay::sloHandleBtnNext()
+{
+    //先获取下一集的file_path
+    int num=vlayout_list_loop_wid->count();
+    int randomInt = QRandomGenerator::global()->bounded(10000);
+    int idx=randomInt%num;
+    VideoCoverWidListLoop* wid=qobject_cast<VideoCoverWidListLoop*>(vlayout_list_loop_wid->itemAt(idx)->widget());
+
+    emit wid->sigPlay();
+
+    qDebug()<<"width:"<<m_video_widget->width();
+    qDebug()<<"height:"<<m_video_widget->height();
+}
+
 void VideoDisplay::closeEvent(QCloseEvent *event)
 {
     qDebug()<<"close event";
+
     int progress_value= m_slider_video_process->value();
     m_player->stop(); // 停止播放
 

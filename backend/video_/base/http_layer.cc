@@ -9,6 +9,8 @@
 #include"../api/api_search_log.h"
 #include"../api/api_search.h"
 #include"../api/api_get_search_log.h"
+#include"../api/api_list_loop.h"
+#include"../api/api_analysis_messages.h"
 #include<string.h>
 #include<iostream>
 HttpServer::HttpServer(const char* msg,ConfRead& conf_reader):m_msg(msg),m_conf_reader(conf_reader){
@@ -61,6 +63,12 @@ void HttpServer::http_route_url(char* wbuf,int wbuf_sz){
     }
     else if(url=="/api/getsearchlog"){
         apiGetSearchLog(wbuf,wbuf_sz,m_http_msg,m_conf_reader);
+    }
+    else if(url=="/api/listloop"){
+        apiListLoop(wbuf,wbuf_sz,m_http_msg,m_conf_reader);
+    }
+    else if(url=="/api/analysismessages"){
+        apiAnalysisMessages(wbuf,wbuf_sz,m_http_msg,m_conf_reader);
     }
 
 }

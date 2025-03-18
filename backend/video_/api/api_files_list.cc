@@ -50,6 +50,14 @@ void apiFilesList(char* wbuf,int wbuf_sz,struct mg_http_message hm,ConfRead& con
             return;
         }
     }
+    char par_search_for_audios_and_videos_value[32]={0};
+    if(query.find("key_search",0)!=std::string::npos){
+        if(mg_http_get_var(&hm.query,"key_search",par_search_for_audios_and_videos_value,sizeof(par_search_for_audios_and_videos_value))<=0){
+            std::cout<<"mg_http_get_var error\n";
+            std::cout<<"3424:"<<par_search_for_audios_and_videos_value<<"\n";
+            return;
+        }
+    }
     //策略为random时调用的数据组织函数
     std::cout<<"hhhhhhh\n";
     char sql[256];
@@ -60,12 +68,25 @@ void apiFilesList(char* wbuf,int wbuf_sz,struct mg_http_message hm,ConfRead& con
         if(strlen(par_search_key_value)&&strcmp(par_search_key_value,"0")==0){
             //有且关键字参数是"0"，那么说明只组织音频文件
             std::cout<<"enter random 1\n";
-            constructFileListsAudio(file_cnt,wbuf,wbuf_sz,par_search_key_value);
+            if(strlen(par_search_for_audios_and_videos_value)){
+                //说明有key_search这个参数，那么在组织音频文件时要带这个参数
+                constructFileListsAudio(file_cnt,wbuf,wbuf_sz,par_search_for_audios_and_videos_value);
+            }
+            else{
+                constructFileListsAudio(file_cnt,wbuf,wbuf_sz);
+            }
+            
         }
         else if(strcmp(par_search_key_value,"1")==0){
             //只组织视频文件
-            std::cout<<"enter random 2\n";
-            constructFileListsVideo(file_cnt,wbuf,wbuf_sz,par_search_key_value);
+            if(strlen(par_search_for_audios_and_videos_value)){
+                constructFileListsVideo(file_cnt,wbuf,wbuf_sz,par_search_for_audios_and_videos_value);
+            }
+            else{
+                constructFileListsVideo(file_cnt,wbuf,wbuf_sz);
+            }
+
+            
         }
         else{
             //混合组织
@@ -92,7 +113,36 @@ void apiFilesList(char* wbuf,int wbuf_sz,struct mg_http_message hm,ConfRead& con
     }
     
 }
-void constructFileListsAudio(int file_cnt,char* wbuf,int wbuf_sz,char* file_type){
+void constructFileListsAudio(int file_cnt,char* wbuf,int wbuf_sz,char* key_search){
+    MysqlConn sql_conn{};
+    char query_[256];
+    
+    sprintf(query_,"select B.*,A.date_time,A.username,A.file_title from  aav_user_file as A inner join aav_file_info as B on A.file_md5=B.file_md5 where B.id%%2 = floor(rand()*2) and B.file_type=0 and A.file_title like '%%%s%%' limit 4",key_search);
+    MYSQL_RES* res=sql_conn.mysqlQuery(query_);
+    std::cout<<"000000\n";
+    //组织回发数据
+    std::cout<<"constructFileListsAudio------------------------------\n";
+    fileListResponseSuccess(res,wbuf,wbuf_sz);
+    std::cout<<"out constructFileListsAudio------------------------------\n";
+
+    mysql_free_result(res);
+}
+void constructFileListsVideo(int file_cnt,char* wbuf,int wbuf_sz,char* key_search){
+    MysqlConn sql_conn{};
+    char query_[256];
+    
+    sprintf(query_,"select B.*,A.date_time,A.username,A.file_title from  aav_user_file as A inner join aav_file_info as B on A.file_md5=B.file_md5 where B.id%%2 = floor(rand()*2) and B.file_type=1 and A.file_title like '%%%s%%' limit 4",key_search);
+    std::cout<<"constructFileListsVideo search key query:"<<query_<<'\n';
+    MYSQL_RES* res=sql_conn.mysqlQuery(query_);
+    std::cout<<"000000\n";
+    //组织回发数据
+    std::cout<<"constructFileListsAudio------------------------------\n";
+    fileListResponseSuccess(res,wbuf,wbuf_sz);
+    std::cout<<"out constructFileListsAudio------------------------------\n";
+
+    mysql_free_result(res);
+}
+void constructFileListsAudio(int file_cnt,char* wbuf,int wbuf_sz){
     std::cout<<"enter constructFileListsAudio\n";
     MysqlConn sql_conn{};
     char query_[256];
@@ -107,7 +157,7 @@ void constructFileListsAudio(int file_cnt,char* wbuf,int wbuf_sz,char* file_type
 
     mysql_free_result(res);
 }
-void constructFileListsVideo(int file_cnt,char* wbuf,int wbuf_sz,char* file_type){
+void constructFileListsVideo(int file_cnt,char* wbuf,int wbuf_sz){
     std::cout<<"enter constructFileListsVideo\n";
     MysqlConn sql_conn{};
     char query_[256];

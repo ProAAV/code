@@ -167,7 +167,7 @@ std::string PyScript::pyscrpt_audio_interface(const std::string& audio_file_path
 std::string PyScript::pyscrpt_video_interface(const std::string& video_file_path){
         try {
             // 获取当前工作目录并添加到 sys.path
-            std::string prompt="结合文字、图图像等内容，认识别角色的情感状态和情感变化。并且按照时间戳的HH:MM:SS组织时间";
+            std::string prompt="结合文字、图图像等内容，认识别角色的情感状态和情感变化。并且按照左上角红色时间戳的HH:MM:SS组织时间,时间形式为**xx:xx:xx - xx:xx:xx**";
             char cwd[1024];
             if (getcwd(cwd, sizeof(cwd)) == nullptr) {
                 throw std::runtime_error("Failed to get current working directory.");

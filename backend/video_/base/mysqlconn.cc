@@ -20,7 +20,6 @@ MYSQL_RES* MysqlConn::mysqlQuery(char* query){
     if(mysql_query(m_conn,query)){
         std::cout<<"mysql_query failed\n";
         std::cout<<mysql_error(m_conn)<<"\n";
-        mysql_close(m_conn);
         return nullptr;
     }
     return mysql_store_result(m_conn);

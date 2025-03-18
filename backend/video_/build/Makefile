@@ -123,6 +123,33 @@ video_server/fast:
 	$(MAKE) -f CMakeFiles/video_server.dir/build.make CMakeFiles/video_server.dir/build
 .PHONY : video_server/fast
 
+api/api_analysis_messages.o: api/api_analysis_messages.cc.o
+
+.PHONY : api/api_analysis_messages.o
+
+# target to build an object file
+api/api_analysis_messages.cc.o:
+	$(MAKE) -f CMakeFiles/video_server.dir/build.make CMakeFiles/video_server.dir/api/api_analysis_messages.cc.o
+.PHONY : api/api_analysis_messages.cc.o
+
+api/api_analysis_messages.i: api/api_analysis_messages.cc.i
+
+.PHONY : api/api_analysis_messages.i
+
+# target to preprocess a source file
+api/api_analysis_messages.cc.i:
+	$(MAKE) -f CMakeFiles/video_server.dir/build.make CMakeFiles/video_server.dir/api/api_analysis_messages.cc.i
+.PHONY : api/api_analysis_messages.cc.i
+
+api/api_analysis_messages.s: api/api_analysis_messages.cc.s
+
+.PHONY : api/api_analysis_messages.s
+
+# target to generate assembly for a file
+api/api_analysis_messages.cc.s:
+	$(MAKE) -f CMakeFiles/video_server.dir/build.make CMakeFiles/video_server.dir/api/api_analysis_messages.cc.s
+.PHONY : api/api_analysis_messages.cc.s
+
 api/api_files_list.o: api/api_files_list.cc.o
 
 .PHONY : api/api_files_list.o
@@ -176,6 +203,33 @@ api/api_get_search_log.s: api/api_get_search_log.cc.s
 api/api_get_search_log.cc.s:
 	$(MAKE) -f CMakeFiles/video_server.dir/build.make CMakeFiles/video_server.dir/api/api_get_search_log.cc.s
 .PHONY : api/api_get_search_log.cc.s
+
+api/api_list_loop.o: api/api_list_loop.cc.o
+
+.PHONY : api/api_list_loop.o
+
+# target to build an object file
+api/api_list_loop.cc.o:
+	$(MAKE) -f CMakeFiles/video_server.dir/build.make CMakeFiles/video_server.dir/api/api_list_loop.cc.o
+.PHONY : api/api_list_loop.cc.o
+
+api/api_list_loop.i: api/api_list_loop.cc.i
+
+.PHONY : api/api_list_loop.i
+
+# target to preprocess a source file
+api/api_list_loop.cc.i:
+	$(MAKE) -f CMakeFiles/video_server.dir/build.make CMakeFiles/video_server.dir/api/api_list_loop.cc.i
+.PHONY : api/api_list_loop.cc.i
+
+api/api_list_loop.s: api/api_list_loop.cc.s
+
+.PHONY : api/api_list_loop.s
+
+# target to generate assembly for a file
+api/api_list_loop.cc.s:
+	$(MAKE) -f CMakeFiles/video_server.dir/build.make CMakeFiles/video_server.dir/api/api_list_loop.cc.s
+.PHONY : api/api_list_loop.cc.s
 
 api/api_login.o: api/api_login.cc.o
 
@@ -618,12 +672,18 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... video_server"
+	@echo "... api/api_analysis_messages.o"
+	@echo "... api/api_analysis_messages.i"
+	@echo "... api/api_analysis_messages.s"
 	@echo "... api/api_files_list.o"
 	@echo "... api/api_files_list.i"
 	@echo "... api/api_files_list.s"
 	@echo "... api/api_get_search_log.o"
 	@echo "... api/api_get_search_log.i"
 	@echo "... api/api_get_search_log.s"
+	@echo "... api/api_list_loop.o"
+	@echo "... api/api_list_loop.i"
+	@echo "... api/api_list_loop.s"
 	@echo "... api/api_login.o"
 	@echo "... api/api_login.i"
 	@echo "... api/api_login.s"

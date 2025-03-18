@@ -26,6 +26,7 @@ public:
     void getNewVideoListsInfo(VideoList* list);
     VideoCoverWidget* addVideoCoverWidget(int x,int y);
     void reload();
+
 private:
     Ui::VideoList *ui;
     QVector<VideoCoverWidget*> m_vec_video_cover_wids;

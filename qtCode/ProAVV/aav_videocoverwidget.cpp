@@ -56,7 +56,7 @@ bool VideoCoverWidget::eventFilter(QObject *obj, QEvent *event)
     if(obj==m_lab_img&&event->type()==QEvent::MouseButtonPress){
         qDebug()<<"clicked and show";
         qDebug()<<"file_path:"<<m_file_path;
-        m_vdis=new VideoDisplay(m_file_md5,nullptr);
+        m_vdis=new VideoDisplay(m_file_md5,m_file_type,nullptr);
         connect(m_vdis,&VideoDisplay::sigClose,this,&VideoCoverWidget::sloCloseDisplayer);
 
         m_vdis->setVideoFilePath(m_file_path);
@@ -64,7 +64,7 @@ bool VideoCoverWidget::eventFilter(QObject *obj, QEvent *event)
         qDebug()<<"pro :::::::"<<pro;
 
         m_vdis->show();
-        m_vdis->play();
+        m_vdis->play(m_file_path,m_file_md5);
         m_vdis->setVideoFileProgressData(pro);
     }
 

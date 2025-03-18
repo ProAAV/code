@@ -43,6 +43,11 @@ void apiLogin(char* wbuf,int wbuf_sz,struct mg_http_message hm,ConfRead& conf_re
     char query_[256];
     sprintf(query_,"select * from `aav_user_info` where username='%s'",username.c_str());
     MYSQL_RES* res=sql_conn.mysqlQuery(query_);
+    if(!res){
+        loginResponFailed(wbuf,wbuf_sz);
+        std::cout<<"query error\n";
+        return;
+    }
     if(!mysql_num_rows(res)){
         //用户表中找不到用户信息，返回1
         loginResponFailed(wbuf,wbuf_sz);

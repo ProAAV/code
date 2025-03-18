@@ -18,5 +18,7 @@ bool fileMd5InfoCheckout(CfileInfo& file_info);
 void upload_responSuccess(char* wbuf,int wbuf_sz);
 void upload_responFailed(char* wbuf,int wbuf_sz);
 void upload_extract_file_features(std::string str);
+std::string upload_video_extract_analysis(std::string str);
 inline std::vector<std::string> vec_remove_file_path;
 static std::vector<std::string> vec_file_features;
+static std::vector<std::string> vec_file_analysis;

@@ -67,7 +67,7 @@ VideoList::VideoList(int flag,QWidget *parent) :
     addVideoCoverWidget(m_x,m_y);
     addVideoCoverWidget(m_x,m_y);
     addVideoCoverWidget(m_x,m_y);*/
-
+    ui->gridLayout->setAlignment(Qt::AlignTop);
     //连接scroll滚动条的事件与槽
     connect(ui->scrollArea->verticalScrollBar(),&QScrollBar::valueChanged,this,[=](int value){
         this->sloHandleScrollBarValueChanged(value);
@@ -170,6 +170,8 @@ void VideoList::reload()
 
 }
 
+
+
 void VideoList::sloShowFilesInfo(QNetworkReply* reply)
 {
     qDebug()<<"offset:"<<m_offset;
@@ -178,7 +180,7 @@ void VideoList::sloShowFilesInfo(QNetworkReply* reply)
         return;
     }
     QByteArray byte_array=reply->readAll();
-    qDebug()<<"dsdsd:"<<byte_array;
+    qDebug()<<"recv file lists info:"<<byte_array;
     QJsonDocument json_docm=QJsonDocument::fromJson(byte_array);
     if(json_docm.isNull()){
         qDebug()<<"json document is null";
