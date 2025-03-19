@@ -464,7 +464,9 @@ compiler_rcc_clean:
 	-$(DEL_FILE) qrc_src.cpp
 qrc_src.cpp: ../ProAVV/src.qrc \
 		/usr/lib/qt5/bin/rcc \
-		../ProAVV/aa7243c933094e26b927243ee7e2856f.png
+		../ProAVV/aa7243c933094e26b927243ee7e2856f.png \
+		../ProAVV/005531e2gaamddm3d2cgch.jpg \
+		../ProAVV/new.png
 	/usr/lib/qt5/bin/rcc -name src ../ProAVV/src.qrc -o qrc_src.cpp
 
 compiler_moc_predefs_make_all: moc_predefs.h

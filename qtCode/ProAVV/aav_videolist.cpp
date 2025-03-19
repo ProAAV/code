@@ -26,47 +26,7 @@ VideoList::VideoList(int flag,QWidget *parent) :
     视频列表展示类
     */
 
-    /*//VideoDisplay* vdis_1=new VideoDisplay();
-    m_widget_1=new VideoCoverWidget(this);
 
-    //m_widget_1->setStyleSheet("QWidget{background-color: red;}");
-    ui->gridLayout->addWidget(m_widget_1,0,0);
-
-    //VideoDisplay* vdis_2=new VideoDisplay();
-    m_widget_2=new VideoCoverWidget(this);
-
-    //m_widget_2->setStyleSheet("QWidget{background-color: green;}");
-    ui->gridLayout->addWidget(m_widget_2,0,1);
-
-
-
-    //VideoDisplay* vdis_3=new VideoDisplay();
-    m_widget_3=new VideoCoverWidget(this);
-
-    //m_widget_3->setStyleSheet("QWidget{background-color: black;}");
-    ui->gridLayout->addWidget(m_widget_3,1,0);
-
-
-    //VideoDisplay* vdis_4=new VideoDisplay();
-    m_widget_4=new VideoCoverWidget(this);
-
-    //m_widget_4->setStyleSheet("QWidget{background-color: blue;}");
-    ui->gridLayout->addWidget(m_widget_4,1,1);
-
-    m_vec_video_cover_wids.push_back(m_widget_1);
-    m_vec_video_cover_wids.push_back(m_widget_2);
-    m_vec_video_cover_wids.push_back(m_widget_3);
-    m_vec_video_cover_wids.push_back(m_widget_4);*/
-
-    /*addVideoCoverWidget(0,0);
-    addVideoCoverWidget(0,1);
-    addVideoCoverWidget(1,0);
-    addVideoCoverWidget(1,1);*/
-
-    /*addVideoCoverWidget(m_x,m_y);
-    addVideoCoverWidget(m_x,m_y);
-    addVideoCoverWidget(m_x,m_y);
-    addVideoCoverWidget(m_x,m_y);*/
     ui->gridLayout->setAlignment(Qt::AlignTop);
     //连接scroll滚动条的事件与槽
     connect(ui->scrollArea->verticalScrollBar(),&QScrollBar::valueChanged,this,[=](int value){
@@ -131,6 +91,9 @@ VideoCoverWidget* VideoList::addVideoCoverWidget(int x,int y)
 {
     qDebug()<<"x:"<<x<<" "<<"y:"<<y;
     VideoCoverWidget* video_cover_wid=new VideoCoverWidget();
+    video_cover_wid->setMinimumHeight(400);
+    video_cover_wid->setMaximumHeight(1000);
+
     if(!video_cover_wid){
         qDebug("erorr to create video_cover_wid");
         return nullptr;

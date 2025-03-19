@@ -195,7 +195,9 @@ compiler_rcc_clean:
 	-$(DEL_FILE) debug\qrc_src.cpp
 debug/qrc_src.cpp: ../ProAVV/src.qrc \
 		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/bin/rcc.exe \
-		../ProAVV/aa7243c933094e26b927243ee7e2856f.png
+		../ProAVV/aa7243c933094e26b927243ee7e2856f.png \
+		../ProAVV/005531e2gaamddm3d2cgch.jpg \
+		../ProAVV/new.png
 	C:\Qt\Qt5.12.3\5.12.3\mingw73_64\bin\rcc.exe -name src ..\ProAVV\src.qrc -o debug\qrc_src.cpp
 
 compiler_moc_predefs_make_all: debug/moc_predefs.h
@@ -548,6 +550,8 @@ debug/moc_aav_main_view.cpp: ../ProAVV/aav_main_view.h \
 		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtCore/qvariantanimation.h \
 		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtCore/qeasingcurve.h \
 		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtCore/qabstractanimation.h \
+		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtMultimedia/qmediaplaylist.h \
+		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtMultimedia/qmediabindableinterface.h \
 		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtCore/QStringList \
 		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtCore/QStringListModel \
 		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtCore/qstringlistmodel.h \
@@ -739,6 +743,8 @@ debug/moc_aav_networkmanager.cpp: ../ProAVV/aav_networkmanager.h \
 		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtCore/qvariantanimation.h \
 		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtCore/qeasingcurve.h \
 		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtCore/qabstractanimation.h \
+		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtMultimedia/qmediaplaylist.h \
+		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtMultimedia/qmediabindableinterface.h \
 		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtCore/QStringList \
 		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtCore/QStringListModel \
 		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtCore/qstringlistmodel.h \
@@ -1279,6 +1285,8 @@ debug/moc_aav_userloginandregis.cpp: ../ProAVV/aav_userloginandregis.h \
 		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtCore/qvariantanimation.h \
 		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtCore/qeasingcurve.h \
 		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtCore/qabstractanimation.h \
+		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtMultimedia/qmediaplaylist.h \
+		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtMultimedia/qmediabindableinterface.h \
 		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtCore/QStringList \
 		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtCore/QStringListModel \
 		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtCore/qstringlistmodel.h \
@@ -1641,6 +1649,8 @@ debug/moc_aav_usrpage.cpp: ../ProAVV/aav_usrpage.h \
 		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtCore/qvariantanimation.h \
 		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtCore/qeasingcurve.h \
 		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtCore/qabstractanimation.h \
+		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtMultimedia/qmediaplaylist.h \
+		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtMultimedia/qmediabindableinterface.h \
 		debug/moc_predefs.h \
 		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/bin/moc.exe
 	C:\Qt\Qt5.12.3\5.12.3\mingw73_64\bin\moc.exe $(DEFINES) --include Z:/code/project/code/qtCode/build-ProAVV-Desktop_Qt_5_12_3_MinGW_64_bit-Debug/debug/moc_predefs.h -IC:/Qt/Qt5.12.3/5.12.3/mingw73_64/mkspecs/win32-g++ -IZ:/code/project/code/qtCode/ProAVV -IZ:/usr/local/include -IC:/Qt/Qt5.12.3/5.12.3/mingw73_64/include -IC:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtMultimediaWidgets -IC:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtMultimedia -IC:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtWidgets -IC:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtGui -IC:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtANGLE -IC:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtNetwork -IC:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtCore -I. -IC:/Qt/Qt5.12.3/Tools/mingw730_64/lib/gcc/x86_64-w64-mingw32/7.3.0/include/c++ -IC:/Qt/Qt5.12.3/Tools/mingw730_64/lib/gcc/x86_64-w64-mingw32/7.3.0/include/c++/x86_64-w64-mingw32 -IC:/Qt/Qt5.12.3/Tools/mingw730_64/lib/gcc/x86_64-w64-mingw32/7.3.0/include/c++/backward -IC:/Qt/Qt5.12.3/Tools/mingw730_64/lib/gcc/x86_64-w64-mingw32/7.3.0/include -IC:/Qt/Qt5.12.3/Tools/mingw730_64/lib/gcc/x86_64-w64-mingw32/7.3.0/include-fixed -IC:/Qt/Qt5.12.3/Tools/mingw730_64/x86_64-w64-mingw32/include ..\ProAVV\aav_usrpage.h -o debug\moc_aav_usrpage.cpp
@@ -1818,6 +1828,8 @@ debug/moc_aav_videocoverwidget.cpp: ../ProAVV/aav_videocoverwidget.h \
 		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtCore/qvariantanimation.h \
 		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtCore/qeasingcurve.h \
 		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtCore/qabstractanimation.h \
+		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtMultimedia/qmediaplaylist.h \
+		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtMultimedia/qmediabindableinterface.h \
 		debug/moc_predefs.h \
 		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/bin/moc.exe
 	C:\Qt\Qt5.12.3\5.12.3\mingw73_64\bin\moc.exe $(DEFINES) --include Z:/code/project/code/qtCode/build-ProAVV-Desktop_Qt_5_12_3_MinGW_64_bit-Debug/debug/moc_predefs.h -IC:/Qt/Qt5.12.3/5.12.3/mingw73_64/mkspecs/win32-g++ -IZ:/code/project/code/qtCode/ProAVV -IZ:/usr/local/include -IC:/Qt/Qt5.12.3/5.12.3/mingw73_64/include -IC:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtMultimediaWidgets -IC:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtMultimedia -IC:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtWidgets -IC:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtGui -IC:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtANGLE -IC:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtNetwork -IC:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtCore -I. -IC:/Qt/Qt5.12.3/Tools/mingw730_64/lib/gcc/x86_64-w64-mingw32/7.3.0/include/c++ -IC:/Qt/Qt5.12.3/Tools/mingw730_64/lib/gcc/x86_64-w64-mingw32/7.3.0/include/c++/x86_64-w64-mingw32 -IC:/Qt/Qt5.12.3/Tools/mingw730_64/lib/gcc/x86_64-w64-mingw32/7.3.0/include/c++/backward -IC:/Qt/Qt5.12.3/Tools/mingw730_64/lib/gcc/x86_64-w64-mingw32/7.3.0/include -IC:/Qt/Qt5.12.3/Tools/mingw730_64/lib/gcc/x86_64-w64-mingw32/7.3.0/include-fixed -IC:/Qt/Qt5.12.3/Tools/mingw730_64/x86_64-w64-mingw32/include ..\ProAVV\aav_videocoverwidget.h -o debug\moc_aav_videocoverwidget.cpp
@@ -2134,6 +2146,8 @@ debug/moc_aav_videodisplay.cpp: ../ProAVV/aav_videodisplay.h \
 		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtCore/qvariantanimation.h \
 		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtCore/qeasingcurve.h \
 		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtCore/qabstractanimation.h \
+		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtMultimedia/qmediaplaylist.h \
+		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtMultimedia/qmediabindableinterface.h \
 		debug/moc_predefs.h \
 		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/bin/moc.exe
 	C:\Qt\Qt5.12.3\5.12.3\mingw73_64\bin\moc.exe $(DEFINES) --include Z:/code/project/code/qtCode/build-ProAVV-Desktop_Qt_5_12_3_MinGW_64_bit-Debug/debug/moc_predefs.h -IC:/Qt/Qt5.12.3/5.12.3/mingw73_64/mkspecs/win32-g++ -IZ:/code/project/code/qtCode/ProAVV -IZ:/usr/local/include -IC:/Qt/Qt5.12.3/5.12.3/mingw73_64/include -IC:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtMultimediaWidgets -IC:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtMultimedia -IC:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtWidgets -IC:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtGui -IC:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtANGLE -IC:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtNetwork -IC:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtCore -I. -IC:/Qt/Qt5.12.3/Tools/mingw730_64/lib/gcc/x86_64-w64-mingw32/7.3.0/include/c++ -IC:/Qt/Qt5.12.3/Tools/mingw730_64/lib/gcc/x86_64-w64-mingw32/7.3.0/include/c++/x86_64-w64-mingw32 -IC:/Qt/Qt5.12.3/Tools/mingw730_64/lib/gcc/x86_64-w64-mingw32/7.3.0/include/c++/backward -IC:/Qt/Qt5.12.3/Tools/mingw730_64/lib/gcc/x86_64-w64-mingw32/7.3.0/include -IC:/Qt/Qt5.12.3/Tools/mingw730_64/lib/gcc/x86_64-w64-mingw32/7.3.0/include-fixed -IC:/Qt/Qt5.12.3/Tools/mingw730_64/x86_64-w64-mingw32/include ..\ProAVV\aav_videodisplay.h -o debug\moc_aav_videodisplay.cpp
@@ -2312,6 +2326,8 @@ debug/moc_aav_videolist.cpp: ../ProAVV/aav_videolist.h \
 		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtCore/qvariantanimation.h \
 		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtCore/qeasingcurve.h \
 		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtCore/qabstractanimation.h \
+		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtMultimedia/qmediaplaylist.h \
+		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtMultimedia/qmediabindableinterface.h \
 		debug/moc_predefs.h \
 		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/bin/moc.exe
 	C:\Qt\Qt5.12.3\5.12.3\mingw73_64\bin\moc.exe $(DEFINES) --include Z:/code/project/code/qtCode/build-ProAVV-Desktop_Qt_5_12_3_MinGW_64_bit-Debug/debug/moc_predefs.h -IC:/Qt/Qt5.12.3/5.12.3/mingw73_64/mkspecs/win32-g++ -IZ:/code/project/code/qtCode/ProAVV -IZ:/usr/local/include -IC:/Qt/Qt5.12.3/5.12.3/mingw73_64/include -IC:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtMultimediaWidgets -IC:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtMultimedia -IC:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtWidgets -IC:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtGui -IC:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtANGLE -IC:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtNetwork -IC:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtCore -I. -IC:/Qt/Qt5.12.3/Tools/mingw730_64/lib/gcc/x86_64-w64-mingw32/7.3.0/include/c++ -IC:/Qt/Qt5.12.3/Tools/mingw730_64/lib/gcc/x86_64-w64-mingw32/7.3.0/include/c++/x86_64-w64-mingw32 -IC:/Qt/Qt5.12.3/Tools/mingw730_64/lib/gcc/x86_64-w64-mingw32/7.3.0/include/c++/backward -IC:/Qt/Qt5.12.3/Tools/mingw730_64/lib/gcc/x86_64-w64-mingw32/7.3.0/include -IC:/Qt/Qt5.12.3/Tools/mingw730_64/lib/gcc/x86_64-w64-mingw32/7.3.0/include-fixed -IC:/Qt/Qt5.12.3/Tools/mingw730_64/x86_64-w64-mingw32/include ..\ProAVV\aav_videolist.h -o debug\moc_aav_videolist.cpp
@@ -2806,6 +2822,8 @@ debug/aav_lineeditsearch.o: ../ProAVV/aav_lineeditsearch.cpp ../ProAVV/aav_linee
 		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtCore/qvariantanimation.h \
 		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtCore/qeasingcurve.h \
 		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtCore/qabstractanimation.h \
+		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtMultimedia/qmediaplaylist.h \
+		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtMultimedia/qmediabindableinterface.h \
 		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtCore/QJsonObject \
 		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtCore/qjsonobject.h \
 		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtCore/QJsonArray \
@@ -3021,6 +3039,8 @@ debug/aav_main_view.o: ../ProAVV/aav_main_view.cpp ../ProAVV/aav_main_view.h \
 		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtCore/qvariantanimation.h \
 		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtCore/qeasingcurve.h \
 		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtCore/qabstractanimation.h \
+		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtMultimedia/qmediaplaylist.h \
+		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtMultimedia/qmediabindableinterface.h \
 		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtCore/QStringList \
 		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtCore/QStringListModel \
 		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtCore/qstringlistmodel.h \
@@ -3038,7 +3058,8 @@ debug/aav_main_view.o: ../ProAVV/aav_main_view.cpp ../ProAVV/aav_main_view.h \
 		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtCore/QDebug \
 		../ProAVV/aav_networkthread.h \
 		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtCore/QThread \
-		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtCore/qthread.h
+		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtCore/qthread.h \
+		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtWidgets/QSpacerItem
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\aav_main_view.o ..\ProAVV\aav_main_view.cpp
 
 debug/aav_networkmanager.o: ../ProAVV/aav_networkmanager.cpp ../ProAVV/aav_networkmanager.h \
@@ -3222,6 +3243,8 @@ debug/aav_networkmanager.o: ../ProAVV/aav_networkmanager.cpp ../ProAVV/aav_netwo
 		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtCore/qvariantanimation.h \
 		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtCore/qeasingcurve.h \
 		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtCore/qabstractanimation.h \
+		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtMultimedia/qmediaplaylist.h \
+		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtMultimedia/qmediabindableinterface.h \
 		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtCore/QStringList \
 		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtCore/QStringListModel \
 		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtCore/qstringlistmodel.h \
@@ -3436,6 +3459,8 @@ debug/aav_networkthread.o: ../ProAVV/aav_networkthread.cpp ../ProAVV/aav_network
 		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtCore/qvariantanimation.h \
 		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtCore/qeasingcurve.h \
 		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtCore/qabstractanimation.h \
+		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtMultimedia/qmediaplaylist.h \
+		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtMultimedia/qmediabindableinterface.h \
 		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtCore/QStringList \
 		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtCore/QStringListModel \
 		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtCore/qstringlistmodel.h \
@@ -3651,6 +3676,8 @@ debug/aav_uploadfile.o: ../ProAVV/aav_uploadfile.cpp ../ProAVV/aav_uploadfile.h 
 		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtCore/qvariantanimation.h \
 		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtCore/qeasingcurve.h \
 		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtCore/qabstractanimation.h \
+		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtMultimedia/qmediaplaylist.h \
+		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtMultimedia/qmediabindableinterface.h \
 		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtCore/QStringList \
 		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtCore/QStringListModel \
 		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtCore/qstringlistmodel.h \
@@ -3985,6 +4012,8 @@ debug/aav_userlogin.o: ../ProAVV/aav_userlogin.cpp ../ProAVV/aav_userlogin.h \
 		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtCore/qvariantanimation.h \
 		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtCore/qeasingcurve.h \
 		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtCore/qabstractanimation.h \
+		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtMultimedia/qmediaplaylist.h \
+		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtMultimedia/qmediabindableinterface.h \
 		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtCore/QStringList \
 		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtCore/QStringListModel \
 		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtCore/qstringlistmodel.h \
@@ -4184,6 +4213,8 @@ debug/aav_userloginandregis.o: ../ProAVV/aav_userloginandregis.cpp ../ProAVV/aav
 		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtCore/qvariantanimation.h \
 		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtCore/qeasingcurve.h \
 		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtCore/qabstractanimation.h \
+		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtMultimedia/qmediaplaylist.h \
+		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtMultimedia/qmediabindableinterface.h \
 		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtCore/QStringList \
 		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtCore/QStringListModel \
 		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtCore/qstringlistmodel.h \
@@ -4448,6 +4479,8 @@ debug/aav_userregister.o: ../ProAVV/aav_userregister.cpp ../ProAVV/aav_userregis
 		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtCore/qvariantanimation.h \
 		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtCore/qeasingcurve.h \
 		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtCore/qabstractanimation.h \
+		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtMultimedia/qmediaplaylist.h \
+		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtMultimedia/qmediabindableinterface.h \
 		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtCore/QStringList \
 		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtCore/QStringListModel \
 		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtCore/qstringlistmodel.h \
@@ -4632,6 +4665,8 @@ debug/aav_usrpage.o: ../ProAVV/aav_usrpage.cpp ../ProAVV/aav_usrpage.h \
 		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtCore/qvariantanimation.h \
 		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtCore/qeasingcurve.h \
 		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtCore/qabstractanimation.h \
+		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtMultimedia/qmediaplaylist.h \
+		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtMultimedia/qmediabindableinterface.h \
 		ui_aav_usrpage.h \
 		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtWidgets/QApplication \
 		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtWidgets/qapplication.h \
@@ -4842,6 +4877,8 @@ debug/aav_videocoverwidget.o: ../ProAVV/aav_videocoverwidget.cpp ../ProAVV/aav_v
 		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtCore/qvariantanimation.h \
 		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtCore/qeasingcurve.h \
 		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtCore/qabstractanimation.h \
+		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtMultimedia/qmediaplaylist.h \
+		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtMultimedia/qmediabindableinterface.h \
 		ui_aav_videocoverwidget.h \
 		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtWidgets/QApplication \
 		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtWidgets/qapplication.h \
@@ -5073,6 +5110,8 @@ debug/aav_videocoverwidlistloop.o: ../ProAVV/aav_videocoverwidlistloop.cpp ../Pr
 		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtCore/qvariantanimation.h \
 		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtCore/qeasingcurve.h \
 		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtCore/qabstractanimation.h \
+		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtMultimedia/qmediaplaylist.h \
+		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtMultimedia/qmediabindableinterface.h \
 		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtCore/QStringList \
 		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtCore/QStringListModel \
 		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtCore/qstringlistmodel.h \
@@ -5259,6 +5298,8 @@ debug/aav_videodisplay.o: ../ProAVV/aav_videodisplay.cpp ../ProAVV/aav_videodisp
 		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtCore/qvariantanimation.h \
 		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtCore/qeasingcurve.h \
 		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtCore/qabstractanimation.h \
+		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtMultimedia/qmediaplaylist.h \
+		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtMultimedia/qmediabindableinterface.h \
 		ui_aav_videodisplay.h \
 		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtWidgets/QApplication \
 		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtWidgets/qapplication.h \
@@ -5297,7 +5338,6 @@ debug/aav_videodisplay.o: ../ProAVV/aav_videodisplay.cpp ../ProAVV/aav_videodisp
 		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtMultimediaWidgets/QVideoWidget \
 		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtMultimediaWidgets/qvideowidget.h \
 		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtMultimediaWidgets/qtmultimediawidgetdefs.h \
-		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtMultimedia/qmediabindableinterface.h \
 		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtWidgets/QMenu \
 		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtWidgets/qmenu.h \
 		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtWidgets/qaction.h \
@@ -5488,6 +5528,8 @@ debug/aav_videolist.o: ../ProAVV/aav_videolist.cpp ../ProAVV/aav_videolist.h \
 		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtCore/qvariantanimation.h \
 		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtCore/qeasingcurve.h \
 		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtCore/qabstractanimation.h \
+		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtMultimedia/qmediaplaylist.h \
+		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtMultimedia/qmediabindableinterface.h \
 		ui_aav_videolist.h \
 		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtWidgets/QApplication \
 		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtWidgets/qapplication.h \
@@ -5844,7 +5886,9 @@ debug/aav_widgetvlume.o: ../ProAVV/aav_widgetvlume.cpp ../ProAVV/aav_widgetvlume
 		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtCore/qpropertyanimation.h \
 		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtCore/qvariantanimation.h \
 		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtCore/qeasingcurve.h \
-		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtCore/qabstractanimation.h
+		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtCore/qabstractanimation.h \
+		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtMultimedia/qmediaplaylist.h \
+		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtMultimedia/qmediabindableinterface.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\aav_widgetvlume.o ..\ProAVV\aav_widgetvlume.cpp
 
 debug/main.o: ../ProAVV/main.cpp ../ProAVV/aav_main_view.h \
@@ -6042,6 +6086,8 @@ debug/main.o: ../ProAVV/main.cpp ../ProAVV/aav_main_view.h \
 		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtCore/qvariantanimation.h \
 		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtCore/qeasingcurve.h \
 		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtCore/qabstractanimation.h \
+		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtMultimedia/qmediaplaylist.h \
+		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtMultimedia/qmediabindableinterface.h \
 		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtCore/QStringList \
 		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtCore/QStringListModel \
 		C:/Qt/Qt5.12.3/5.12.3/mingw73_64/include/QtCore/qstringlistmodel.h \

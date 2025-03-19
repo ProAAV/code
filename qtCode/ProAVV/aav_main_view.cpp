@@ -10,6 +10,7 @@
 #include"aav_userlogin.h"
 #include"aav_usermanager.h"
 #include"aav_networkthread.h"
+#include<QSpacerItem>
 MainView::MainView(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::MainView),status_is_search{false}
@@ -42,15 +43,28 @@ MainView::MainView(QWidget *parent)
     QHBoxLayout* hlayout=new QHBoxLayout();
     hlayout->addWidget(m_ledit_search);
     hlayout->addWidget(btn_search);
+    QFont font("Arial", 13); // 设置字体为 Arial，大小为 12
+    m_ledit_search->setFont(font);
+    m_ledit_search->setMinimumHeight(20);
+    m_ledit_search->setMaximumHeight(35);
+    btn_search->setMinimumHeight(20);
+    btn_search->setMaximumHeight(35);
 
     QPushButton* btn_audios=new QPushButton(this);
     QPushButton* btn_videos=new QPushButton(this);
     btn_audios->setText("音频");
     btn_videos->setText("视频");
     QHBoxLayout* hlayout_2=new QHBoxLayout();
-    hlayout_2->addWidget(btn_audios);
-    hlayout_2->addWidget(btn_videos);
 
+
+    QSpacerItem* space_item_hlayout_2_1=new QSpacerItem(20,40,QSizePolicy::Minimum, QSizePolicy::Minimum);
+    hlayout_2->addSpacerItem(space_item_hlayout_2_1);
+    hlayout_2->addWidget(btn_audios);
+    QSpacerItem* space_item_hlayout_2_2=new QSpacerItem(500,40,QSizePolicy::Minimum, QSizePolicy::Minimum);
+    hlayout_2->addSpacerItem(space_item_hlayout_2_2);
+    hlayout_2->addWidget(btn_videos);
+    QSpacerItem* space_item_hlayout_2_3=new QSpacerItem(120,40,QSizePolicy::Expanding, QSizePolicy::Minimum);
+    hlayout_2->addSpacerItem(space_item_hlayout_2_3);
 
     //这个stack_wid作为video_page_wid这里面的一个控件
     stack_video_page_wid=new QStackedWidget(video_page_wid);
@@ -58,7 +72,13 @@ MainView::MainView(QWidget *parent)
     vlayout->addLayout(hlayout);
     vlayout->addLayout(hlayout_2);
     vlayout->addWidget(stack_video_page_wid);
+    vlayout->setStretchFactor(hlayout,4);
+    vlayout->setStretchFactor(hlayout_2,1);
+    vlayout->setStretchFactor(stack_video_page_wid,4);
     video_page_wid->setLayout(vlayout);
+
+
+
 
     VideoList* video_list_home_audios=new VideoList(4,this);
     VideoList* video_list_home_videos=new VideoList(5,this);

@@ -12,9 +12,19 @@
 #include<QNetworkReply>
 #include<bitset>
 #include<QPropertyAnimation>
+#include<qmediaplaylist.h>
 namespace Ui {
 class VideoDisplay;
 }
+typedef enum PlayerMode_{
+    //顺序播放、随机播放、单个播放、单个循环、列表循环
+    SEQUENCE=1,
+    RANDOM,
+    SINGLE,
+    SINGLELOOP,
+    LOOP
+}Mode;
+
 const int N=100;
 class VideoDisplay : public QWidget
 {
@@ -35,6 +45,7 @@ public:
     int timeToSeconds(const QString &qtTimeStr);
     void parseMessages(QString& message);
     void checkDanmuPresentTime(int second);
+    void handleModeChange();
 private:
     Ui::VideoDisplay *ui;
     QVBoxLayout* m_vlayout;
@@ -43,7 +54,7 @@ private:
 
     QMediaPlayer* m_player;
     QVideoWidget* m_video_widget;
-
+    int player_mode;
     QLabel* m_lab_present_time;
     QLabel* m_lab_dur_time;
     qint64 m_cnt_pause_player;
@@ -69,6 +80,7 @@ private:
     QVector<QString> vec_descriptions;
     QPropertyAnimation *animation;
     QLabel *danmuLabel;
+    QMediaPlaylist* m_media_list;
 public slots:
     void sloSetSliderDura(qint64 dur);
     void sloSetSliderPos(qint64 dur);

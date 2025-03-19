@@ -14,7 +14,12 @@ VideoCoverWidget::VideoCoverWidget(QWidget *parent)
 
 
     m_lab_img=new QLabel(this);
+    //m_lab_img->setMinimumSize(400,400);
+    //m_lab_img->setMaximumSize(1000,1000);
+    //m_lab_img->setMaximumHeight(1000);
+    //m_lab_img->setMinimumHeight(400);
     m_lab_duration=new QLabel(this);
+    m_lab_duration->setAlignment(Qt::AlignRight);
     m_lab_upload_date=new QLabel(this);
     m_lab_intro=new QLabel(this);
     m_lab_username=new QLabel(this);
@@ -25,6 +30,7 @@ VideoCoverWidget::VideoCoverWidget(QWidget *parent)
     m_hlayout=new QHBoxLayout();
     m_vlayout=new QVBoxLayout();
 
+
     m_hlayout->addWidget(m_lab_username);
     m_hlayout->addWidget(m_lab_upload_date);
     m_hlayout->addWidget(m_lab_duration);
@@ -33,13 +39,13 @@ VideoCoverWidget::VideoCoverWidget(QWidget *parent)
     m_vlayout->addLayout(m_hlayout);
     m_vlayout->addWidget(m_lab_intro);
 
-    m_vlayout->setStretchFactor(m_lab_img,5);
-    m_vlayout->setStretchFactor(m_hlayout,2);
+    m_vlayout->setStretchFactor(m_lab_img,15);
+    m_vlayout->setStretchFactor(m_hlayout,1);
     m_vlayout->setStretchFactor(m_lab_intro,2);
 
 
 
-    m_lab_img->setFixedSize(200,200);
+
 
     this->setLayout(m_vlayout);
 }
@@ -57,6 +63,7 @@ bool VideoCoverWidget::eventFilter(QObject *obj, QEvent *event)
         qDebug()<<"clicked and show";
         qDebug()<<"file_path:"<<m_file_path;
         m_vdis=new VideoDisplay(m_file_md5,m_file_type,nullptr);
+        m_vdis->resize(950,600);
         connect(m_vdis,&VideoDisplay::sigClose,this,&VideoCoverWidget::sloCloseDisplayer);
 
         m_vdis->setVideoFilePath(m_file_path);
@@ -100,11 +107,14 @@ void VideoCoverWidget::sloRequestImg(QString& file_img_path)
     if(file_img_path=="null"){
         qDebug()<<"file_img_path is null";
         //如果图片是空，那么直接使用qt自定义的一张图片展示封面
-        QPixmap pix_(":/aa7243c933094e26b927243ee7e2856f.png");
+        QPixmap pix_(":/new.png");
+        m_lab_img->resize(500,500);
+        qDebug()<<"lab_size:"<<m_lab_img->size();
         m_lab_img->setPixmap(pix_.scaled(m_lab_img->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation));
         m_lab_img->setAlignment(Qt::AlignCenter);
         m_lab_img->setScaledContents(true);
         return;
+
     }
     NetWorkThread* thread=new NetWorkThread{};
     thread->m_net_manager->http_get_img_cover(file_img_path,m_lab_img);

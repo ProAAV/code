@@ -27,7 +27,7 @@ VideoDisplay::VideoDisplay(QString& file_md5,QString& file_type,QWidget *parent)
 {
     ui->setupUi(this);
     qDebug()<<"VideoDisplay create and vec:"<<vec_list_loop_wids.size();
-
+    player_mode=0;
 
     list_loop_wid=new QWidget(this);
     vlayout_list_loop_wid=new QVBoxLayout(list_loop_wid);
@@ -35,6 +35,8 @@ VideoDisplay::VideoDisplay(QString& file_md5,QString& file_type,QWidget *parent)
     ui->scrollArea->setWidget(list_loop_wid);
     m_cnt_pause_player=0;
     m_file_md5=file_md5;
+
+
     qDebug()<<"videodisplay init";
     /*
      视频播放类
@@ -44,6 +46,7 @@ VideoDisplay::VideoDisplay(QString& file_md5,QString& file_type,QWidget *parent)
     m_video_widget=new QVideoWidget(this);
     m_player->setVideoOutput(m_video_widget);
 
+    m_media_list=new QMediaPlaylist(this);
     //必须在player和video_widget初始化完成后再进行
     //createDanmu("hello world!",5000);
     //当前进度，分隔符，总时长再加一个进度条的创建，作为当前页面的第二个板块
@@ -105,6 +108,43 @@ VideoDisplay::VideoDisplay(QString& file_md5,QString& file_type,QWidget *parent)
     m_menu_mode->addAction(act_mode_4);
     m_menu_mode->addAction(act_mode_5);
     btn_play_mode->setMenu(m_menu_mode);
+    connect(act_mode_1,&QAction::triggered,this,[=](){
+        qDebug()<<"enter SEQUENCE";
+        /*m_media_list->addMedia(QMediaContent(m_file_path));
+
+        for(const auto&wid:vec_list_loop_wids){
+            qDebug()<<"addaddadd";
+            m_media_list->addMedia(QMediaContent(wid->m_file_path));
+        }*/
+        /*int count = m_media_list->mediaCount();
+                    for (int i = 0; i < count; ++i) {
+                        QMediaContent content = m_media_list->media(i);
+                        QUrl url = content.canonicalUrl();
+
+                        qDebug() << "Media content at index" << i << ":" << url.toString();
+        }
+        m_player->setPlaylist(m_media_list);
+
+        m_media_list->setPlaybackMode(QMediaPlaylist::Sequential);*/
+        player_mode=Mode::SEQUENCE;
+
+    });
+
+    connect(act_mode_2,&QAction::triggered,this,[=](){
+        player_mode=Mode::RANDOM;
+
+    });
+    connect(act_mode_3,&QAction::triggered,this,[=](){
+        player_mode=Mode::SINGLE;
+    });
+    connect(act_mode_4,&QAction::triggered,this,[=](){
+        player_mode=Mode::SINGLELOOP;
+
+    });
+    connect(act_mode_5,&QAction::triggered,this,[=](){
+        player_mode=Mode::LOOP;
+    });
+
 
 
     m_btn_vlm=new VolumeButton(this);
@@ -163,29 +203,8 @@ VideoDisplay::VideoDisplay(QString& file_md5,QString& file_type,QWidget *parent)
     connect(thread,&QThread::finished,this,[thread](){
         thread->deleteLater();
     });
-    //QVBoxLayout* vlayout_list_loop=new QVBoxLayout();
+    qDebug()<<"m_file_path:"<<m_file_path;
 
-    /*VideoCoverWidListLoop* cover_wid_list_loop_1=new VideoCoverWidListLoop(ui->widget);
-    VideoCoverWidListLoop* cover_wid_list_loop_2=new VideoCoverWidListLoop(ui->widget);
-    VideoCoverWidListLoop* cover_wid_list_loop_3=new VideoCoverWidListLoop(ui->widget);
-    VideoCoverWidListLoop* cover_wid_list_loop_4=new VideoCoverWidListLoop(ui->widget);
-    VideoCoverWidListLoop* cover_wid_list_loop_5=new VideoCoverWidListLoop(ui->widget);*/
-    /*cover_wid_list_loop_1->setFixedSize(500,500);
-    cover_wid_list_loop_2->setFixedSize(500,500);
-    cover_wid_list_loop_3->setFixedSize(500,500);
-    cover_wid_list_loop_4->setFixedSize(500,500);
-    cover_wid_list_loop_5->setFixedSize(500,500);
-
-
-    vlayout_list_loop->addWidget(cover_wid_list_loop_1);
-    vlayout_list_loop->addWidget(cover_wid_list_loop_2);
-    vlayout_list_loop->addWidget(cover_wid_list_loop_3);
-    vlayout_list_loop->addWidget(cover_wid_list_loop_4);
-    vlayout_list_loop->addWidget(cover_wid_list_loop_5);*/
-
-
-
-    //ui->widget->setLayout(vlayout_list_loop);
 
 }
 
@@ -267,10 +286,12 @@ void VideoDisplay::play(const QString& file_path,const QString& file_md5)
     }
 
     QUrl url(file_path);
+    m_media_list->addMedia(QMediaContent(m_file_path));
     m_player->stop();
 
     m_player->setMedia(QMediaContent(url));
-
+    //这是后面改的，可能会出问题
+    m_file_path=file_path;
 
     connect(m_player,&QMediaPlayer::mediaStatusChanged,this,&VideoDisplay::sloPreload);
 
@@ -301,12 +322,15 @@ void VideoDisplay::play(const QString& file_path,const QString& file_md5)
 
 
     }
-    qDebug()<<"我的发";
-    NetWorkThread* thread=new NetWorkThread();
-    thread->m_net_manager->http_get_video_analysis_messages(file_md5,this,9);
-    connect(thread,&QThread::finished,this,[thread](){
-        thread->deleteLater();
-    });
+    if(m_file_type=="1"){
+        //视频才会去请求视频解析
+        NetWorkThread* thread=new NetWorkThread();
+        thread->m_net_manager->http_get_video_analysis_messages(file_md5,this,9);
+        connect(thread,&QThread::finished,this,[thread](){
+            thread->deleteLater();
+        });
+    }
+
 
     /*for(int i=1;i<=10;i++){
         QTimer::singleShot(30000, this, [=](){
@@ -387,7 +411,9 @@ void VideoDisplay::listLoopCoverShowInfo(QNetworkReply* reply)
         });
         wid->setFixedSize(200,200);
         vlayout_list_loop_wid->addWidget(wid);
+
         vec_list_loop_wids.push_back(wid);
+
     }
     for(int i=0;i<file_info_cnt;i++){
         //给视频封面对象赋值
@@ -412,7 +438,11 @@ void VideoDisplay::listLoopCoverShowInfo(QNetworkReply* reply)
         vec_list_loop_wids[i]->m_file_type=file_type;
         //赋值完毕直接调用vec_list_loop_wids[i]的显示方法
         vec_list_loop_wids[i]->showCover();
+        m_media_list->addMedia(QMediaContent(file_path));
     }
+    //m_media_list->setPlaybackMode(QMediaPlaylist::Sequential);
+
+    m_player->setPlaylist(m_media_list);
 }
 
 void VideoDisplay::createDanmu(const QString &text, int duration)
@@ -517,68 +547,6 @@ void VideoDisplay::analyzeDanmuMessages(QNetworkReply* reply)
         vec_descriptions.push_back(file_description);
         qDebug()<<start_time<<" "<<end_time<<" "<<file_description;
     }
-    /*QString file_description_1=obj_root.value("file_description_1").toString();
-    QString file_description_2=obj_root.value("file_description_2").toString();
-    QString file_description_3=obj_root.value("file_description_3").toString();
-    QString file_description_4=obj_root.value("file_description_4").toString();
-
-    qDebug()<<"11111:"<<file_description_1;
-    qDebug()<<"22222:"<<file_description_2;
-    qDebug()<<"33333:"<<file_description_3;
-    qDebug()<<"44444:"<<file_description_4;
-
-
-    int start_pos=file_description_1.indexOf("**",0);
-    m_start_time_1=file_description_1.mid(start_pos+2,8);
-    start_pos=file_description_1.indexOf("- ",start_pos);
-    m_end_time_1=file_description_1.mid(start_pos+2,8);
-
-    start_pos=file_description_1.indexOf("- ",start_pos+2);
-    m_file_description_1=file_description_1.mid(start_pos,-1);
-    qDebug()<<m_start_time_1<<" "<<m_end_time_1<<" "<<m_file_description_1;
-
-
-
-    start_pos=file_description_2.indexOf("**",0);
-    m_start_time_2=file_description_2.mid(start_pos+2,8);
-    start_pos=file_description_2.indexOf("- ",start_pos);
-    m_end_time_2=file_description_2.mid(start_pos+2,8);
-
-    start_pos=file_description_2.indexOf("- ",start_pos+2);
-    m_file_description_2=file_description_2.mid(start_pos,-1);
-    qDebug()<<m_start_time_2<<" "<<m_end_time_2<<" "<<m_file_description_2;
-
-    start_pos=file_description_3.indexOf("**",0);
-    m_start_time_3=file_description_3.mid(start_pos+2,8);
-    start_pos=file_description_3.indexOf("- ",start_pos);
-    m_end_time_3=file_description_3.mid(start_pos+2,8);
-
-    start_pos=file_description_3.indexOf("- ",start_pos+2);
-    m_file_description_3=file_description_3.mid(start_pos,-1);
-    qDebug()<<m_start_time_3<<" "<<m_end_time_3<<" "<<m_file_description_3;
-
-
-
-    start_pos=file_description_4.indexOf("**",0);
-    m_start_time_4=file_description_4.mid(start_pos+2,8);
-    start_pos=file_description_4.indexOf("- ",start_pos);
-    m_end_time_4=file_description_4.mid(start_pos+2,8);
-
-    start_pos=file_description_4.indexOf("- ",start_pos+2);
-    m_file_description_4=file_description_4.mid(start_pos,-1);
-    qDebug()<<m_start_time_4<<" "<<m_end_time_4<<" "<<m_file_description_4;
-    st_1=timeToSeconds(m_start_time_1);
-    et_1=timeToSeconds(m_end_time_1);
-
-    qDebug()<<"st1:"<<st_1<<" "<<"et_1:"<<et_1;
-    st_2=timeToSeconds(m_start_time_2);
-    et_2=timeToSeconds(m_end_time_2);
-
-    st_3=timeToSeconds(m_start_time_3);
-    et_3=timeToSeconds(m_end_time_3);
-
-    st_4=timeToSeconds(m_start_time_4);
-    et_4=timeToSeconds(m_end_time_4);*/
 }
 
 int VideoDisplay::timeToSeconds(const QString &qtTimeStr)
@@ -655,6 +623,75 @@ void VideoDisplay::checkDanmuPresentTime(int second)
 
         }
 }
+
+void VideoDisplay::handleModeChange()
+{
+
+    if(player_mode==SEQUENCE){
+        qDebug("enter handleModeChange");
+        //m_media_list->addMedia(QMediaContent(m_file_path));
+        /*for(const auto wid:vec_list_loop_wids){
+            //qDebug()<<"addaddadd";
+            qDebug()<<"wid file_path:"<<wid->m_file_path;
+            m_media_list->addMedia(QMediaContent(wid->m_file_path));
+        }*/
+        int count = m_media_list->mediaCount();
+                            for (int i = 0; i < count; ++i) {
+                                QMediaContent content = m_media_list->media(i);
+                                QUrl url = content.canonicalUrl();
+
+                                qDebug() << "Media content at index" << i << ":" << url.toString();
+                }
+        m_media_list->setPlaybackMode(QMediaPlaylist::Sequential);
+        //m_media_list->setCurrentIndex(1);
+        if(!m_player->playlist()){
+            m_player->setPlaylist(m_media_list);
+        }
+
+        connect(m_media_list,&QMediaPlaylist::currentIndexChanged,this,[=](int index){
+            qDebug()<<"current index:"<<index;
+        });
+
+        qDebug("out handleModeChange");
+    }
+    else if(player_mode==RANDOM){
+        /*m_media_list->addMedia(QMediaContent(m_file_path));
+        for(const auto&wid:vec_list_loop_wids){
+            m_media_list->addMedia(QMediaContent(wid->m_file_path));
+        }*/
+        m_media_list->setPlaybackMode(QMediaPlaylist::Random);
+        if(!m_player->playlist()){
+            m_player->setPlaylist(m_media_list);
+        }
+        m_player->play();
+
+    }
+    else if(player_mode==SINGLE){
+
+    }
+    else if(player_mode==SINGLELOOP){
+        /*m_media_list->addMedia(QMediaContent(m_file_path));*/
+        qDebug("singloop");
+        m_media_list->setPlaybackMode(QMediaPlaylist::CurrentItemInLoop);
+
+        if(!m_player->playlist()){
+            m_player->setPlaylist(m_media_list);
+        }
+
+
+    }
+    else if(player_mode==LOOP){
+        /*m_media_list->addMedia(QMediaContent(m_file_path));
+        for(const auto&wid:vec_list_loop_wids){
+            m_media_list->addMedia(QMediaContent(wid->m_file_path));
+        }*/
+        m_media_list->setPlaybackMode(QMediaPlaylist::Loop);
+        if(!m_player->playlist()){
+            m_player->setPlaylist(m_media_list);
+        }
+
+    }
+}
 void VideoDisplay::updatePresentTimeLab(qint64 tim){
     m_lab_present_time->setText(integraTime(tim,0));
 }
@@ -703,6 +740,9 @@ void VideoDisplay::sloAdjRate(int num){
 void VideoDisplay::sloPreload(QMediaPlayer::MediaStatus status){
     if(status==QMediaPlayer::LoadedMedia){
         m_player->play();
+    }
+    else if(status==QMediaPlayer::EndOfMedia){
+        handleModeChange();
     }
 }
 
