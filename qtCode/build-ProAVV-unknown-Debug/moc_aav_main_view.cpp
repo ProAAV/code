@@ -21,8 +21,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_MainView_t {
-    QByteArrayData data[9];
-    char stringdata0[119];
+    QByteArrayData data[11];
+    char stringdata0[147];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -39,13 +39,15 @@ QT_MOC_LITERAL(4, 38, 5), // "reply"
 QT_MOC_LITERAL(5, 44, 20), // "sloBtnUserPageHandle"
 QT_MOC_LITERAL(6, 65, 19), // "sloUserLoginSuccess"
 QT_MOC_LITERAL(7, 85, 20), // "sloUserLoginSuccess2"
-QT_MOC_LITERAL(8, 106, 12) // "sloBtnSearch"
+QT_MOC_LITERAL(8, 106, 12), // "sloBtnSearch"
+QT_MOC_LITERAL(9, 119, 13), // "sloSetTheme01"
+QT_MOC_LITERAL(10, 133, 13) // "sloSetTheme02"
 
     },
     "MainView\0sigFilesInfo\0\0QNetworkReply*\0"
     "reply\0sloBtnUserPageHandle\0"
     "sloUserLoginSuccess\0sloUserLoginSuccess2\0"
-    "sloBtnSearch"
+    "sloBtnSearch\0sloSetTheme01\0sloSetTheme02"
 };
 #undef QT_MOC_LITERAL
 
@@ -55,7 +57,7 @@ static const uint qt_meta_data_MainView[] = {
        8,       // revision
        0,       // classname
        0,    0, // classinfo
-       5,   14, // methods
+       7,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -63,18 +65,22 @@ static const uint qt_meta_data_MainView[] = {
        1,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    1,   39,    2, 0x06 /* Public */,
+       1,    1,   49,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       5,    0,   42,    2, 0x0a /* Public */,
-       6,    0,   43,    2, 0x0a /* Public */,
-       7,    0,   44,    2, 0x0a /* Public */,
-       8,    0,   45,    2, 0x0a /* Public */,
+       5,    0,   52,    2, 0x0a /* Public */,
+       6,    0,   53,    2, 0x0a /* Public */,
+       7,    0,   54,    2, 0x0a /* Public */,
+       8,    0,   55,    2, 0x0a /* Public */,
+       9,    0,   56,    2, 0x0a /* Public */,
+      10,    0,   57,    2, 0x0a /* Public */,
 
  // signals: parameters
     QMetaType::Void, 0x80000000 | 3,    4,
 
  // slots: parameters
+    QMetaType::Void,
+    QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
@@ -94,6 +100,8 @@ void MainView::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, vo
         case 2: _t->sloUserLoginSuccess(); break;
         case 3: _t->sloUserLoginSuccess2(); break;
         case 4: _t->sloBtnSearch(); break;
+        case 5: _t->sloSetTheme01(); break;
+        case 6: _t->sloSetTheme02(); break;
         default: ;
         }
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
@@ -148,13 +156,13 @@ int MainView::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 5)
+        if (_id < 7)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 5;
+        _id -= 7;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 5)
+        if (_id < 7)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 5;
+        _id -= 7;
     }
     return _id;
 }

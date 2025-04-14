@@ -4,8 +4,14 @@
 #include"../base/common.h"
 #include<json/json.h>
 
-void apiAnalysisMessages(char* wbuf,int wbuf_sz,struct mg_http_message hm,ConfRead& conf_reader){
+void apiAnalysisMessages(void* args){
     std::cout<<"enter apiAnalysisMessages\n";
+    ApiFuncArgs* ags=(ApiFuncArgs*)args;
+    char* wbuf=ags->wbuf;
+    int wbuf_sz=ags->wbuf_sz;
+    struct mg_http_message hm=ags->hm;
+    ConfRead conf_reader=*ags->conf_reader;
+
     std::string method(hm.method.buf,hm.method.len);
     if(method!="GET"){
         std::cout<<"apiAnalysisMessages error ,the method is not GET\n";

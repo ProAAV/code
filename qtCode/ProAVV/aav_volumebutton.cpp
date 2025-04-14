@@ -38,7 +38,7 @@ VolumeButton::VolumeButton(QWidget *parent):QPushButton (parent)
 
     //先隐藏
     m_wid_vlm->hide();
-    m_wid_vlm->setStyleSheet("QWidget{background-color:red}");
+    //m_wid_vlm->setStyleSheet("QWidget{background-color:black}");
 
 
 

@@ -7,6 +7,7 @@
 #include"aav_networkmanager.h"
 #include"aav_networkthread.h"
 #include<QJsonDocument>
+#include"aav_usermanager.h"
 #include<QJsonObject>
 #include<QJsonArray>
 #include<QJsonValue>
@@ -29,6 +30,10 @@ UsrPage::UsrPage(QWidget *parent) :
     lab_usernickname=new QLabel(m_user_info_wid);
     m_btn_logout=new QPushButton(m_user_info_wid);
     m_btn_logout->setText("退出登录");
+    connect(m_btn_logout,&QPushButton::clicked,this,[this](){
+        UserManager::instance()->setUserName("");
+        emit this->sigLoginOut();
+    });
     QLabel* lab_tips_username=new QLabel(m_user_info_wid);
     QLabel* lab_tips_usernickname=new QLabel(m_user_info_wid);
     lab_tips_username->setText("账号:");

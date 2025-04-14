@@ -13,12 +13,15 @@
 #include<QJsonArray>
 #include<QTimer>
 #include<QJsonValue>
-
 NetWorkManager::NetWorkManager(QObject *parent): QObject{parent}
 {
     m_manager=new QNetworkAccessManager(this);
     m_buffer=nullptr;
     m_files_info_reply=nullptr;
+    success_tip=new ToTips();
+    success_tip->resize(200,50);
+    success_tip->hide();
+
 }
 
 NetWorkManager::~NetWorkManager()
@@ -120,10 +123,37 @@ void NetWorkManager::http_upload_file(double file_playback_duration,QString& fil
     loop.exec();*/
 
     // 处理响应
+
+
+    //upload_file_success_tip->setWindowFlags(Qt::FramelessWindowHint);
+
     connect(reply,&QNetworkReply::finished,this,[=](){
         if (reply->error()) {
-            qDebug() << "上传失败：" << reply->errorString();
+            QString str=QString("上传失败:%1").arg(reply->errorString());
+            success_tip->getLab()->setStyleSheet("QLabel{background-color:green;color:white;font-size:20px;}");
+            success_tip->getLab()->setText("str");
+            success_tip->getLab()->setAlignment(Qt::AlignCenter);
+
+            success_tip->show();
+            QTimer* time=new QTimer(this);
+            connect(time,&QTimer::timeout,this,[=](){
+                success_tip->hide();
+                time->deleteLater();
+            });
+            time->start(1000);
+
+            //qDebug() << "上传失败：" << reply->errorString();
         } else {
+            success_tip->getLab()->setStyleSheet("QLabel{background-color:green;color:white;font-size:20px;}");
+            success_tip->getLab()->setText("上传成功");
+            success_tip->getLab()->setAlignment(Qt::AlignCenter);
+            success_tip->show();
+            QTimer* time=new QTimer(this);
+            connect(time,&QTimer::timeout,this,[=](){
+                success_tip->hide();
+                time->deleteLater();
+            });
+            time->start(1000);
             qDebug() << "上传成功，服务器响应：" << reply->readAll();
         }
 

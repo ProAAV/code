@@ -7,6 +7,7 @@
 #include"aav_userloginandregis.h"
 #include"aav_usrpage.h"
 #include"aav_lineeditsearch.h"
+#include<QApplication>
 QT_BEGIN_NAMESPACE
 namespace Ui {
 class MainView;
@@ -18,9 +19,11 @@ class MainView : public QWidget
     Q_OBJECT
 
 public:
-    MainView(QWidget *parent = nullptr);
+    MainView(QApplication* app,QWidget *parent = nullptr);
     ~MainView();
-
+    QMenu* menu_set;
+    QAction* act_theme_01;
+    QAction* act_theme_02;
 private:
     Ui::MainView *ui;
     UploadSelect* m_wid_upload_select;
@@ -30,6 +33,9 @@ private:
     VideoList* m_search_video_lists;
     QStackedWidget* stack_video_page_wid;
     bool status_is_search;
+    QApplication* m_app;
+
+
 signals:
     void sigFilesInfo(QNetworkReply* reply);
 public slots:
@@ -37,6 +43,7 @@ public slots:
     void sloUserLoginSuccess();
     void sloUserLoginSuccess2();
     void sloBtnSearch();
-
+    void sloSetTheme01();
+    void sloSetTheme02();
 };
 #endif // AVV_MAIN_VIEW_H

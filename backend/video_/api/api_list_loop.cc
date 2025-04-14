@@ -1,8 +1,15 @@
 #include"api_list_loop.h"
 #include<iostream>
+#include"../base/common.h"
 #include<json/json.h>
-void apiListLoop(char* wbuf,int wbuf_sz,struct mg_http_message hm,ConfRead& conf_reader){
+void apiListLoop(void* args){
     std::cout<<"enter list loop\n";
+    ApiFuncArgs* ags=(ApiFuncArgs*)args;
+    char* wbuf=ags->wbuf;
+    int wbuf_sz=ags->wbuf_sz;
+    struct mg_http_message hm=ags->hm;
+    ConfRead conf_reader=*ags->conf_reader;
+
     std::string method(hm.method.buf,hm.method.len);
     if(method!="POST"){
         std::cout<<"apiListLoop error ,the method is not POST\n";

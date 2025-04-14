@@ -5,6 +5,7 @@
 #include<QLineEdit>
 #include<QHBoxLayout>
 #include<QVBoxLayout>
+#include"aav_totips.h"
 namespace Ui {
 class UserRegister;
 }
@@ -23,6 +24,7 @@ private:
     QLineEdit* m_ledit_password;
     QLineEdit* m_ledit_nickname;
     QLineEdit* m_ledit_repassword;
+    ToTips* success_tip;
 signals:
     void sigRegisterSuccess();
     void sigRegisterFailed();

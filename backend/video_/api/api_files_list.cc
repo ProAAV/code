@@ -3,9 +3,16 @@
 #include<string.h>
 #include<json/json.h>
 #include<iostream>
-void apiFilesList(char* wbuf,int wbuf_sz,struct mg_http_message hm,ConfRead& conf_reader){
+void apiFilesList(void* args){
     //先解析请求行所请求的参数
     std::cout<<"enter apiFilesList\n";
+    ApiFuncArgs* ags=(ApiFuncArgs*)args;
+    char* wbuf=ags->wbuf;
+    int wbuf_sz=ags->wbuf_sz;
+    struct mg_http_message hm=ags->hm;
+    ConfRead conf_reader=*ags->conf_reader;
+
+
     std::string method(hm.method.buf,hm.method.len);
     if(method!="GET"){
         std::cout<<"apiFilesList error ,the method is not GET\n";

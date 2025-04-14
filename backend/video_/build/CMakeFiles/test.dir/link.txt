@@ -1,1 +1,0 @@
-/usr/bin/c++     CMakeFiles/test.dir/test.cc.o  -o test   -L/usr/lib/python3.8/config-3.8-x86_64-linux-gnu  -Wl,-rpath,/usr/lib/python3.8/config-3.8-x86_64-linux-gnu -lavcodec -lavutil -lavformat -lswscale -lavdevice -lavfilter -lfdfsclient -lmysqlclient -ljsoncpp -lpython3.8 -lcrypt -lpthread -ldl -lutil -lm 

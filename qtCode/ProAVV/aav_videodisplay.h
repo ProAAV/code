@@ -51,7 +51,7 @@ private:
     QVBoxLayout* m_vlayout;
     QHBoxLayout* m_hlayout;
     QSlider* m_slider_video_process;
-
+    QLabel* m_audio_show_layer;
     QMediaPlayer* m_player;
     QVideoWidget* m_video_widget;
     int player_mode;
@@ -81,6 +81,9 @@ private:
     QPropertyAnimation *animation;
     QLabel *danmuLabel;
     QMediaPlaylist* m_media_list;
+    QMediaPlaylist* m_media_list_sigloop;
+    int cur_media_idx;
+    int max_media_idx;
 public slots:
     void sloSetSliderDura(qint64 dur);
     void sloSetSliderPos(qint64 dur);

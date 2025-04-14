@@ -6,27 +6,43 @@
 
 #IncludeRegexTransform: 
 
-/home/hcc/share/code/project/code/backend/video_/api/api_files_list.cc
-api_files_list.h
-/home/hcc/share/code/project/code/backend/video_/api/api_files_list.h
-../base/common.h
-/home/hcc/share/code/project/code/backend/video_/base/common.h
-string.h
+/home/hcc/share/code/code/backend/video_/api/api_login.cc
+api_login.h
+/home/hcc/share/code/code/backend/video_/api/api_login.h
+iostream
 -
 json/json.h
 -
+../base/common.h
+/home/hcc/share/code/code/backend/video_/base/common.h
+
+/home/hcc/share/code/code/backend/video_/api/api_login.h
+../base/config_read.h
+/home/hcc/share/code/code/backend/video_/base/config_read.h
+../base/mysqlconn.h
+/home/hcc/share/code/code/backend/video_/base/mysqlconn.h
+../base/mongoose.h
+/home/hcc/share/code/code/backend/video_/base/mongoose.h
+
+/home/hcc/share/code/code/backend/video_/api/api_register.cc
+api_register.h
+/home/hcc/share/code/code/backend/video_/api/api_register.h
 iostream
 -
+../base/common.h
+/home/hcc/share/code/code/backend/video_/base/common.h
+json/json.h
+-
 
-/home/hcc/share/code/project/code/backend/video_/api/api_files_list.h
+/home/hcc/share/code/code/backend/video_/api/api_register.h
 ../base/config_read.h
-/home/hcc/share/code/project/code/backend/video_/base/config_read.h
+/home/hcc/share/code/code/backend/video_/base/config_read.h
 ../base/mysqlconn.h
-/home/hcc/share/code/project/code/backend/video_/base/mysqlconn.h
+/home/hcc/share/code/code/backend/video_/base/mysqlconn.h
 ../base/mongoose.h
-/home/hcc/share/code/project/code/backend/video_/base/mongoose.h
+/home/hcc/share/code/code/backend/video_/base/mongoose.h
 
-/home/hcc/share/code/project/code/backend/video_/base/common.h
+/home/hcc/share/code/code/backend/video_/base/common.h
 cstdlib
 -
 string
@@ -35,18 +51,22 @@ iostream
 -
 regex
 -
+mongoose.h
+/home/hcc/share/code/code/backend/video_/base/mongoose.h
+config_read.h
+/home/hcc/share/code/code/backend/video_/base/config_read.h
 unistd.h
 -
 
-/home/hcc/share/code/project/code/backend/video_/base/config_read.h
+/home/hcc/share/code/code/backend/video_/base/config_read.h
 string
 -
 unordered_map
 -
 
-/home/hcc/share/code/project/code/backend/video_/base/mongoose.h
+/home/hcc/share/code/code/backend/video_/base/mongoose.h
 mongoose_config.h
-/home/hcc/share/code/project/code/backend/video_/base/mongoose_config.h
+/home/hcc/share/code/code/backend/video_/base/mongoose_config.h
 ctype.h
 -
 errno.h
@@ -280,9 +300,9 @@ string.h
 time.h
 -
 cmsis_os.h
-/home/hcc/share/code/project/code/backend/video_/base/cmsis_os.h
+/home/hcc/share/code/code/backend/video_/base/cmsis_os.h
 cmsis_os2.h
-/home/hcc/share/code/project/code/backend/video_/base/cmsis_os2.h
+/home/hcc/share/code/code/backend/video_/base/cmsis_os2.h
 stdlib.h
 -
 ctype.h
@@ -462,11 +482,11 @@ openssl/err.h
 openssl/ssl.h
 -
 Driver_ETH_MAC.h
-/home/hcc/share/code/project/code/backend/video_/base/Driver_ETH_MAC.h
+/home/hcc/share/code/code/backend/video_/base/Driver_ETH_MAC.h
 Driver_ETH_PHY.h
-/home/hcc/share/code/project/code/backend/video_/base/Driver_ETH_PHY.h
+/home/hcc/share/code/code/backend/video_/base/Driver_ETH_PHY.h
 
-/home/hcc/share/code/project/code/backend/video_/base/mysqlconn.h
+/home/hcc/share/code/code/backend/video_/base/mysqlconn.h
 string
 -
 mysql/mysql.h

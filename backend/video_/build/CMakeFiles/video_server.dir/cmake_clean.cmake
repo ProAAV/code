@@ -18,6 +18,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/video_server.dir/base/net_event_loop.cc.o"
   "CMakeFiles/video_server.dir/base/net_socket.cc.o"
   "CMakeFiles/video_server.dir/base/py_script.cc.o"
+  "CMakeFiles/video_server.dir/base/thread_pool.cc.o"
   "CMakeFiles/video_server.dir/main.cc.o"
   "video_server"
   "video_server.pdb"

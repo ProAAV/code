@@ -1,9 +1,16 @@
 #include"api_get_search_log.h"
 #include<iostream>
+#include"../base/common.h"
 #include<json/json.h>
-void apiGetSearchLog(char* wbuf,int wbuf_sz,struct mg_http_message hm,ConfRead& conf_reader){
+void apiGetSearchLog(void* args){
     //整个流程是客户端发送search_key过来，服务端模糊匹配到这些关键词从数据库中取出返回显示在qt的completer中自动补全
     std::cout<<"enter apiGetSearchLog\n";
+    ApiFuncArgs* ags=(ApiFuncArgs*)args;
+    char* wbuf=ags->wbuf;
+    int wbuf_sz=ags->wbuf_sz;
+    struct mg_http_message hm=ags->hm;
+    ConfRead conf_reader=*ags->conf_reader;
+
     std::string method(hm.method.buf,hm.method.len);
     if(method!="GET"){
         std::cout<<"apiGetSearchLog error ,the method is not POST\n";

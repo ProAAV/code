@@ -1,8 +1,15 @@
 #include"api_register.h"
 #include<iostream>
+#include"../base/common.h"
 #include<json/json.h>
-void apiRegister(char* wbuf,int wbuf_sz,struct mg_http_message hm,ConfRead& conf_reader){
+void apiRegister(void* args){
     std::cout<<"enter apiRegister\n";
+    ApiFuncArgs* ags=(ApiFuncArgs*)args;
+    char* wbuf=ags->wbuf;
+    int wbuf_sz=ags->wbuf_sz;
+    struct mg_http_message hm=ags->hm;
+    ConfRead conf_reader=*ags->conf_reader;
+
     std::string method(hm.method.buf,hm.method.len);
     if(method!="POST"){
         std::cout<<"apiRegister error ,the method is not POST\n";
@@ -52,7 +59,7 @@ void apiRegister(char* wbuf,int wbuf_sz,struct mg_http_message hm,ConfRead& conf
         registerResponFailed(wbuf,wbuf_sz);
         return;
     }
-    sprintf(query_,"insert into `aav_user_info` (nickname,username,userpassword) value ('%s','%s','%s')",nickname.c_str(),username.c_str(),password.c_str());
+    sprintf(query_,"insert into `aav_user_info` (nickname,username,userpassword) value ('%s','%s',SHA2('%s', 256))",nickname.c_str(),username.c_str(),password.c_str());
     res=sql_conn.mysqlQuery(query_);
 
     registerResponSuccess(wbuf,wbuf_sz);

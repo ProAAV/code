@@ -20,7 +20,7 @@ UserLogin::UserLogin(QWidget *parent)
     lab_password->setText("密码:");
     m_ledit_account=new QLineEdit(this);
     m_ledit_password=new QLineEdit(this);
-
+    m_ledit_password->setEchoMode(QLineEdit::Password);
     QHBoxLayout* hlayout_1=new QHBoxLayout();
     QHBoxLayout* hlayout_2=new QHBoxLayout();
 

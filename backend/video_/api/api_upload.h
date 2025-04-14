@@ -7,7 +7,7 @@ extern "C"{
     #include"../base/mongoose.h"
 }
 #define FASTDFS_CLIENT_CONF "/etc/fdfs/client.conf"
-void apiUpload(char* wbuf,int wbuf_sz,struct mg_http_message hm,ConfRead& conf_reader);
+void apiUpload(void* args);
 int uploadHandleFileTLS(CfileInfo& file_info,ConfRead& conf_reader);
 int uploadFileToFastdfs(CfileInfo& file_info,ConfRead& conf_reader,const bool& is_audio);
 //checkEnd函数负责检查传入字符串的末尾是否是以'/'结尾，如果不是则加上一个'/'
@@ -19,6 +19,8 @@ void upload_responSuccess(char* wbuf,int wbuf_sz);
 void upload_responFailed(char* wbuf,int wbuf_sz);
 void upload_extract_file_features(std::string str);
 std::string upload_video_extract_analysis(std::string str);
+void audio_py_update(CfileInfo file_info);
+void video_py_update(CfileInfo file_info);
 inline std::vector<std::string> vec_remove_file_path;
 static std::vector<std::string> vec_file_features;
 static std::vector<std::string> vec_file_analysis;

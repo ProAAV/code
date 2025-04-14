@@ -1,9 +1,16 @@
 #include"api_login.h"
 #include<iostream>
 #include<json/json.h>
+#include"../base/common.h"
 //定义回发状态码，0表示登录成功，1表示账号或密码错误，2表示服务器出错
-void apiLogin(char* wbuf,int wbuf_sz,struct mg_http_message hm,ConfRead& conf_reader){
+
+void apiLogin(void* args){
     std::cout<<"enter apiLogin\n";
+    ApiFuncArgs* ags=(ApiFuncArgs*)args;
+    char* wbuf=ags->wbuf;
+    int wbuf_sz=ags->wbuf_sz;
+    struct mg_http_message hm=ags->hm;
+    ConfRead conf_reader=*ags->conf_reader;
     std::string method(hm.method.buf,hm.method.len);
     if(method!="POST"){
         std::cout<<"apiFilesList error ,the method is not GET\n";
@@ -41,7 +48,7 @@ void apiLogin(char* wbuf,int wbuf_sz,struct mg_http_message hm,ConfRead& conf_re
     }
     MysqlConn sql_conn{};
     char query_[256];
-    sprintf(query_,"select * from `aav_user_info` where username='%s'",username.c_str());
+    sprintf(query_,"select * from `aav_user_info` where username='%s' and userpassword=SHA2('%s', 256)",username.c_str(),password.c_str());
     MYSQL_RES* res=sql_conn.mysqlQuery(query_);
     if(!res){
         loginResponFailed(wbuf,wbuf_sz);

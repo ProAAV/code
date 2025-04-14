@@ -28,6 +28,7 @@ set(SOURCES
     base/py_script.cc
     api/api_list_loop.cc
     api/api_analysis_messages.cc
+    base/thread_pool.cc
 )
 add_executable(video_server ${SOURCES})
 add_compile_options(-g)

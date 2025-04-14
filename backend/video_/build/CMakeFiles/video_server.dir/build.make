@@ -43,10 +43,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/hcc/share/code/project/code/backend/video_
+CMAKE_SOURCE_DIR = /home/hcc/share/code/code/backend/video_
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/hcc/share/code/project/code/backend/video_/build
+CMAKE_BINARY_DIR = /home/hcc/share/code/code/backend/video_/build
 
 # Include any dependencies generated for this target.
 include CMakeFiles/video_server.dir/depend.make
@@ -59,263 +59,276 @@ include CMakeFiles/video_server.dir/flags.make
 
 CMakeFiles/video_server.dir/main.cc.o: CMakeFiles/video_server.dir/flags.make
 CMakeFiles/video_server.dir/main.cc.o: ../main.cc
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/hcc/share/code/project/code/backend/video_/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/video_server.dir/main.cc.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/video_server.dir/main.cc.o -c /home/hcc/share/code/project/code/backend/video_/main.cc
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/hcc/share/code/code/backend/video_/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/video_server.dir/main.cc.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/video_server.dir/main.cc.o -c /home/hcc/share/code/code/backend/video_/main.cc
 
 CMakeFiles/video_server.dir/main.cc.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/video_server.dir/main.cc.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/hcc/share/code/project/code/backend/video_/main.cc > CMakeFiles/video_server.dir/main.cc.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/hcc/share/code/code/backend/video_/main.cc > CMakeFiles/video_server.dir/main.cc.i
 
 CMakeFiles/video_server.dir/main.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/video_server.dir/main.cc.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/hcc/share/code/project/code/backend/video_/main.cc -o CMakeFiles/video_server.dir/main.cc.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/hcc/share/code/code/backend/video_/main.cc -o CMakeFiles/video_server.dir/main.cc.s
 
 CMakeFiles/video_server.dir/base/net_event_loop.cc.o: CMakeFiles/video_server.dir/flags.make
 CMakeFiles/video_server.dir/base/net_event_loop.cc.o: ../base/net_event_loop.cc
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/hcc/share/code/project/code/backend/video_/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/video_server.dir/base/net_event_loop.cc.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/video_server.dir/base/net_event_loop.cc.o -c /home/hcc/share/code/project/code/backend/video_/base/net_event_loop.cc
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/hcc/share/code/code/backend/video_/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/video_server.dir/base/net_event_loop.cc.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/video_server.dir/base/net_event_loop.cc.o -c /home/hcc/share/code/code/backend/video_/base/net_event_loop.cc
 
 CMakeFiles/video_server.dir/base/net_event_loop.cc.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/video_server.dir/base/net_event_loop.cc.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/hcc/share/code/project/code/backend/video_/base/net_event_loop.cc > CMakeFiles/video_server.dir/base/net_event_loop.cc.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/hcc/share/code/code/backend/video_/base/net_event_loop.cc > CMakeFiles/video_server.dir/base/net_event_loop.cc.i
 
 CMakeFiles/video_server.dir/base/net_event_loop.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/video_server.dir/base/net_event_loop.cc.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/hcc/share/code/project/code/backend/video_/base/net_event_loop.cc -o CMakeFiles/video_server.dir/base/net_event_loop.cc.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/hcc/share/code/code/backend/video_/base/net_event_loop.cc -o CMakeFiles/video_server.dir/base/net_event_loop.cc.s
 
 CMakeFiles/video_server.dir/base/net_socket.cc.o: CMakeFiles/video_server.dir/flags.make
 CMakeFiles/video_server.dir/base/net_socket.cc.o: ../base/net_socket.cc
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/hcc/share/code/project/code/backend/video_/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/video_server.dir/base/net_socket.cc.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/video_server.dir/base/net_socket.cc.o -c /home/hcc/share/code/project/code/backend/video_/base/net_socket.cc
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/hcc/share/code/code/backend/video_/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/video_server.dir/base/net_socket.cc.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/video_server.dir/base/net_socket.cc.o -c /home/hcc/share/code/code/backend/video_/base/net_socket.cc
 
 CMakeFiles/video_server.dir/base/net_socket.cc.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/video_server.dir/base/net_socket.cc.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/hcc/share/code/project/code/backend/video_/base/net_socket.cc > CMakeFiles/video_server.dir/base/net_socket.cc.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/hcc/share/code/code/backend/video_/base/net_socket.cc > CMakeFiles/video_server.dir/base/net_socket.cc.i
 
 CMakeFiles/video_server.dir/base/net_socket.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/video_server.dir/base/net_socket.cc.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/hcc/share/code/project/code/backend/video_/base/net_socket.cc -o CMakeFiles/video_server.dir/base/net_socket.cc.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/hcc/share/code/code/backend/video_/base/net_socket.cc -o CMakeFiles/video_server.dir/base/net_socket.cc.s
 
 CMakeFiles/video_server.dir/base/config_read.cc.o: CMakeFiles/video_server.dir/flags.make
 CMakeFiles/video_server.dir/base/config_read.cc.o: ../base/config_read.cc
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/hcc/share/code/project/code/backend/video_/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/video_server.dir/base/config_read.cc.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/video_server.dir/base/config_read.cc.o -c /home/hcc/share/code/project/code/backend/video_/base/config_read.cc
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/hcc/share/code/code/backend/video_/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/video_server.dir/base/config_read.cc.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/video_server.dir/base/config_read.cc.o -c /home/hcc/share/code/code/backend/video_/base/config_read.cc
 
 CMakeFiles/video_server.dir/base/config_read.cc.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/video_server.dir/base/config_read.cc.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/hcc/share/code/project/code/backend/video_/base/config_read.cc > CMakeFiles/video_server.dir/base/config_read.cc.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/hcc/share/code/code/backend/video_/base/config_read.cc > CMakeFiles/video_server.dir/base/config_read.cc.i
 
 CMakeFiles/video_server.dir/base/config_read.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/video_server.dir/base/config_read.cc.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/hcc/share/code/project/code/backend/video_/base/config_read.cc -o CMakeFiles/video_server.dir/base/config_read.cc.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/hcc/share/code/code/backend/video_/base/config_read.cc -o CMakeFiles/video_server.dir/base/config_read.cc.s
 
 CMakeFiles/video_server.dir/base/mongoose.c.o: CMakeFiles/video_server.dir/flags.make
 CMakeFiles/video_server.dir/base/mongoose.c.o: ../base/mongoose.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/hcc/share/code/project/code/backend/video_/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building C object CMakeFiles/video_server.dir/base/mongoose.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/video_server.dir/base/mongoose.c.o   -c /home/hcc/share/code/project/code/backend/video_/base/mongoose.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/hcc/share/code/code/backend/video_/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building C object CMakeFiles/video_server.dir/base/mongoose.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/video_server.dir/base/mongoose.c.o   -c /home/hcc/share/code/code/backend/video_/base/mongoose.c
 
 CMakeFiles/video_server.dir/base/mongoose.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/video_server.dir/base/mongoose.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/hcc/share/code/project/code/backend/video_/base/mongoose.c > CMakeFiles/video_server.dir/base/mongoose.c.i
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/hcc/share/code/code/backend/video_/base/mongoose.c > CMakeFiles/video_server.dir/base/mongoose.c.i
 
 CMakeFiles/video_server.dir/base/mongoose.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/video_server.dir/base/mongoose.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/hcc/share/code/project/code/backend/video_/base/mongoose.c -o CMakeFiles/video_server.dir/base/mongoose.c.s
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/hcc/share/code/code/backend/video_/base/mongoose.c -o CMakeFiles/video_server.dir/base/mongoose.c.s
 
 CMakeFiles/video_server.dir/base/http_layer.cc.o: CMakeFiles/video_server.dir/flags.make
 CMakeFiles/video_server.dir/base/http_layer.cc.o: ../base/http_layer.cc
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/hcc/share/code/project/code/backend/video_/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/video_server.dir/base/http_layer.cc.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/video_server.dir/base/http_layer.cc.o -c /home/hcc/share/code/project/code/backend/video_/base/http_layer.cc
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/hcc/share/code/code/backend/video_/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/video_server.dir/base/http_layer.cc.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/video_server.dir/base/http_layer.cc.o -c /home/hcc/share/code/code/backend/video_/base/http_layer.cc
 
 CMakeFiles/video_server.dir/base/http_layer.cc.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/video_server.dir/base/http_layer.cc.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/hcc/share/code/project/code/backend/video_/base/http_layer.cc > CMakeFiles/video_server.dir/base/http_layer.cc.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/hcc/share/code/code/backend/video_/base/http_layer.cc > CMakeFiles/video_server.dir/base/http_layer.cc.i
 
 CMakeFiles/video_server.dir/base/http_layer.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/video_server.dir/base/http_layer.cc.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/hcc/share/code/project/code/backend/video_/base/http_layer.cc -o CMakeFiles/video_server.dir/base/http_layer.cc.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/hcc/share/code/code/backend/video_/base/http_layer.cc -o CMakeFiles/video_server.dir/base/http_layer.cc.s
 
 CMakeFiles/video_server.dir/api/api_upload.cc.o: CMakeFiles/video_server.dir/flags.make
 CMakeFiles/video_server.dir/api/api_upload.cc.o: ../api/api_upload.cc
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/hcc/share/code/project/code/backend/video_/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/video_server.dir/api/api_upload.cc.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/video_server.dir/api/api_upload.cc.o -c /home/hcc/share/code/project/code/backend/video_/api/api_upload.cc
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/hcc/share/code/code/backend/video_/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/video_server.dir/api/api_upload.cc.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/video_server.dir/api/api_upload.cc.o -c /home/hcc/share/code/code/backend/video_/api/api_upload.cc
 
 CMakeFiles/video_server.dir/api/api_upload.cc.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/video_server.dir/api/api_upload.cc.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/hcc/share/code/project/code/backend/video_/api/api_upload.cc > CMakeFiles/video_server.dir/api/api_upload.cc.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/hcc/share/code/code/backend/video_/api/api_upload.cc > CMakeFiles/video_server.dir/api/api_upload.cc.i
 
 CMakeFiles/video_server.dir/api/api_upload.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/video_server.dir/api/api_upload.cc.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/hcc/share/code/project/code/backend/video_/api/api_upload.cc -o CMakeFiles/video_server.dir/api/api_upload.cc.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/hcc/share/code/code/backend/video_/api/api_upload.cc -o CMakeFiles/video_server.dir/api/api_upload.cc.s
 
 CMakeFiles/video_server.dir/base/file_info.cc.o: CMakeFiles/video_server.dir/flags.make
 CMakeFiles/video_server.dir/base/file_info.cc.o: ../base/file_info.cc
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/hcc/share/code/project/code/backend/video_/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/video_server.dir/base/file_info.cc.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/video_server.dir/base/file_info.cc.o -c /home/hcc/share/code/project/code/backend/video_/base/file_info.cc
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/hcc/share/code/code/backend/video_/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/video_server.dir/base/file_info.cc.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/video_server.dir/base/file_info.cc.o -c /home/hcc/share/code/code/backend/video_/base/file_info.cc
 
 CMakeFiles/video_server.dir/base/file_info.cc.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/video_server.dir/base/file_info.cc.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/hcc/share/code/project/code/backend/video_/base/file_info.cc > CMakeFiles/video_server.dir/base/file_info.cc.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/hcc/share/code/code/backend/video_/base/file_info.cc > CMakeFiles/video_server.dir/base/file_info.cc.i
 
 CMakeFiles/video_server.dir/base/file_info.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/video_server.dir/base/file_info.cc.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/hcc/share/code/project/code/backend/video_/base/file_info.cc -o CMakeFiles/video_server.dir/base/file_info.cc.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/hcc/share/code/code/backend/video_/base/file_info.cc -o CMakeFiles/video_server.dir/base/file_info.cc.s
 
 CMakeFiles/video_server.dir/base/mysqlconn.cc.o: CMakeFiles/video_server.dir/flags.make
 CMakeFiles/video_server.dir/base/mysqlconn.cc.o: ../base/mysqlconn.cc
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/hcc/share/code/project/code/backend/video_/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/video_server.dir/base/mysqlconn.cc.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/video_server.dir/base/mysqlconn.cc.o -c /home/hcc/share/code/project/code/backend/video_/base/mysqlconn.cc
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/hcc/share/code/code/backend/video_/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/video_server.dir/base/mysqlconn.cc.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/video_server.dir/base/mysqlconn.cc.o -c /home/hcc/share/code/code/backend/video_/base/mysqlconn.cc
 
 CMakeFiles/video_server.dir/base/mysqlconn.cc.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/video_server.dir/base/mysqlconn.cc.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/hcc/share/code/project/code/backend/video_/base/mysqlconn.cc > CMakeFiles/video_server.dir/base/mysqlconn.cc.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/hcc/share/code/code/backend/video_/base/mysqlconn.cc > CMakeFiles/video_server.dir/base/mysqlconn.cc.i
 
 CMakeFiles/video_server.dir/base/mysqlconn.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/video_server.dir/base/mysqlconn.cc.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/hcc/share/code/project/code/backend/video_/base/mysqlconn.cc -o CMakeFiles/video_server.dir/base/mysqlconn.cc.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/hcc/share/code/code/backend/video_/base/mysqlconn.cc -o CMakeFiles/video_server.dir/base/mysqlconn.cc.s
 
 CMakeFiles/video_server.dir/api/api_files_list.cc.o: CMakeFiles/video_server.dir/flags.make
 CMakeFiles/video_server.dir/api/api_files_list.cc.o: ../api/api_files_list.cc
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/hcc/share/code/project/code/backend/video_/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/video_server.dir/api/api_files_list.cc.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/video_server.dir/api/api_files_list.cc.o -c /home/hcc/share/code/project/code/backend/video_/api/api_files_list.cc
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/hcc/share/code/code/backend/video_/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/video_server.dir/api/api_files_list.cc.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/video_server.dir/api/api_files_list.cc.o -c /home/hcc/share/code/code/backend/video_/api/api_files_list.cc
 
 CMakeFiles/video_server.dir/api/api_files_list.cc.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/video_server.dir/api/api_files_list.cc.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/hcc/share/code/project/code/backend/video_/api/api_files_list.cc > CMakeFiles/video_server.dir/api/api_files_list.cc.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/hcc/share/code/code/backend/video_/api/api_files_list.cc > CMakeFiles/video_server.dir/api/api_files_list.cc.i
 
 CMakeFiles/video_server.dir/api/api_files_list.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/video_server.dir/api/api_files_list.cc.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/hcc/share/code/project/code/backend/video_/api/api_files_list.cc -o CMakeFiles/video_server.dir/api/api_files_list.cc.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/hcc/share/code/code/backend/video_/api/api_files_list.cc -o CMakeFiles/video_server.dir/api/api_files_list.cc.s
 
 CMakeFiles/video_server.dir/api/api_login.cc.o: CMakeFiles/video_server.dir/flags.make
 CMakeFiles/video_server.dir/api/api_login.cc.o: ../api/api_login.cc
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/hcc/share/code/project/code/backend/video_/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/video_server.dir/api/api_login.cc.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/video_server.dir/api/api_login.cc.o -c /home/hcc/share/code/project/code/backend/video_/api/api_login.cc
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/hcc/share/code/code/backend/video_/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/video_server.dir/api/api_login.cc.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/video_server.dir/api/api_login.cc.o -c /home/hcc/share/code/code/backend/video_/api/api_login.cc
 
 CMakeFiles/video_server.dir/api/api_login.cc.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/video_server.dir/api/api_login.cc.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/hcc/share/code/project/code/backend/video_/api/api_login.cc > CMakeFiles/video_server.dir/api/api_login.cc.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/hcc/share/code/code/backend/video_/api/api_login.cc > CMakeFiles/video_server.dir/api/api_login.cc.i
 
 CMakeFiles/video_server.dir/api/api_login.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/video_server.dir/api/api_login.cc.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/hcc/share/code/project/code/backend/video_/api/api_login.cc -o CMakeFiles/video_server.dir/api/api_login.cc.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/hcc/share/code/code/backend/video_/api/api_login.cc -o CMakeFiles/video_server.dir/api/api_login.cc.s
 
 CMakeFiles/video_server.dir/api/api_register.cc.o: CMakeFiles/video_server.dir/flags.make
 CMakeFiles/video_server.dir/api/api_register.cc.o: ../api/api_register.cc
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/hcc/share/code/project/code/backend/video_/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object CMakeFiles/video_server.dir/api/api_register.cc.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/video_server.dir/api/api_register.cc.o -c /home/hcc/share/code/project/code/backend/video_/api/api_register.cc
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/hcc/share/code/code/backend/video_/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object CMakeFiles/video_server.dir/api/api_register.cc.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/video_server.dir/api/api_register.cc.o -c /home/hcc/share/code/code/backend/video_/api/api_register.cc
 
 CMakeFiles/video_server.dir/api/api_register.cc.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/video_server.dir/api/api_register.cc.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/hcc/share/code/project/code/backend/video_/api/api_register.cc > CMakeFiles/video_server.dir/api/api_register.cc.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/hcc/share/code/code/backend/video_/api/api_register.cc > CMakeFiles/video_server.dir/api/api_register.cc.i
 
 CMakeFiles/video_server.dir/api/api_register.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/video_server.dir/api/api_register.cc.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/hcc/share/code/project/code/backend/video_/api/api_register.cc -o CMakeFiles/video_server.dir/api/api_register.cc.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/hcc/share/code/code/backend/video_/api/api_register.cc -o CMakeFiles/video_server.dir/api/api_register.cc.s
 
 CMakeFiles/video_server.dir/api/api_update_user_history.cc.o: CMakeFiles/video_server.dir/flags.make
 CMakeFiles/video_server.dir/api/api_update_user_history.cc.o: ../api/api_update_user_history.cc
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/hcc/share/code/project/code/backend/video_/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building CXX object CMakeFiles/video_server.dir/api/api_update_user_history.cc.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/video_server.dir/api/api_update_user_history.cc.o -c /home/hcc/share/code/project/code/backend/video_/api/api_update_user_history.cc
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/hcc/share/code/code/backend/video_/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building CXX object CMakeFiles/video_server.dir/api/api_update_user_history.cc.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/video_server.dir/api/api_update_user_history.cc.o -c /home/hcc/share/code/code/backend/video_/api/api_update_user_history.cc
 
 CMakeFiles/video_server.dir/api/api_update_user_history.cc.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/video_server.dir/api/api_update_user_history.cc.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/hcc/share/code/project/code/backend/video_/api/api_update_user_history.cc > CMakeFiles/video_server.dir/api/api_update_user_history.cc.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/hcc/share/code/code/backend/video_/api/api_update_user_history.cc > CMakeFiles/video_server.dir/api/api_update_user_history.cc.i
 
 CMakeFiles/video_server.dir/api/api_update_user_history.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/video_server.dir/api/api_update_user_history.cc.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/hcc/share/code/project/code/backend/video_/api/api_update_user_history.cc -o CMakeFiles/video_server.dir/api/api_update_user_history.cc.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/hcc/share/code/code/backend/video_/api/api_update_user_history.cc -o CMakeFiles/video_server.dir/api/api_update_user_history.cc.s
 
 CMakeFiles/video_server.dir/api/api_user_info.cc.o: CMakeFiles/video_server.dir/flags.make
 CMakeFiles/video_server.dir/api/api_user_info.cc.o: ../api/api_user_info.cc
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/hcc/share/code/project/code/backend/video_/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Building CXX object CMakeFiles/video_server.dir/api/api_user_info.cc.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/video_server.dir/api/api_user_info.cc.o -c /home/hcc/share/code/project/code/backend/video_/api/api_user_info.cc
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/hcc/share/code/code/backend/video_/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Building CXX object CMakeFiles/video_server.dir/api/api_user_info.cc.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/video_server.dir/api/api_user_info.cc.o -c /home/hcc/share/code/code/backend/video_/api/api_user_info.cc
 
 CMakeFiles/video_server.dir/api/api_user_info.cc.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/video_server.dir/api/api_user_info.cc.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/hcc/share/code/project/code/backend/video_/api/api_user_info.cc > CMakeFiles/video_server.dir/api/api_user_info.cc.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/hcc/share/code/code/backend/video_/api/api_user_info.cc > CMakeFiles/video_server.dir/api/api_user_info.cc.i
 
 CMakeFiles/video_server.dir/api/api_user_info.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/video_server.dir/api/api_user_info.cc.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/hcc/share/code/project/code/backend/video_/api/api_user_info.cc -o CMakeFiles/video_server.dir/api/api_user_info.cc.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/hcc/share/code/code/backend/video_/api/api_user_info.cc -o CMakeFiles/video_server.dir/api/api_user_info.cc.s
 
 CMakeFiles/video_server.dir/api/api_search.cc.o: CMakeFiles/video_server.dir/flags.make
 CMakeFiles/video_server.dir/api/api_search.cc.o: ../api/api_search.cc
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/hcc/share/code/project/code/backend/video_/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Building CXX object CMakeFiles/video_server.dir/api/api_search.cc.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/video_server.dir/api/api_search.cc.o -c /home/hcc/share/code/project/code/backend/video_/api/api_search.cc
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/hcc/share/code/code/backend/video_/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Building CXX object CMakeFiles/video_server.dir/api/api_search.cc.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/video_server.dir/api/api_search.cc.o -c /home/hcc/share/code/code/backend/video_/api/api_search.cc
 
 CMakeFiles/video_server.dir/api/api_search.cc.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/video_server.dir/api/api_search.cc.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/hcc/share/code/project/code/backend/video_/api/api_search.cc > CMakeFiles/video_server.dir/api/api_search.cc.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/hcc/share/code/code/backend/video_/api/api_search.cc > CMakeFiles/video_server.dir/api/api_search.cc.i
 
 CMakeFiles/video_server.dir/api/api_search.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/video_server.dir/api/api_search.cc.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/hcc/share/code/project/code/backend/video_/api/api_search.cc -o CMakeFiles/video_server.dir/api/api_search.cc.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/hcc/share/code/code/backend/video_/api/api_search.cc -o CMakeFiles/video_server.dir/api/api_search.cc.s
 
 CMakeFiles/video_server.dir/api/api_search_log.cc.o: CMakeFiles/video_server.dir/flags.make
 CMakeFiles/video_server.dir/api/api_search_log.cc.o: ../api/api_search_log.cc
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/hcc/share/code/project/code/backend/video_/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Building CXX object CMakeFiles/video_server.dir/api/api_search_log.cc.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/video_server.dir/api/api_search_log.cc.o -c /home/hcc/share/code/project/code/backend/video_/api/api_search_log.cc
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/hcc/share/code/code/backend/video_/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Building CXX object CMakeFiles/video_server.dir/api/api_search_log.cc.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/video_server.dir/api/api_search_log.cc.o -c /home/hcc/share/code/code/backend/video_/api/api_search_log.cc
 
 CMakeFiles/video_server.dir/api/api_search_log.cc.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/video_server.dir/api/api_search_log.cc.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/hcc/share/code/project/code/backend/video_/api/api_search_log.cc > CMakeFiles/video_server.dir/api/api_search_log.cc.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/hcc/share/code/code/backend/video_/api/api_search_log.cc > CMakeFiles/video_server.dir/api/api_search_log.cc.i
 
 CMakeFiles/video_server.dir/api/api_search_log.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/video_server.dir/api/api_search_log.cc.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/hcc/share/code/project/code/backend/video_/api/api_search_log.cc -o CMakeFiles/video_server.dir/api/api_search_log.cc.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/hcc/share/code/code/backend/video_/api/api_search_log.cc -o CMakeFiles/video_server.dir/api/api_search_log.cc.s
 
 CMakeFiles/video_server.dir/api/api_get_search_log.cc.o: CMakeFiles/video_server.dir/flags.make
 CMakeFiles/video_server.dir/api/api_get_search_log.cc.o: ../api/api_get_search_log.cc
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/hcc/share/code/project/code/backend/video_/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Building CXX object CMakeFiles/video_server.dir/api/api_get_search_log.cc.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/video_server.dir/api/api_get_search_log.cc.o -c /home/hcc/share/code/project/code/backend/video_/api/api_get_search_log.cc
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/hcc/share/code/code/backend/video_/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Building CXX object CMakeFiles/video_server.dir/api/api_get_search_log.cc.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/video_server.dir/api/api_get_search_log.cc.o -c /home/hcc/share/code/code/backend/video_/api/api_get_search_log.cc
 
 CMakeFiles/video_server.dir/api/api_get_search_log.cc.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/video_server.dir/api/api_get_search_log.cc.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/hcc/share/code/project/code/backend/video_/api/api_get_search_log.cc > CMakeFiles/video_server.dir/api/api_get_search_log.cc.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/hcc/share/code/code/backend/video_/api/api_get_search_log.cc > CMakeFiles/video_server.dir/api/api_get_search_log.cc.i
 
 CMakeFiles/video_server.dir/api/api_get_search_log.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/video_server.dir/api/api_get_search_log.cc.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/hcc/share/code/project/code/backend/video_/api/api_get_search_log.cc -o CMakeFiles/video_server.dir/api/api_get_search_log.cc.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/hcc/share/code/code/backend/video_/api/api_get_search_log.cc -o CMakeFiles/video_server.dir/api/api_get_search_log.cc.s
 
 CMakeFiles/video_server.dir/base/py_script.cc.o: CMakeFiles/video_server.dir/flags.make
 CMakeFiles/video_server.dir/base/py_script.cc.o: ../base/py_script.cc
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/hcc/share/code/project/code/backend/video_/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_18) "Building CXX object CMakeFiles/video_server.dir/base/py_script.cc.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/video_server.dir/base/py_script.cc.o -c /home/hcc/share/code/project/code/backend/video_/base/py_script.cc
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/hcc/share/code/code/backend/video_/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_18) "Building CXX object CMakeFiles/video_server.dir/base/py_script.cc.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/video_server.dir/base/py_script.cc.o -c /home/hcc/share/code/code/backend/video_/base/py_script.cc
 
 CMakeFiles/video_server.dir/base/py_script.cc.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/video_server.dir/base/py_script.cc.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/hcc/share/code/project/code/backend/video_/base/py_script.cc > CMakeFiles/video_server.dir/base/py_script.cc.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/hcc/share/code/code/backend/video_/base/py_script.cc > CMakeFiles/video_server.dir/base/py_script.cc.i
 
 CMakeFiles/video_server.dir/base/py_script.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/video_server.dir/base/py_script.cc.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/hcc/share/code/project/code/backend/video_/base/py_script.cc -o CMakeFiles/video_server.dir/base/py_script.cc.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/hcc/share/code/code/backend/video_/base/py_script.cc -o CMakeFiles/video_server.dir/base/py_script.cc.s
 
 CMakeFiles/video_server.dir/api/api_list_loop.cc.o: CMakeFiles/video_server.dir/flags.make
 CMakeFiles/video_server.dir/api/api_list_loop.cc.o: ../api/api_list_loop.cc
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/hcc/share/code/project/code/backend/video_/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_19) "Building CXX object CMakeFiles/video_server.dir/api/api_list_loop.cc.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/video_server.dir/api/api_list_loop.cc.o -c /home/hcc/share/code/project/code/backend/video_/api/api_list_loop.cc
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/hcc/share/code/code/backend/video_/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_19) "Building CXX object CMakeFiles/video_server.dir/api/api_list_loop.cc.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/video_server.dir/api/api_list_loop.cc.o -c /home/hcc/share/code/code/backend/video_/api/api_list_loop.cc
 
 CMakeFiles/video_server.dir/api/api_list_loop.cc.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/video_server.dir/api/api_list_loop.cc.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/hcc/share/code/project/code/backend/video_/api/api_list_loop.cc > CMakeFiles/video_server.dir/api/api_list_loop.cc.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/hcc/share/code/code/backend/video_/api/api_list_loop.cc > CMakeFiles/video_server.dir/api/api_list_loop.cc.i
 
 CMakeFiles/video_server.dir/api/api_list_loop.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/video_server.dir/api/api_list_loop.cc.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/hcc/share/code/project/code/backend/video_/api/api_list_loop.cc -o CMakeFiles/video_server.dir/api/api_list_loop.cc.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/hcc/share/code/code/backend/video_/api/api_list_loop.cc -o CMakeFiles/video_server.dir/api/api_list_loop.cc.s
 
 CMakeFiles/video_server.dir/api/api_analysis_messages.cc.o: CMakeFiles/video_server.dir/flags.make
 CMakeFiles/video_server.dir/api/api_analysis_messages.cc.o: ../api/api_analysis_messages.cc
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/hcc/share/code/project/code/backend/video_/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_20) "Building CXX object CMakeFiles/video_server.dir/api/api_analysis_messages.cc.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/video_server.dir/api/api_analysis_messages.cc.o -c /home/hcc/share/code/project/code/backend/video_/api/api_analysis_messages.cc
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/hcc/share/code/code/backend/video_/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_20) "Building CXX object CMakeFiles/video_server.dir/api/api_analysis_messages.cc.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/video_server.dir/api/api_analysis_messages.cc.o -c /home/hcc/share/code/code/backend/video_/api/api_analysis_messages.cc
 
 CMakeFiles/video_server.dir/api/api_analysis_messages.cc.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/video_server.dir/api/api_analysis_messages.cc.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/hcc/share/code/project/code/backend/video_/api/api_analysis_messages.cc > CMakeFiles/video_server.dir/api/api_analysis_messages.cc.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/hcc/share/code/code/backend/video_/api/api_analysis_messages.cc > CMakeFiles/video_server.dir/api/api_analysis_messages.cc.i
 
 CMakeFiles/video_server.dir/api/api_analysis_messages.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/video_server.dir/api/api_analysis_messages.cc.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/hcc/share/code/project/code/backend/video_/api/api_analysis_messages.cc -o CMakeFiles/video_server.dir/api/api_analysis_messages.cc.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/hcc/share/code/code/backend/video_/api/api_analysis_messages.cc -o CMakeFiles/video_server.dir/api/api_analysis_messages.cc.s
+
+CMakeFiles/video_server.dir/base/thread_pool.cc.o: CMakeFiles/video_server.dir/flags.make
+CMakeFiles/video_server.dir/base/thread_pool.cc.o: ../base/thread_pool.cc
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/hcc/share/code/code/backend/video_/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_21) "Building CXX object CMakeFiles/video_server.dir/base/thread_pool.cc.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/video_server.dir/base/thread_pool.cc.o -c /home/hcc/share/code/code/backend/video_/base/thread_pool.cc
+
+CMakeFiles/video_server.dir/base/thread_pool.cc.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/video_server.dir/base/thread_pool.cc.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/hcc/share/code/code/backend/video_/base/thread_pool.cc > CMakeFiles/video_server.dir/base/thread_pool.cc.i
+
+CMakeFiles/video_server.dir/base/thread_pool.cc.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/video_server.dir/base/thread_pool.cc.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/hcc/share/code/code/backend/video_/base/thread_pool.cc -o CMakeFiles/video_server.dir/base/thread_pool.cc.s
 
 # Object files for target video_server
 video_server_OBJECTS = \
@@ -338,7 +351,8 @@ video_server_OBJECTS = \
 "CMakeFiles/video_server.dir/api/api_get_search_log.cc.o" \
 "CMakeFiles/video_server.dir/base/py_script.cc.o" \
 "CMakeFiles/video_server.dir/api/api_list_loop.cc.o" \
-"CMakeFiles/video_server.dir/api/api_analysis_messages.cc.o"
+"CMakeFiles/video_server.dir/api/api_analysis_messages.cc.o" \
+"CMakeFiles/video_server.dir/base/thread_pool.cc.o"
 
 # External object files for target video_server
 video_server_EXTERNAL_OBJECTS =
@@ -363,9 +377,10 @@ video_server: CMakeFiles/video_server.dir/api/api_get_search_log.cc.o
 video_server: CMakeFiles/video_server.dir/base/py_script.cc.o
 video_server: CMakeFiles/video_server.dir/api/api_list_loop.cc.o
 video_server: CMakeFiles/video_server.dir/api/api_analysis_messages.cc.o
+video_server: CMakeFiles/video_server.dir/base/thread_pool.cc.o
 video_server: CMakeFiles/video_server.dir/build.make
 video_server: CMakeFiles/video_server.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/hcc/share/code/project/code/backend/video_/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_21) "Linking CXX executable video_server"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/hcc/share/code/code/backend/video_/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_22) "Linking CXX executable video_server"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/video_server.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -378,6 +393,6 @@ CMakeFiles/video_server.dir/clean:
 .PHONY : CMakeFiles/video_server.dir/clean
 
 CMakeFiles/video_server.dir/depend:
-	cd /home/hcc/share/code/project/code/backend/video_/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/hcc/share/code/project/code/backend/video_ /home/hcc/share/code/project/code/backend/video_ /home/hcc/share/code/project/code/backend/video_/build /home/hcc/share/code/project/code/backend/video_/build /home/hcc/share/code/project/code/backend/video_/build/CMakeFiles/video_server.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/hcc/share/code/code/backend/video_/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/hcc/share/code/code/backend/video_ /home/hcc/share/code/code/backend/video_ /home/hcc/share/code/code/backend/video_/build /home/hcc/share/code/code/backend/video_/build /home/hcc/share/code/code/backend/video_/build/CMakeFiles/video_server.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/video_server.dir/depend
 

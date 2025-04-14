@@ -48,10 +48,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/hcc/share/code/project/code/backend/video_
+CMAKE_SOURCE_DIR = /home/hcc/share/code/code/backend/video_
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/hcc/share/code/project/code/backend/video_/build
+CMAKE_BINARY_DIR = /home/hcc/share/code/code/backend/video_/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -80,9 +80,9 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/hcc/share/code/project/code/backend/video_/build/CMakeFiles /home/hcc/share/code/project/code/backend/video_/build/CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/hcc/share/code/code/backend/video_/build/CMakeFiles /home/hcc/share/code/code/backend/video_/build/CMakeFiles/progress.marks
 	$(MAKE) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/hcc/share/code/project/code/backend/video_/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/hcc/share/code/code/backend/video_/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -636,6 +636,33 @@ base/py_script.cc.s:
 	$(MAKE) -f CMakeFiles/video_server.dir/build.make CMakeFiles/video_server.dir/base/py_script.cc.s
 .PHONY : base/py_script.cc.s
 
+base/thread_pool.o: base/thread_pool.cc.o
+
+.PHONY : base/thread_pool.o
+
+# target to build an object file
+base/thread_pool.cc.o:
+	$(MAKE) -f CMakeFiles/video_server.dir/build.make CMakeFiles/video_server.dir/base/thread_pool.cc.o
+.PHONY : base/thread_pool.cc.o
+
+base/thread_pool.i: base/thread_pool.cc.i
+
+.PHONY : base/thread_pool.i
+
+# target to preprocess a source file
+base/thread_pool.cc.i:
+	$(MAKE) -f CMakeFiles/video_server.dir/build.make CMakeFiles/video_server.dir/base/thread_pool.cc.i
+.PHONY : base/thread_pool.cc.i
+
+base/thread_pool.s: base/thread_pool.cc.s
+
+.PHONY : base/thread_pool.s
+
+# target to generate assembly for a file
+base/thread_pool.cc.s:
+	$(MAKE) -f CMakeFiles/video_server.dir/build.make CMakeFiles/video_server.dir/base/thread_pool.cc.s
+.PHONY : base/thread_pool.cc.s
+
 main.o: main.cc.o
 
 .PHONY : main.o
@@ -729,6 +756,9 @@ help:
 	@echo "... base/py_script.o"
 	@echo "... base/py_script.i"
 	@echo "... base/py_script.s"
+	@echo "... base/thread_pool.o"
+	@echo "... base/thread_pool.i"
+	@echo "... base/thread_pool.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"

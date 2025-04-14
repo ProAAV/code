@@ -1,8 +1,15 @@
 #include"api_search_log.h"
 #include<iostream>
 #include<json/json.h>
-void apiSearchLog(char* wbuf,int wbuf_sz,struct mg_http_message hm,ConfRead& conf_reader){
+#include"../base/common.h"
+void apiSearchLog(void* args){
     std::cout<<"enter apiSearchLog\n";
+    ApiFuncArgs* ags=(ApiFuncArgs*)args;
+    char* wbuf=ags->wbuf;
+    int wbuf_sz=ags->wbuf_sz;
+    struct mg_http_message hm=ags->hm;
+    ConfRead conf_reader=*ags->conf_reader;
+
     std::string method(hm.method.buf,hm.method.len);
     if(method!="POST"){
         std::cout<<"apiSearchLog error ,the method is not POST\n";

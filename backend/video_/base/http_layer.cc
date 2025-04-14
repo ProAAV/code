@@ -32,43 +32,48 @@ std::string HttpServer::http_get_url(){
     return real_url;
 }
 
-void HttpServer::http_route_url(char* wbuf,int wbuf_sz){
+
+void HttpServer::http_route_url(char* wbuf,int wbuf_sz,thread_pool_t* thread_pool){
     //作为路由，url决定调用具体的函数
     std::string url=http_get_url();
-    
+    ApiFuncArgs* args=new ApiFuncArgs;
+    args->conf_reader=&m_conf_reader;
+    args->hm=m_http_msg;
+    args->wbuf=wbuf;
+    args->wbuf_sz=wbuf_sz;
     if(url=="/api/upload"){
-        apiUpload(wbuf,wbuf_sz,m_http_msg,m_conf_reader);
+        apiUpload(args);
     }
     else if(url=="/api/filesList"){
-        apiFilesList(wbuf,wbuf_sz,m_http_msg,m_conf_reader);
+        apiFilesList(args);
     }
     else if(url=="/api/login"){
-        apiLogin(wbuf,wbuf_sz,m_http_msg,m_conf_reader);
+        apiLogin(args);
     }
     else if(url=="/api/register"){
-        apiRegister(wbuf,wbuf_sz,m_http_msg,m_conf_reader);
+        apiRegister(args);
     }
     else if(url=="/api/uphistory"){
         std::cout<<"url==/api/uphistory\n";
-        apiHandleUpdateUserHistory(wbuf,wbuf_sz,m_http_msg,m_conf_reader);
+        apiHandleUpdateUserHistory(args);
     }
     else if(url=="/api/userinfo"){
-        apiUserInfo(wbuf,wbuf_sz,m_http_msg,m_conf_reader);
+        apiUserInfo(args);
     }
     else if(url=="/api/searchlog"){
-        apiSearchLog(wbuf,wbuf_sz,m_http_msg,m_conf_reader);
+        apiSearchLog(args);
     }
     else if(url=="/api/search"){
-        apiSearch(wbuf,wbuf_sz,m_http_msg,m_conf_reader);
+        apiSearch(args);
     }
     else if(url=="/api/getsearchlog"){
-        apiGetSearchLog(wbuf,wbuf_sz,m_http_msg,m_conf_reader);
+        apiGetSearchLog(args);
     }
     else if(url=="/api/listloop"){
-        apiListLoop(wbuf,wbuf_sz,m_http_msg,m_conf_reader);
+        apiListLoop(args);
     }
     else if(url=="/api/analysismessages"){
-        apiAnalysisMessages(wbuf,wbuf_sz,m_http_msg,m_conf_reader);
+        apiAnalysisMessages(args);
     }
 
 }

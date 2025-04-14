@@ -13,6 +13,7 @@ SOURCES += \
     aav_main_view.cpp \
     aav_networkmanager.cpp \
     aav_networkthread.cpp \
+    aav_totips.cpp \
     aav_uploadfile.cpp \
     aav_uploadselect.cpp \
     aav_userlogin.cpp \
@@ -33,6 +34,7 @@ HEADERS += \
     aav_main_view.h \
     aav_networkmanager.h \
     aav_networkthread.h \
+    aav_totips.h \
     aav_uploadfile.h \
     aav_uploadselect.h \
     aav_userlogin.h \
@@ -49,6 +51,7 @@ HEADERS += \
 
 FORMS += \
     aav_main_view.ui \
+    aav_totips.ui \
     aav_uploadfile.ui \
     aav_uploadselect.ui \
     aav_userlogin.ui \

@@ -167,7 +167,11 @@ std::string PyScript::pyscrpt_audio_interface(const std::string& audio_file_path
 std::string PyScript::pyscrpt_video_interface(const std::string& video_file_path){
         try {
             // 获取当前工作目录并添加到 sys.path
-            std::string prompt="结合文字、图图像等内容，认识别角色的情感状态和情感变化。并且按照左上角红色时间戳的HH:MM:SS组织时间,时间形式为**xx:xx:xx - xx:xx:xx**";
+            //std::string prompt="结合文字、图图像等内容，认识别角色的情感状态和情感变化。并且按照左上角红色时间戳的HH:MM:SS组织时间,时间形式为**xx:xx:xx - xx:xx:xx**";
+            std::string prompt="结合文字、图图像等内容，认识别角色的情感状态和情感变化。并且按照左上角红色时间戳的HH:MM:SS组织时间,按照'1. **00:00:00 - 00:00:43**\
+            - 用户打开Corel VideoStudio X10软件，并选择了一个项目文件。\
+            - 界面显示了多个素材窗口，用户在其中浏览并选择了几个视频和图片素材。\
+            - 时间戳显示从00:00:00到00:00:43，期间用户主要是在浏览和选择素材。'这样的格式来返回结果";
             char cwd[1024];
             if (getcwd(cwd, sizeof(cwd)) == nullptr) {
                 throw std::runtime_error("Failed to get current working directory.");

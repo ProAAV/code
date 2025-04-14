@@ -34,7 +34,9 @@ UserLoginAndRegis::UserLoginAndRegis(QWidget *parent) :
     connect(btn_login,&QPushButton::clicked,this,&UserLoginAndRegis::sloHandleLoginBtn);
 
     connect(btn_register,&QPushButton::clicked,this,&UserLoginAndRegis::sloHandleRegisterBtn);
-
+    connect(m_register_wid,&UserRegister::sigRegisterSuccess,this,[=](){
+        m_stack_widget->setCurrentWidget(m_login_wid);
+    });
 
 }
 void UserLoginAndRegis::sloHandleLoginBtn(){

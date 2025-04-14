@@ -3,7 +3,9 @@
 #include<stdlib.h>
 #include<string.h>
 #include<fstream>
+#include<thread>
 #include<json/json.h>
+#include"../base/common.h"
 #include"fdfs_client.h"
 #include"tracker_client.h"
 #include"../base/config_read.h"
@@ -55,9 +57,15 @@ void upload_responFailed(char* wbuf,int wbuf_sz){
     }
     memcpy(wbuf,response.c_str(),response.size());
 }
-void apiUpload(char* wbuf,int wbuf_sz,struct mg_http_message hm,ConfRead& conf_reader){
+void apiUpload(void* args){
     std::cout<<"enter upload api\n";
     //文件信息是由我们自己根据http请求体发送来的表单字段解析得到的
+    ApiFuncArgs* ags=(ApiFuncArgs*)args;
+    char* wbuf=ags->wbuf;
+    int wbuf_sz=ags->wbuf_sz;
+    struct mg_http_message hm=ags->hm;
+    ConfRead conf_reader=*ags->conf_reader;
+    
     CfileInfo file_info{};
     struct mg_str* content_type=mg_http_get_header(&hm,"content-type");
     std::string ct(content_type->buf,content_type->len);
@@ -242,21 +250,28 @@ int uploadHandleFileTLS(CfileInfo& file_info,ConfRead& conf_reader){
     bool is_audio;
     generateCoverPic(file_info,conf_reader,is_audio);
     //先判断文件中有无视频流，如果没有就直接判定为音频流，那么就可以调用py接口分析标签,可以考虑异步执行
+    std::cout<<"out generateCoverPic\n";
     if(is_audio){
 
-        PyScript pyscript{};
+        /*PyScript pyscript{};
         pyscript.pyscrpt_init();
         std::string strr=pyscript.pyscrpt_audio_interface(file_path);
         upload_extract_file_features(strr);
-        std::cout<<"pyscrpt_audio_interface----------\n";
+        std::cout<<"pyscrpt_audio_interface----------\n";*/
+        std::thread thrd(audio_py_update,file_info);
+        thrd.detach();
+        //audio_py_update(file_path);
     }
     else if(!is_audio){
-        PyScript pyscript{};
+        /*PyScript pyscript{};
         pyscript.pyscrpt_init();
         video_analysis_message=pyscript.pyscrpt_video_interface(file_path);
 
         //upload_video_extract_analysis(strr);
-        std::cout<<"pyscrpt_video_interface----------\n";
+        std::cout<<"pyscrpt_video_interface----------\n";*/
+        std::thread thrd(video_py_update,file_info);
+        thrd.detach();
+        //video_py_update(file_path);
     }
     //上传文件到fastdfs中
     std::cout<<"enter uploadHandleFileTLS\n";
@@ -266,6 +281,33 @@ int uploadHandleFileTLS(CfileInfo& file_info,ConfRead& conf_reader){
     }
     return 0;
 
+}
+void audio_py_update(CfileInfo file_info){
+    std::string file_path=file_info.getFileInfoMap().at("file_path");
+    std::string file_md5=file_info.getFileInfoMap().at("file_md5");
+    PyScript pyscript{};
+    pyscript.pyscrpt_init();
+    std::string strr=pyscript.pyscrpt_audio_interface(file_path);
+    upload_extract_file_features(strr);
+    char sql[512]={0};
+    sprintf(sql,"update aav_file_info set file_feature_1='%s',file_feature_2='%s',file_feature_3='%s',file_feature_4='%s',file_feature_5='%s' where file_md5='%s'",vec_file_features[0].c_str(),vec_file_features[1].c_str(),vec_file_features[2].c_str(),vec_file_features[3].c_str(),vec_file_features[4].c_str(),file_md5.c_str());
+    std::cout<<"sqll:"<<sql<<'\n';
+    MysqlConn conn{};
+    conn.mysqlQuery(sql);
+    std::cout<<"pyscrpt_audio_interface----------\n";
+}
+void video_py_update(CfileInfo file_info){
+    std::string file_path=file_info.getFileInfoMap().at("file_path");
+    std::string file_md5=file_info.getFileInfoMap().at("file_md5");
+    PyScript pyscript{};
+    pyscript.pyscrpt_init();
+    video_analysis_message=pyscript.pyscrpt_video_interface(file_path);
+    char sql[8192]={0};
+    sprintf(sql,"update aav_video_descrpt set message='%s'where file_md5='%s'",video_analysis_message.c_str(),file_md5.c_str());
+    MysqlConn conn{};
+    conn.mysqlQuery(sql);
+    //upload_video_extract_analysis(strr);
+    std::cout<<"pyscrpt_video_interface----------\n";
 }
 void upload_extract_file_features(std::string str){
     std::cout<<"enter upload_extract_file_features\n";
@@ -283,9 +325,10 @@ void upload_extract_file_features(std::string str){
     do{
         pos=str.find(",",s_pos);
         std::string feature=str.substr(s_pos,pos-s_pos);
+        std::cout<<"s_pos:"<<s_pos<<" "<<"pos-s_pos:"<<pos-s_pos<<"\n";
         std::cout<<"str_tags:"<<feature<<'\n';
         vec_file_features.push_back(feature);
-        s_pos=pos+2;
+        s_pos=pos+1;
     }while(pos!=std::string::npos);
     
     std::cout<<"end upload_extract_file_features\n";
@@ -645,14 +688,14 @@ int uploadFileToFastdfs(CfileInfo& file_info,ConfRead& conf_reader,const bool& i
     //得到数据之后更新aav_file_info这张表
     char query[512];
     MysqlConn conn{};
-    if(vec_file_features.size()!=5&&is_audio){
+    /*if(vec_file_features.size()!=5&&is_audio){
         std::cout<<"vec_file_features size:"<<vec_file_features.size()<<'\n';
         for(auto i:vec_file_features){
             std::cout<<"feature:"<<i<<'\n';
         }
         std::cout<<"vec_file_features.size()!=5\n";
         return 1;
-    }
+    }*/
     std::string file_type;
     if(is_audio){
         //"0"表示音频文件
@@ -665,19 +708,26 @@ int uploadFileToFastdfs(CfileInfo& file_info,ConfRead& conf_reader,const bool& i
     }
     else{
         file_type="1";
-        for(int i=0;i<5;i++)vec_file_features.push_back("");
+        
     }
-    sprintf(query,"insert into `aav_file_info` (file_path,file_md5,file_size,file_playback_duration,file_image_path,file_feature_1,file_feature_2,file_feature_3,file_feature_4,file_feature_5,file_type) value('%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s')",update_file_path.c_str(),update_file_md5.c_str(),update_file_size.c_str(),update_file_playback_duration.c_str(),update_file_image_path.c_str(),vec_file_features[0].c_str(),vec_file_features[1].c_str(),vec_file_features[2].c_str(),vec_file_features[3].c_str(),vec_file_features[4].c_str(),file_type.c_str());
+    //vec_file_features.clear();
+    //for(int i=0;i<5;i++)vec_file_features.push_back("");
+    //sprintf(query,"insert into `aav_file_info` (file_path,file_md5,file_size,file_playback_duration,file_image_path,file_feature_1,file_feature_2,file_feature_3,file_feature_4,file_feature_5,file_type) value('%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s')",update_file_path.c_str(),update_file_md5.c_str(),update_file_size.c_str(),update_file_playback_duration.c_str(),update_file_image_path.c_str(),vec_file_features[0].c_str(),vec_file_features[1].c_str(),vec_file_features[2].c_str(),vec_file_features[3].c_str(),vec_file_features[4].c_str(),file_type.c_str());
+    sprintf(query,"insert into `aav_file_info` (file_path,file_md5,file_size,file_playback_duration,file_image_path,file_feature_1,file_feature_2,file_feature_3,file_feature_4,file_feature_5,file_type) value('%s','%s','%s','%s','%s','','','','','','%s')",update_file_path.c_str(),update_file_md5.c_str(),update_file_size.c_str(),update_file_playback_duration.c_str(),update_file_image_path.c_str(),file_type.c_str());
+
     std::cout<<"query::::"<<query<<"\n";
     
     conn.mysqlQuery(query);
     //更新aav_video_descrpt这张表，将视频文件的描述插入
     std::string username=file_info.getFileInfoMap().at("username");
-    std::string sstr=upload_video_extract_analysis(video_analysis_message);
-    std::cout<<"sstr-----------======:"<<sstr<<std::endl;
-    sprintf(query,"insert into aav_video_descrpt (username,file_md5,message) value('%s','%s','%s')",username.c_str(),update_file_md5.c_str(),sstr.c_str());
-    std::cout<<"analysis query:"<<query<<std::endl;
-    conn.mysqlQuery(query);
+    //std::string sstr=upload_video_extract_analysis(video_analysis_message);
+    if(!is_audio){
+        std::string sstr="";
+        std::cout<<"sstr-----------======:"<<sstr<<std::endl;
+        sprintf(query,"insert into aav_video_descrpt (username,file_md5,message) value('%s','%s','%s')",username.c_str(),update_file_md5.c_str(),sstr.c_str());
+        std::cout<<"analysis query:"<<query<<std::endl;
+        conn.mysqlQuery(query);
+    }
 
     //之后更新aav_user_file这张表
     

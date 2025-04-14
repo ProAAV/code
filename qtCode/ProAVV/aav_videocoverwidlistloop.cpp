@@ -28,7 +28,8 @@ VideoCoverWidListLoop::VideoCoverWidListLoop(QWidget *parent) :
 
     hlayout->addWidget(lab_cover_img);
     hlayout->addLayout(vlayout);
-
+    hlayout->setStretchFactor(lab_cover_img,5);
+    hlayout->setStretchFactor(vlayout,3);
     this->setLayout(hlayout);
 
 }
@@ -45,6 +46,7 @@ void VideoCoverWidListLoop::showCover()
     if(m_file_img_path=="null"){
         qDebug()<<"file_img_path is null";
         //如果图片是空，那么直接使用qt自定义的一张图片展示封面
+        lab_cover_img->resize(500,500);
         QPixmap pix_(":/aa7243c933094e26b927243ee7e2856f.png");
         lab_cover_img->setPixmap(pix_.scaled(lab_cover_img->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation));
         lab_cover_img->setAlignment(Qt::AlignCenter);

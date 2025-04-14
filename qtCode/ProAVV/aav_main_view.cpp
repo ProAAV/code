@@ -11,9 +11,14 @@
 #include"aav_usermanager.h"
 #include"aav_networkthread.h"
 #include<QSpacerItem>
-MainView::MainView(QWidget *parent)
+#include<QMenu>
+#include<QFile>
+#include<QAction>
+#include <QStyle>
+#include <QScreen>
+MainView::MainView(QApplication* app,QWidget *parent)
     : QWidget(parent)
-    , ui(new Ui::MainView),status_is_search{false}
+    , ui(new Ui::MainView),status_is_search{false},m_app{app}
 {
     ui->setupUi(this);
     m_wid_upload_select=nullptr;
@@ -29,9 +34,14 @@ MainView::MainView(QWidget *parent)
 
 
     m_userpage=new UsrPage(this);
-    QWidget* video_page_wid=new QWidget(this);
 
+    QWidget* video_page_wid=new QWidget(this);
+    video_page_wid->setObjectName("video_page_wid");
+    connect(m_userpage,&UsrPage::sigLoginOut,this,[=](){
+        ui->stackw->setCurrentWidget(video_page_wid);
+    });
     VideoList* video_list_wid=new VideoList(0,video_page_wid);
+    video_list_wid->setObjectName("video_list_wid");
     m_search_video_lists=new VideoList(3,video_page_wid);
 
 
@@ -183,7 +193,18 @@ MainView::MainView(QWidget *parent)
         if(!m_wid_upload_select)m_wid_upload_select=new UploadSelect();
         m_wid_upload_select->show();
     });
+    //为设置按钮添加动作
+    menu_set=new QMenu(ui->btn_set);
+    act_theme_01=new QAction(this);
+    act_theme_01->setText("浅色主题");
+    menu_set->addAction(act_theme_01);
+    act_theme_02=new QAction(this);
+    act_theme_02->setText("深色主题");
+    menu_set->addAction(act_theme_02);
+    ui->btn_set->setMenu(menu_set);
 
+    connect(act_theme_01,&QAction::triggered,this,&MainView::sloSetTheme01);
+    connect(act_theme_02,&QAction::triggered,this,&MainView::sloSetTheme02);
 
 }
 
@@ -247,4 +268,24 @@ void MainView::sloBtnSearch()
         thread2->deleteLater();
     });
     status_is_search=true;
+}
+//设置深色主题
+void MainView::sloSetTheme02()
+{
+    QFile file(":/01_theme.qss");
+    if (file.open(QFile::ReadOnly)) {
+        QString styleSheet = QLatin1String(file.readAll());
+        m_app->setStyleSheet(styleSheet);
+        file.close();
+    }
+}
+//设置浅色主题
+void MainView::sloSetTheme01()
+{
+    QFile file(":/02_theme.qss");
+    if (file.open(QFile::ReadOnly)) {
+        QString styleSheet = QLatin1String(file.readAll());
+        m_app->setStyleSheet(styleSheet);
+        file.close();
+    }
 }

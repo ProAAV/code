@@ -4,6 +4,7 @@
 #include<sys/epoll.h>
 #include<vector>
 #include"config_read.h"
+#include"thread_pool.h"
 #define EPOLL_EVENTS_MAX 64
 //套接字的accept行为
 void acceptCallback(int fd,EventLoop& evloop);
@@ -18,7 +19,7 @@ public:
     friend void acceptCallback(int fd,EventLoop& evloop);
     friend void recvCallback(int fd,EventLoop& evloop);
     friend void sendCallback(int fd,EventLoop& evloop);
-    EventLoop(ConfRead& conf_reader);
+    EventLoop(ConfRead& conf_reader,thread_pool_t* thread_pool);
     ~EventLoop();
     
     //创建服务端网络套接字
@@ -50,4 +51,5 @@ private:
     //fd通过map来寻找到对应的NetSocket对象
     std::unordered_map<int,NetSocket*> m_map;
     ConfRead m_conf_reader;
+    thread_pool_t* m_thread_pool;
 };

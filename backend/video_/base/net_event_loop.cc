@@ -77,7 +77,7 @@ void recvCallback(int fd,EventLoop& evloop){
     int wbuffer_size=evloop.m_map[fd]->getWriteBufferSize();
     
     if(method=="POST"||method=="GET"){
-        http_layer.http_route_url(write_buffer,wbuffer_size);
+        http_layer.http_route_url(write_buffer,wbuffer_size,evloop.m_thread_pool);
     }
     else{
         std::cout<<"no func can be called\n";
@@ -119,7 +119,7 @@ void sendCallback(int fd,EventLoop& evloop){
 }
 
 
-EventLoop::EventLoop(ConfRead& conf_reader):m_conf_reader(conf_reader){
+EventLoop::EventLoop(ConfRead& conf_reader,thread_pool_t* thread_pool):m_conf_reader(conf_reader),m_thread_pool{thread_pool}{
     
 }
 EventLoop::~EventLoop(){
@@ -186,6 +186,7 @@ void EventLoop::enterLoop(EventLoop& evloop){
         if(nb_ready>0){
             for(unsigned i=0;i<nb_ready;i++){
                 if(m_epoll_events[i].events&EPOLLIN){
+                    
                     m_map[m_epoll_events[i].data.fd]->getEpollInCb()(m_epoll_events[i].data.fd,evloop);
                 }
                 else if(m_epoll_events[i].events&EPOLLOUT){

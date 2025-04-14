@@ -14,6 +14,8 @@
 #include"aav_lineeditsearch.h"
 #include"aav_videocoverwidlistloop.h"
 #include"aav_videodisplay.h"
+#include"aav_totips.h"
+#include<QTimer>
 class NetWorkManager : public QObject
 {
     //貌似对于qt来说它的http的post请求总是请求头和请求体分两次传输
@@ -57,6 +59,8 @@ public:
 private:
     QNetworkAccessManager* m_manager;
     QNetworkReply* m_files_info_reply;
+
+    ToTips* success_tip;
 signals:
 public slots:
     QBuffer* sloHandleDownloadData(QNetworkReply* reply);

@@ -3,6 +3,8 @@
 #include<string>
 #include<iostream>
 #include<regex>
+#include"mongoose.h"
+#include"config_read.h"
 #include<unistd.h>
 inline void isNumber(const std::string& str) {
     // 正则表达式匹配整数、浮点数和科学计数法
@@ -25,3 +27,10 @@ inline void blankTrim(std::string& str){
     
     
 }
+
+struct ApiFuncArgs{
+    int wbuf_sz;
+    char* wbuf;
+    struct mg_http_message hm;
+    ConfRead* conf_reader;
+};

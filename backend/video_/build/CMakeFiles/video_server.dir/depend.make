@@ -20,42 +20,49 @@ CMakeFiles/video_server.dir/api/api_files_list.cc.o: ../base/mysqlconn.h
 
 CMakeFiles/video_server.dir/api/api_get_search_log.cc.o: ../api/api_get_search_log.cc
 CMakeFiles/video_server.dir/api/api_get_search_log.cc.o: ../api/api_get_search_log.h
+CMakeFiles/video_server.dir/api/api_get_search_log.cc.o: ../base/common.h
 CMakeFiles/video_server.dir/api/api_get_search_log.cc.o: ../base/config_read.h
 CMakeFiles/video_server.dir/api/api_get_search_log.cc.o: ../base/mongoose.h
 CMakeFiles/video_server.dir/api/api_get_search_log.cc.o: ../base/mysqlconn.h
 
 CMakeFiles/video_server.dir/api/api_list_loop.cc.o: ../api/api_list_loop.cc
 CMakeFiles/video_server.dir/api/api_list_loop.cc.o: ../api/api_list_loop.h
+CMakeFiles/video_server.dir/api/api_list_loop.cc.o: ../base/common.h
 CMakeFiles/video_server.dir/api/api_list_loop.cc.o: ../base/config_read.h
 CMakeFiles/video_server.dir/api/api_list_loop.cc.o: ../base/mongoose.h
 CMakeFiles/video_server.dir/api/api_list_loop.cc.o: ../base/mysqlconn.h
 
 CMakeFiles/video_server.dir/api/api_login.cc.o: ../api/api_login.cc
 CMakeFiles/video_server.dir/api/api_login.cc.o: ../api/api_login.h
+CMakeFiles/video_server.dir/api/api_login.cc.o: ../base/common.h
 CMakeFiles/video_server.dir/api/api_login.cc.o: ../base/config_read.h
 CMakeFiles/video_server.dir/api/api_login.cc.o: ../base/mongoose.h
 CMakeFiles/video_server.dir/api/api_login.cc.o: ../base/mysqlconn.h
 
 CMakeFiles/video_server.dir/api/api_register.cc.o: ../api/api_register.cc
 CMakeFiles/video_server.dir/api/api_register.cc.o: ../api/api_register.h
+CMakeFiles/video_server.dir/api/api_register.cc.o: ../base/common.h
 CMakeFiles/video_server.dir/api/api_register.cc.o: ../base/config_read.h
 CMakeFiles/video_server.dir/api/api_register.cc.o: ../base/mongoose.h
 CMakeFiles/video_server.dir/api/api_register.cc.o: ../base/mysqlconn.h
 
 CMakeFiles/video_server.dir/api/api_search.cc.o: ../api/api_search.cc
 CMakeFiles/video_server.dir/api/api_search.cc.o: ../api/api_search.h
+CMakeFiles/video_server.dir/api/api_search.cc.o: ../base/common.h
 CMakeFiles/video_server.dir/api/api_search.cc.o: ../base/config_read.h
 CMakeFiles/video_server.dir/api/api_search.cc.o: ../base/mongoose.h
 CMakeFiles/video_server.dir/api/api_search.cc.o: ../base/mysqlconn.h
 
 CMakeFiles/video_server.dir/api/api_search_log.cc.o: ../api/api_search_log.cc
 CMakeFiles/video_server.dir/api/api_search_log.cc.o: ../api/api_search_log.h
+CMakeFiles/video_server.dir/api/api_search_log.cc.o: ../base/common.h
 CMakeFiles/video_server.dir/api/api_search_log.cc.o: ../base/config_read.h
 CMakeFiles/video_server.dir/api/api_search_log.cc.o: ../base/mongoose.h
 CMakeFiles/video_server.dir/api/api_search_log.cc.o: ../base/mysqlconn.h
 
 CMakeFiles/video_server.dir/api/api_update_user_history.cc.o: ../api/api_update_user_history.cc
 CMakeFiles/video_server.dir/api/api_update_user_history.cc.o: ../api/api_update_user_history.h
+CMakeFiles/video_server.dir/api/api_update_user_history.cc.o: ../base/common.h
 CMakeFiles/video_server.dir/api/api_update_user_history.cc.o: ../base/config_read.h
 CMakeFiles/video_server.dir/api/api_update_user_history.cc.o: ../base/mongoose.h
 CMakeFiles/video_server.dir/api/api_update_user_history.cc.o: ../base/mysqlconn.h
@@ -74,6 +81,7 @@ CMakeFiles/video_server.dir/api/api_upload.cc.o: /home/hcc/share/FastDfs/fastdfs
 CMakeFiles/video_server.dir/api/api_upload.cc.o: /home/hcc/share/FastDfs/fastdfs/tracker/tracker_types.h
 CMakeFiles/video_server.dir/api/api_upload.cc.o: ../api/api_upload.cc
 CMakeFiles/video_server.dir/api/api_upload.cc.o: ../api/api_upload.h
+CMakeFiles/video_server.dir/api/api_upload.cc.o: ../base/common.h
 CMakeFiles/video_server.dir/api/api_upload.cc.o: ../base/config_read.h
 CMakeFiles/video_server.dir/api/api_upload.cc.o: ../base/file_info.h
 CMakeFiles/video_server.dir/api/api_upload.cc.o: ../base/mongoose.h
@@ -169,6 +177,7 @@ CMakeFiles/video_server.dir/api/api_upload.cc.o: /usr/include/python3.8/weakrefo
 
 CMakeFiles/video_server.dir/api/api_user_info.cc.o: ../api/api_user_info.cc
 CMakeFiles/video_server.dir/api/api_user_info.cc.o: ../api/api_user_info.h
+CMakeFiles/video_server.dir/api/api_user_info.cc.o: ../base/common.h
 CMakeFiles/video_server.dir/api/api_user_info.cc.o: ../base/config_read.h
 CMakeFiles/video_server.dir/api/api_user_info.cc.o: ../base/mongoose.h
 CMakeFiles/video_server.dir/api/api_user_info.cc.o: ../base/mysqlconn.h
@@ -176,6 +185,7 @@ CMakeFiles/video_server.dir/api/api_user_info.cc.o: ../base/mysqlconn.h
 CMakeFiles/video_server.dir/base/config_read.cc.o: ../base/common.h
 CMakeFiles/video_server.dir/base/config_read.cc.o: ../base/config_read.cc
 CMakeFiles/video_server.dir/base/config_read.cc.o: ../base/config_read.h
+CMakeFiles/video_server.dir/base/config_read.cc.o: ../base/mongoose.h
 
 CMakeFiles/video_server.dir/base/file_info.cc.o: ../base/file_info.cc
 CMakeFiles/video_server.dir/base/file_info.cc.o: ../base/file_info.h
@@ -198,6 +208,7 @@ CMakeFiles/video_server.dir/base/http_layer.cc.o: ../base/http_layer.cc
 CMakeFiles/video_server.dir/base/http_layer.cc.o: ../base/http_layer.h
 CMakeFiles/video_server.dir/base/http_layer.cc.o: ../base/mongoose.h
 CMakeFiles/video_server.dir/base/http_layer.cc.o: ../base/mysqlconn.h
+CMakeFiles/video_server.dir/base/http_layer.cc.o: ../base/thread_pool.h
 
 CMakeFiles/video_server.dir/base/mysqlconn.cc.o: ../base/mysqlconn.cc
 CMakeFiles/video_server.dir/base/mysqlconn.cc.o: ../base/mysqlconn.h
@@ -209,6 +220,7 @@ CMakeFiles/video_server.dir/base/net_event_loop.cc.o: ../base/mongoose.h
 CMakeFiles/video_server.dir/base/net_event_loop.cc.o: ../base/net_event_loop.cc
 CMakeFiles/video_server.dir/base/net_event_loop.cc.o: ../base/net_event_loop.h
 CMakeFiles/video_server.dir/base/net_event_loop.cc.o: ../base/net_socket.h
+CMakeFiles/video_server.dir/base/net_event_loop.cc.o: ../base/thread_pool.h
 
 CMakeFiles/video_server.dir/base/net_socket.cc.o: ../base/net_socket.cc
 CMakeFiles/video_server.dir/base/net_socket.cc.o: ../base/net_socket.h
@@ -303,9 +315,14 @@ CMakeFiles/video_server.dir/base/py_script.cc.o: /usr/include/python3.8/unicodeo
 CMakeFiles/video_server.dir/base/py_script.cc.o: /usr/include/python3.8/warnings.h
 CMakeFiles/video_server.dir/base/py_script.cc.o: /usr/include/python3.8/weakrefobject.h
 
+CMakeFiles/video_server.dir/base/thread_pool.cc.o: ../base/thread_pool.cc
+CMakeFiles/video_server.dir/base/thread_pool.cc.o: ../base/thread_pool.h
+
 CMakeFiles/video_server.dir/main.cc.o: ../base/common.h
 CMakeFiles/video_server.dir/main.cc.o: ../base/config_read.h
+CMakeFiles/video_server.dir/main.cc.o: ../base/mongoose.h
 CMakeFiles/video_server.dir/main.cc.o: ../base/net_event_loop.h
 CMakeFiles/video_server.dir/main.cc.o: ../base/net_socket.h
+CMakeFiles/video_server.dir/main.cc.o: ../base/thread_pool.h
 CMakeFiles/video_server.dir/main.cc.o: ../main.cc
 

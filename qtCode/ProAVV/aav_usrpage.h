@@ -36,6 +36,8 @@ private:
 
 protected:
     void showEvent(QShowEvent *event) override;
+signals:
+    void sigLoginOut();
 };
 
 #endif // USRPAGE_H

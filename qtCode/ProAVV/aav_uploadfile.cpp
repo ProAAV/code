@@ -50,7 +50,7 @@ UploadFile::UploadFile(QString& file_path,QWidget *parent)
 
         m_file_path=file_path;
         //首先捕获一张封面
-        captureAnPicture();
+        //captureAnPicture();
         //获取到音视频播放时长
         double file_playback_duration=getVideoFileDuration();
         //然后再上传视频文件和捕获的封面图片
@@ -102,7 +102,7 @@ double UploadFile::getVideoFileDuration()
         avformat_close_input(&fmt_ctx);
         return durationInSeconds;
 }
-void UploadFile::captureAnPicture(){
+/*void UploadFile::captureAnPicture(){
     AVFormatContext* format_context=nullptr;
     //open video file firstly
     int ret=avformat_open_input(&format_context,m_file_path.toUtf8().constData(),nullptr,nullptr);
@@ -240,7 +240,7 @@ void UploadFile::captureAnPicture(){
     }
     end:
     av_packet_unref(&packet);
-}
+}*/
 UploadFile::~UploadFile()
 {
     delete ui;
