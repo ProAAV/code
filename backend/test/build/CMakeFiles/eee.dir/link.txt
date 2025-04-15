@@ -1,1 +1,0 @@
-/usr/bin/c++     CMakeFiles/eee.dir/main.cc.o  -o eee  -lavcodec -lavutil -lavformat -lswscale -lavdevice -lavfilter -lfdfsclient 

@@ -1,3 +1,0 @@
-/home/hcc/share/code/project/code/backend/test/build/CMakeFiles/rebuild_cache.dir
-/home/hcc/share/code/project/code/backend/test/build/CMakeFiles/edit_cache.dir
-/home/hcc/share/code/project/code/backend/test/build/CMakeFiles/eee.dir

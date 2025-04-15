@@ -1,0 +1,163 @@
+
+#user  nobody;
+worker_processes  1;
+
+#error_log  logs/error.log;
+#error_log  logs/error.log  notice;
+#error_log  logs/error.log  info;
+
+#pid        logs/nginx.pid;
+
+
+events {
+    worker_connections  1024;
+}
+
+
+http {
+    include       mime.types;
+    default_type  application/octet-stream;
+
+    #log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
+    #                  '$status $body_bytes_sent "$http_referer" '
+    #                  '"$http_user_agent" "$http_x_forwarded_for"';
+
+    #access_log  logs/access.log  main;
+
+    sendfile        on;
+    #tcp_nopush     on;
+
+    #keepalive_timeout  0;
+    keepalive_timeout  65;
+    upstream backend{
+	server 192.168.208.128:8081;
+	server 192.168.208.128:8082;
+	server 192.168.208.128:8083;
+	server 192.168.208.128:8084;
+    }
+    log_format main '$remote_addr - $remote_user [$time_local] "$request" '
+         '$status $body_bytes_sent "$http_referer" '
+         '"$http_user_agent" "$http_x_forwarded_for" '
+         '"$upstream_addr"';
+    #gzip  on;
+
+    server {
+        listen       8888;
+        server_name  localhost;
+
+        #charset koi8-r;
+
+        access_log  /home/hcc/log/video.log  main;
+
+        location / {
+	    proxy_pass http://backend;
+            #root   html;
+            #index  index.html index.htm;
+        }
+	location /api/ {
+	    proxy_pass http://backend;
+	}
+	location /api/filesList {
+	    proxy_pass http://backend;
+	}
+	location /api/login {
+	    proxy_pass http://backend;
+	}
+	location /api/userinfo {
+            proxy_pass http://backend;
+        }
+
+	location /api/uphistory {
+	    proxy_pass http://backend;
+	}
+	location /api/register {
+	    proxy_pass http://backend;
+	}
+	location ~/group([0-9])/M([0-9])([0-9]) {
+	    ngx_fastdfs_module;
+	}
+	location /api/upload{
+	    upload_max_file_size 1g;
+	    client_max_body_size 1g;
+	    upload_pass @upload_backend;
+	    upload_store /tmp/nginx_upload;
+	    upload_store_access user:r;
+	    upload_set_form_field "${upload_field_name}_name" $upload_file_name;
+	    upload_set_form_field "${upload_field_name}_path" $upload_tmp_path;
+	    upload_aggregate_form_field "${upload_field_name}_md5" $upload_file_md5;
+	    upload_aggregate_form_field "${upload_field_name}_size" $upload_file_size;
+	    upload_pass_form_field "^.*$";
+	}
+	location @upload_backend{
+	    proxy_pass http://backend;	
+	}
+        #error_page  404              /404.html;
+
+        # redirect server error pages to the static page /50x.html
+        #
+        error_page   500 502 503 504  /50x.html;
+        location = /50x.html {
+            root   html;
+        }
+
+        # proxy the PHP scripts to Apache listening on 127.0.0.1:80
+        #
+        #location ~ \.php$ {
+        #    proxy_pass   http://127.0.0.1;
+        #}
+
+        # pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000
+        #
+        #location ~ \.php$ {
+        #    root           html;
+        #    fastcgi_pass   127.0.0.1:9000;
+        #    fastcgi_index  index.php;
+        #    fastcgi_param  SCRIPT_FILENAME  /scripts$fastcgi_script_name;
+        #    include        fastcgi_params;
+        #}
+
+        # deny access to .htaccess files, if Apache's document root
+        # concurs with nginx's one
+        #
+        #location ~ /\.ht {
+        #    deny  all;
+        #}
+    }
+
+
+    # another virtual host using mix of IP-, name-, and port-based configuration
+    #
+    #server {
+    #    listen       8000;
+    #    listen       somename:8080;
+    #    server_name  somename  alias  another.alias;
+
+    #    location / {
+    #        root   html;
+    #        index  index.html index.htm;
+    #    }
+    #}
+
+
+    # HTTPS server
+    #
+    #server {
+    #    listen       443 ssl;
+    #    server_name  localhost;
+
+    #    ssl_certificate      cert.pem;
+    #    ssl_certificate_key  cert.key;
+
+    #    ssl_session_cache    shared:SSL:1m;
+    #    ssl_session_timeout  5m;
+
+    #    ssl_ciphers  HIGH:!aNULL:!MD5;
+    #    ssl_prefer_server_ciphers  on;
+
+    #    location / {
+    #        root   html;
+    #        index  index.html index.htm;
+    #    }
+    #}
+
+}
