@@ -63,7 +63,7 @@ bool VideoCoverWidget::eventFilter(QObject *obj, QEvent *event)
         qDebug()<<"clicked and show";
         qDebug()<<"file_path:"<<m_file_path;
         m_vdis=new VideoDisplay(m_file_md5,m_file_type,nullptr);
-        m_vdis->resize(950,600);
+        m_vdis->resize(1200,800);
         connect(m_vdis,&VideoDisplay::sigClose,this,&VideoCoverWidget::sloCloseDisplayer);
 
         m_vdis->setVideoFilePath(m_file_path);

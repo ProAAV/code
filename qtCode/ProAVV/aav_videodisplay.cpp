@@ -28,6 +28,12 @@ VideoDisplay::VideoDisplay(QString& file_md5,QString& file_type,QWidget *parent)
     QWidget(parent),ui(new Ui::VideoDisplay),m_file_path(""),m_file_type(file_type),m_ptr(0),animation{nullptr},danmuLabel{nullptr}
 {
     ui->setupUi(this);
+    sc_pause=new QShortcut(Qt::Key_Space,this);
+    sc_fast_rewind=new QShortcut(Qt::Key_Left,this);
+    sc_fast_forward=new QShortcut(Qt::Key_Right,this);
+    sc_volum_up=new QShortcut(Qt::Key_Up,this);
+    sc_volum_down=new QShortcut(Qt::Key_Down,this);
+
     qDebug()<<"VideoDisplay create and vec:"<<vec_list_loop_wids.size();
     player_mode=0;
     cur_media_idx=0;
@@ -88,9 +94,14 @@ VideoDisplay::VideoDisplay(QString& file_md5,QString& file_type,QWidget *parent)
     hlayout_slider->addWidget(m_lab_dur_time);
     hlayout_slider->addWidget(m_slider_video_process);
     //暂停，视频下一集,倍速，音量的按钮，播放模式按钮
-
+    QPushButton* btn_fast_rewind=new QPushButton(this);
+    btn_fast_rewind->setText("快退");
+    connect(btn_fast_rewind,&QPushButton::clicked,this,&VideoDisplay::sloFastRewind);
     QPushButton* btn_video_pause=new QPushButton(this);
     btn_video_pause->setText("暂停");
+    QPushButton* btn_fast_forward=new QPushButton(this);
+    btn_fast_forward->setText("快进");
+    connect(btn_fast_forward,&QPushButton::clicked,this,&VideoDisplay::sloFastForward);
     QPushButton* btn_video_next=new QPushButton(this);
     btn_video_next->setText("next");
     QPushButton* btn_play_mode=new QPushButton(this);
@@ -182,7 +193,11 @@ VideoDisplay::VideoDisplay(QString& file_md5,QString& file_type,QWidget *parent)
     QSpacerItem* s4=new QSpacerItem(40,20);
     QSpacerItem* s5=new QSpacerItem(40,20);
     QSpacerItem* s6=new QSpacerItem(40,20);
+    m_hlayout->addWidget(btn_fast_rewind);
+    //m_hlayout->addSpacerItem(s5);
     m_hlayout->addWidget(btn_video_pause);
+    //m_hlayout->addSpacerItem(s6);
+    m_hlayout->addWidget(btn_fast_forward);
     m_hlayout->addSpacerItem(s1);
 
     m_hlayout->addWidget(btn_video_next);
@@ -197,6 +212,7 @@ VideoDisplay::VideoDisplay(QString& file_md5,QString& file_type,QWidget *parent)
 
     //实现暂停，倍速播放
     connect(btn_video_pause,&QPushButton::clicked,this,&VideoDisplay::sloPlayerPause);
+    connect(sc_pause,&QShortcut::activated,this,&VideoDisplay::sloPlayerPause);
     connect(m_btn_rate,&QPushButton::clicked,this,&VideoDisplay::sloMenuUnfold);
     connect(act_rate_1,&QAction::triggered,this,[=](){
         this->sloAdjRate(1);
@@ -213,6 +229,8 @@ VideoDisplay::VideoDisplay(QString& file_md5,QString& file_type,QWidget *parent)
     connect(act_rate_5,&QAction::triggered,this,[=](){
         this->sloAdjRate(5);
     });
+    connect(sc_fast_rewind,&QShortcut::activated,this,&VideoDisplay::sloFastRewind);
+    connect(sc_fast_forward,&QShortcut::activated,this,&VideoDisplay::sloFastForward);
     //最后用一个垂直布局将三个板块合并
     m_vlayout=new QVBoxLayout;
     m_vlayout->addWidget(m_video_widget);
@@ -231,7 +249,7 @@ VideoDisplay::VideoDisplay(QString& file_md5,QString& file_type,QWidget *parent)
     connect(m_player,&QMediaPlayer::positionChanged,this,&VideoDisplay::sloSetSliderPos);
     connect(m_slider_video_process,&QSlider::sliderMoved,this,&VideoDisplay::sloPlayerMove);
     //实现音频同步
-    connect(m_btn_vlm->getSlider(),&QSlider::sliderMoved,this,[this](int position){
+    connect(m_btn_vlm->getSlider(),&QSlider::valueChanged,this,[this](int position){
         this->sloVolumeChanged(position);
     });
 
@@ -242,13 +260,15 @@ VideoDisplay::VideoDisplay(QString& file_md5,QString& file_type,QWidget *parent)
         thread->deleteLater();
     });
     qDebug()<<"m_file_path:"<<m_file_path;
-
+    connect(sc_volum_up,&QShortcut::activated,this,&VideoDisplay::sloVolumeUp);
+    connect(sc_volum_down,&QShortcut::activated,this,&VideoDisplay::sloVolumeDown);
 
 }
 
 
 void VideoDisplay::sloSetSliderDura(qint64 dur){
     int val=static_cast<int>(dur);
+    duration=val;
     m_slider_video_process->setRange(0,val);
     updateDurationTimeLab(dur);
 }
@@ -909,6 +929,48 @@ void VideoDisplay::sloHandleBtnNext()
 
     qDebug()<<"width:"<<m_video_widget->width();
     qDebug()<<"height:"<<m_video_widget->height();
+}
+
+void VideoDisplay::sloFastRewind()
+{
+    qint64 currentPosition = m_player->position();
+    currentPosition -= 5000; // 减去5000毫秒（5秒）
+    if (currentPosition < 0) {
+        currentPosition = 0; // 如果位置小于0，设置为0
+    }
+    m_player->setPosition(currentPosition);
+}
+
+void VideoDisplay::sloFastForward()
+{
+    qint64 currentPosition = m_player->position();
+    if (currentPosition <duration-5000) {
+        currentPosition += 5000; // 加上5000毫秒（5秒）
+    }
+    m_player->setPosition(currentPosition);
+}
+
+void VideoDisplay::sloVolumeUp()
+{
+    int v=m_player->volume();
+
+
+        v+=5;
+        m_btn_vlm->getSlider()->setValue(v);
+
+
+
+}
+
+void VideoDisplay::sloVolumeDown()
+{
+    int v=m_player->volume();
+    if(v>=5){
+        v-=5;
+        qDebug()<<"v:"<<v;
+        m_btn_vlm->getSlider()->setValue(v);
+    }
+
 }
 
 void VideoDisplay::closeEvent(QCloseEvent *event)

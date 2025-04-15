@@ -13,6 +13,7 @@
 #include<bitset>
 #include<QPropertyAnimation>
 #include<qmediaplaylist.h>
+#include<QShortcut>
 namespace Ui {
 class VideoDisplay;
 }
@@ -46,6 +47,11 @@ public:
     void parseMessages(QString& message);
     void checkDanmuPresentTime(int second);
     void handleModeChange();
+    QShortcut* sc_pause;
+    QShortcut* sc_fast_rewind;
+    QShortcut* sc_fast_forward;
+    QShortcut* sc_volum_up;
+    QShortcut* sc_volum_down;
 private:
     Ui::VideoDisplay *ui;
     QVBoxLayout* m_vlayout;
@@ -55,6 +61,7 @@ private:
     QMediaPlayer* m_player;
     QVideoWidget* m_video_widget;
     int player_mode;
+    int duration;
     QLabel* m_lab_present_time;
     QLabel* m_lab_dur_time;
     qint64 m_cnt_pause_player;
@@ -95,6 +102,10 @@ public slots:
     void sloVolumeChanged(int position);
     Ui::VideoDisplay *getVideoDisplayUi();
     void sloHandleBtnNext();
+    void sloFastRewind();
+    void sloFastForward();
+    void sloVolumeUp();
+    void sloVolumeDown();
 protected:
     void closeEvent(QCloseEvent *event) override;
 signals:
